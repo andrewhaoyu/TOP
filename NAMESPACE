@@ -1,0 +1,6 @@
+importFrom("stats", "model.matrix", "pchisq", "pnorm", "cor")
+importFrom("utils", "capture.output", "combn", "object.size", "write.table", "read.table")
+import(CompQuadForm)
+useDynLib(TOP)
+
+export(fixedEffect, randomEffect, modelInfo, scan.score)

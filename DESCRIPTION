@@ -1,0 +1,12 @@
+Package: TOP
+Type: Package
+Title: TwO-stage Polytmous Logistic Regression
+Version: 0.2.0
+Author: Haoyu Zhang, Bill Wheeler
+Maintainer: Haoyu Zhang <andrew.haoyu@gmail.com>
+Description: A two-stage regression model for epidemiological studies with multivariate disease classification data.
+License: GPL-2
+Depends: R (>= 3.1.0)
+Imports: CompQuadForm
+NeedsCompilation: yes
+Packaged: 2018-09-10 15:39:29 UTC; wheelerwi
