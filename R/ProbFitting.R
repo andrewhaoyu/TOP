@@ -16,13 +16,11 @@
 #'
 #' @examples
 ProbFitting <- function(delta0,y,x.all,z.standard,z.all,missingTumorIndicator=NULL){
-
   if(is.null(missingTumorIndicator)==1){
     n <- nrow(y)
     M <- nrow(z.standard)
     y_em <- matrix(0,nrow=n,ncol = M)
     beta <- matrix(z.all%*%delta0,ncol = M)
-
     ##add intercept to x.all
     x.all.inter <- as.matrix(cbind(1,x.all))
     index = 1
@@ -39,7 +37,7 @@ ProbFitting <- function(delta0,y,x.all,z.standard,z.all,missingTumorIndicator=NU
         y_em[i,jdx] <- 1
       }
     }
-    return(list(y_em=y_em, missing.vec=NULL, missing.mat=NULL, complete.vec=1:n))
+    return(list(y_em=y_em))
   }else{
     n <- nrow(y)
     M <- nrow(z.standard)
@@ -50,16 +48,15 @@ ProbFitting <- function(delta0,y,x.all,z.standard,z.all,missingTumorIndicator=NU
     beta <- matrix(z.all%*%delta0,ncol = M)
     ##add intercept to x.all
     x.all.inter <- as.matrix(cbind(1,x.all))
-    index <- 1
+    index = 1
+
 
     for(i in 1:nrow(y)){
       if(y[i,1]==1) {
         ###find out which tumor characteristic is observed
         idx <- which(y[i,2:ncol(y)]!=missingTumorIndicator)
-
         ###jdx is the potential subtype this missing person could be
         jdx <- apply(z.standard,1,function(t){all(t[idx]==y[i,idx+1])})
-
         if(sum(jdx)!=1){
           missing.vec[index] <- i
           missing.mat[index,] <- jdx
@@ -71,11 +68,12 @@ ProbFitting <- function(delta0,y,x.all,z.standard,z.all,missingTumorIndicator=NU
         }else{
           y_em[i,jdx] <- 1
         }
+
       }
     }
 
     missing.vec <- missing.vec[1:(index-1)]
-    missing.mat <- missing.mat[1:(index-1), , drop=FALSE]
+    missing.mat <- missing.mat[1:(index-1),]
     complete.vec <- c(1:n)
     complete.vec <- complete.vec[!(complete.vec%in%missing.vec)]
 

@@ -117,10 +117,8 @@ IndividualHeterTest <- function(logodds,sigma){
 ScoreGlobalTestForAssoc <- function(score,infor){
   infor <- as.matrix(infor)
   df <- length(score)
-
   GTA.stat <- score%*%solve(infor)%*%t(score)
   p.value.GTA <- pchisq(as.numeric(GTA.stat),df=df,lower.tail = F)
-
   places = 3
   power.number <- floor(-log10(p.value.GTA))+places
   ###format the output with three digits in total
@@ -129,20 +127,6 @@ ScoreGlobalTestForAssoc <- function(score,infor){
   return(p.value.GTA)
 
 }
-
-ScoreGlobalTestForAssoc2 <- function(obj){
-
-  score    <- obj$score.result
-  infor    <- obj$efficient.info.result
-
-  infor    <- as.matrix(infor)
-  df       <- length(score)
-  GTA.stat <- as.numeric(score%*%solve(infor)%*%t(score))
-  p.value  <- pchisq(GTA.stat,df=df,lower.tail = F)
-
-  return(list(p.value=p.value, test=GTA.stat, df=df))
-}
-
 
 
 #' Title
@@ -184,42 +168,6 @@ ScoreGlobalMixedTestForAssoc <- function(score,infor){
   return(c(p.value.GTA,p.value.GTA.mixed))
 
 }
-
-ScoreGlobalMixedTestForAssoc2 <- function(obj){
-
-  score       <- obj$score.result
-  infor       <- obj$efficient.info.result
-
-  infor       <- as.matrix(infor)
-  df          <- length(score)
-  GTA.stat    <- score%*%solve(infor)%*%t(score)
-  p.value.GTA <- pchisq(as.numeric(GTA.stat),df=df,lower.tail = F)
-  
-  GTA.mixed         <- score%*%t(score)
-  lamda             <- eigen(infor)$values
-  result            <- davies(GTA.mixed,lamda,lim = 2000000,acc=1e-9)
-  p.value.GTA.mixed <- result$Qq
-  error             <- result$ifault
-  msg               <- NULL
-
-  if (error) {
-    msgVec <- c(
-    "ERROR with p.value.GTA.mixed: requested accuracy could not be obtained", 
-    "ERROR with p.value.GTA.mixed: round-off error possibly significant", 
-    "ERROR with p.value.GTA.mixed: invalid parameters", 
-    "ERROR with p.value.GTA.mixed: unable to locate integration parameters")
-    msg <- msgVec[error]
-  }
-  
-  if (p.value.GTA.mixed < 0) p.value.GTA.mixed <- 1e-09
-  
-  return(list(p.value=p.value.GTA.mixed, error=error, error.message=msg,
-              p.value.fixed=p.value.GTA))
-
-}
-
-
-
 
 
 #' Title

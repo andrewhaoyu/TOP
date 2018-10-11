@@ -9,7 +9,7 @@
 #' @examples
 GenerateTumorCharacterCat <- function(y.pheno.complete){
   tumor.number = ncol(y.pheno.complete)-1
-  y.tumor.complete = y.pheno.complete[,2:(tumor.number+1), drop=FALSE]
+  y.tumor.complete = y.pheno.complete[,2:(tumor.number+1)]
   tumor.character.cat = list()
   for(i in 1:tumor.number){
     unique.tumor.cat = unique(y.tumor.complete[!is.na(y.tumor.complete[,i]),i])

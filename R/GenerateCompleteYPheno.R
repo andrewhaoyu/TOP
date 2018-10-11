@@ -1,5 +1,14 @@
 ###Generate the complete y pheno dataframe based on the incomplete data file
 
+
+
+
+
+
+
+
+
+
 #' Title
 #'
 #' @param y.pheno
@@ -11,7 +20,7 @@
 #' @examples
 GenerateMissingPosition <- function(y.pheno,missingTumorIndicator){
 
-  idx <- NULL
+
   tumor.number  <-  ncol(y.pheno)-1
   find.missing.position.text = "idx <- which("
   for(i in 2:(tumor.number+1)){
@@ -30,6 +39,14 @@ GenerateMissingPosition <- function(y.pheno,missingTumorIndicator){
 
 }
 
+
+
+
+
+
+
+
+
 #' Title
 #'
 #' @param y.pheno
@@ -40,8 +57,6 @@ GenerateMissingPosition <- function(y.pheno,missingTumorIndicator){
 #'
 #' @examples
 GenerateCompleteYPheno <- function(y.pheno,missingTumorIndicator){
-
-  idx <- NULL
   tumor.number  <-  ncol(y.pheno)-1
   find.missing.position.text = "idx <- which("
   for(i in 2:(tumor.number+1)){
@@ -74,8 +89,6 @@ GenerateCompleteYPheno <- function(y.pheno,missingTumorIndicator){
 #'
 #' @examples
 GenerateCompleteXCovariates <- function(y.pheno,x.all,missingTumorIndicator){
-
-  idx <- NULL
   tumor.number  <-  ncol(y.pheno)-1
   find.missing.position.text = "idx <- which("
   for(i in 2:(tumor.number+1)){

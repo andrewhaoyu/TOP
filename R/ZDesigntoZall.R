@@ -29,16 +29,13 @@ ZDesigntoZall <- function(baselineonly,
   saturated.number <- CountCovarNumber(saturated)
   ###second.stage.category for different model structures
   baselineonly.second.cat <- 1
-  #additive.second.cat <- ncol(z.design.additive)
-  #pairwise.interaction.second.cat <- ncol(z.design.pairwise.interaction)
-  #saturated.second.cat <- ncol(z.design.saturated)
-  additive.second.cat             <- CountCovarNumber(z.design.additive)
-  pairwise.interaction.second.cat <- CountCovarNumber(z.design.pairwise.interaction)
-  saturated.second.cat            <- CountCovarNumber(z.design.saturated)
-
+  additive.second.cat <- ncol(z.design.additive)
+  pairwise.interaction.second.cat <- ncol(z.design.pairwise.interaction)
+  saturated.second.cat <- ncol(z.design.saturated)
   ###1 for intercept
   total.covar.number <- 1+ baselineonly.number+additive.number+
     pairwise.interaction.number+saturated.number
+
   z.all <- matrix(0,nrow=(M*total.covar.number),ncol = (M+baselineonly.number*baselineonly.second.cat+
                                                           additive.second.cat*additive.number+
                                                           pairwise.interaction.second.cat*pairwise.interaction.number)+saturated.second.cat*saturated.number)

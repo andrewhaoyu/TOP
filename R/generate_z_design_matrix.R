@@ -12,10 +12,9 @@
 #' @export
 #'
 #' @examples
-GenerateZDesignBaselineonly <- function(tumor.character.cat,tumor.number,tumor.names,freq.subtypes,
-       cutoff=10){
+GenerateZDesignBaselineonly <- function(tumor.character.cat,tumor.number,tumor.names,freq.subtypes){
   M = 1
-  
+  cutoff <- 10
   for(i in 1:tumor.number){
     M = M*length(tumor.character.cat[[i]])
   }
@@ -45,10 +44,9 @@ GenerateZDesignBaselineonly <- function(tumor.character.cat,tumor.number,tumor.n
 #' @export
 #'
 #' @examples
-GenerateZDesignAdditive <- function(tumor.character.cat,tumor.number,tumor.names,freq.subtypes,
-           cutoff=10){
+GenerateZDesignAdditive <- function(tumor.character.cat,tumor.number,tumor.names,freq.subtypes){
   z.design.additive.text <- NULL
-  
+  cutoff <- 10
   for(i in 1:tumor.number){
     if(i==tumor.number){
       z.design.additive.text <- paste0(z.design.additive.text,
@@ -107,14 +105,13 @@ GenerateZDesignNamesAdditive <- function(tumor.names){
 #' @export
 #'
 #' @examples
-GenerateZDesignPairwiseInteraction <- function(tumor.character.cat,tumor.number,tumor.names,
-      freq.subtypes, cutoff=10){
-  
+GenerateZDesignPairwiseInteraction <- function(tumor.character.cat,tumor.number,tumor.names,freq.subtypes){
+  cutoff <- 10
   z.design.pairwise.interaction <-
     GenerateZDesignAdditive(tumor.character.cat,
                               tumor.number,
                               tumor.names,
-                              freq.subtypes, cutoff=cutoff)
+                              freq.subtypes)
   z.design.names.pairwise.interaction <- colnames(z.design.pairwise.interaction)
   all.pairwise.combnation <- combn(tumor.number,2)+1
   combn.number <- ncol(all.pairwise.combnation)
@@ -154,13 +151,12 @@ GenerateZDesignPairwiseInteraction <- function(tumor.character.cat,tumor.number,
 #' @export
 #'
 #' @examples
-GenerateZDesignSaturated <- function(tumor.character.cat,tumor.number,tumor.names,freq.subtypes,
-       cutoff=10) {
- 
+GenerateZDesignSaturated <- function(tumor.character.cat,tumor.number,tumor.names,freq.subtypes) {
+  cutoff <- 10
   z.design.saturated <- GenerateZDesignAdditive(tumor.character.cat,
                                                   tumor.number,
                                                   tumor.names,
-                                                  freq.subtypes, cutoff=cutoff)
+                                                  freq.subtypes)
   z.design.names.saturated <- colnames(z.design.saturated)
   ##j represent the order of the interaction
   for(j in 2:tumor.number){

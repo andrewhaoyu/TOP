@@ -36,8 +36,9 @@ FirstStageTest <- function(beta,sigma,M,first.stage.mat){
 
   covar.names <- NULL
   subtypes.names <- NULL
+  for(j in 1:nrow(first.stage.mat)){
   for(i in 1:ncol(first.stage.mat)){
-    for(j in 1:nrow(first.stage.mat)){
+
       if(is.na(first.stage.mat[j,i])==F){
         covar.names = c(covar.names,all.covar.names[i])
         subtypes.names =

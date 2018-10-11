@@ -1,12 +1,19 @@
-Package: TOP
+Package: bc2
 Type: Package
-Title: TwO-stage Polytmous Logistic Regression
-Version: 0.2.0
-Author: Haoyu Zhang, Bill Wheeler
+Title: Breast Cancer Prediction
+Version: 0.1.2
+Author: Haoyu Zhang 
 Maintainer: Haoyu Zhang <andrew.haoyu@gmail.com>
-Description: A two-stage regression model for epidemiological studies with multivariate disease classification data.
-License: GPL-2
-Depends: R (>= 3.1.0)
-Imports: CompQuadForm
-NeedsCompilation: yes
-Packaged: 2018-09-10 15:39:29 UTC; wheelerwi
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: MIT
+Depends:
+  R (>= 3.1.0)
+Imports:
+ CompQuadForm
+LinkingTo:
+    CompQuadForm
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+Suggests: testthat

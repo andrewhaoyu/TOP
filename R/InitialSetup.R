@@ -21,7 +21,7 @@ InitialSetup <- function(y.pheno.complete,
                          pairwise.interaction,
                          saturated,
                          x.self.design= NULL,
-                         z.design = NULL, cutoff=10
+                         z.design = NULL
                          ){
   if(is.null(x.self.design)==T){
     y <- y.pheno.complete
@@ -40,19 +40,19 @@ InitialSetup <- function(y.pheno.complete,
     z.design.baselineonly <- GenerateZDesignBaselineonly(tumor.character.cat,
                                                          tumor.number,
                                                          tumor.names,
-                                                         freq.subtypes, cutoff=cutoff)
+                                                         freq.subtypes)
     z.design.additive <- GenerateZDesignAdditive(tumor.character.cat,
                                                  tumor.number,
                                                  tumor.names,
-                                                 freq.subtypes, cutoff=cutoff)
+                                                 freq.subtypes)
     z.design.pairwise.interaction <- GenerateZDesignPairwiseInteraction(tumor.character.cat,
                                                                         tumor.number,
                                                                         tumor.names,
-                                                                        freq.subtypes, cutoff=cutoff)
+                                                                        freq.subtypes)
     z.design.saturated <- GenerateZDesignSaturated(tumor.character.cat,
                                                    tumor.number,
                                                    tumor.names,
-                                                   freq.subtypes, cutoff=cutoff)
+                                                   freq.subtypes)
     full.second.stage.names <- colnames(z.design.saturated)
     covar.names <- GenerateCovarName(baselineonly,
                                      additive,
@@ -69,16 +69,9 @@ InitialSetup <- function(y.pheno.complete,
                            z.design.pairwise.interaction,
                            z.design.saturated)
     z.standard <- z.design.additive[,-1]
-
-    delta0 <-StartValueFunction(freq.subtypes,y.case.control,z.all, cutoff=cutoff)
-    ret <- list(delta0=delta0,z.all=z.all,z.standard= z.standard,
-                z.design.baselineonly = z.design.baselineonly,
-                z.design.additive=z.design.additive,
-                z.design.pairwise.interaction=z.design.pairwise.interaction,
-                z.design.saturated=z.design.saturated,covar.names = covar.names,
-                tumor.names=tumor.names, freq.subtypes=freq.subtypes,
-                tumor.character.cat=tumor.character.cat)
-    return(ret)
+    delta0 <-StartValueFunction(freq.subtypes,y.case.control,z.all)
+    return(list(delta0 = delta0,z.all=z.all,z.standard= z.standard,z.deisign.baselineonly = z.design.baselineonly,z.design.additive=z.design.additive,z.design.pairwise.interaction=z.design.pairwise.interaction,z.design.saturated=z.design.saturated,covar.names = covar.names,tumor.names=tumor.names
+    ))
   }else{
     y <- y.pheno.complete
     tumor.number <- ncol(y)-1
@@ -125,16 +118,11 @@ InitialSetup <- function(y.pheno.complete,
                                z.design.additive,
                                z.design.pairwise.interaction,
                                z.design.saturated)
-    delta0 <-StartValueFunction(freq.subtypes,y.case.control,z.all, cutoff=cutoff)
+    delta0 <-StartValueFunction(freq.subtypes,y.case.control,z.all)
     z.standard <- z.design.additive[,-1]
-    ret <- list(delta0=delta0,z.all=z.all,z.standard= z.standard,
-                z.design.baselineonly = z.design.baselineonly,z.design.additive=z.design.additive,
-                z.design.pairwise.interaction=z.design.pairwise.interaction,
-                z.design.saturated=z.design.saturated,covar.names = covar.names,
-                tumor.names=tumor.names, freq.subtypes=freq.subtypes,
-                tumor.character.cat=tumor.character.cat)
-
-    return(ret)
+    delta0 <-StartValueFunction(freq.subtypes,y.case.control,z.all)
+    return(list(delta0 = delta0,z.all=z.all,z.standard= z.standard,z.deisign.baselineonly = z.design.baselineonly,z.design.additive=z.design.additive,z.design.pairwise.interaction=z.design.pairwise.interaction,z.design.saturated=z.design.saturated,covar.names = covar.names,tumor.names=tumor.names
+    ))
   }
 
 }
@@ -241,7 +229,12 @@ if(is.null(x.self.design)){
               AIC = AIC,beta=beta,covariance.beta=covariance.beta,
               z.standard=z.standard))
 }else{
-  full.second.stage.names <- colnames(z.design.saturated)
+  if(is.null(colnames(z.design))){
+    full.second.stage.names <- paste0("self_design_group",c(1:ncol(z.design)))
+  }else{
+    full.second.stage.names <- colnames(z.design)
+  }
+
   M <- as.integer(nrow(z.standard))
   ###delta represent second stage parameters
   delta <- model.result$delta
@@ -259,7 +252,8 @@ if(is.null(x.self.design)){
   takeout.intercept.result <- TakeoutIntercept(delta,covariance.delta,
                                                M,
                                                tumor.names,
-                                               z.all,covar.names)
+                                               z.all,
+                                               covar.names)
   beta <- takeout.intercept.result$beta
   covariance.beta <- takeout.intercept.result$covariance.beta
   delta.no.inter <- takeout.intercept.result$delta.no.inter
