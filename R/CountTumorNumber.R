@@ -1,12 +1,9 @@
-##count variable number
-#' Title
+#' Count variable number
 #'
-#' @param covar
+#' @param covar the covariate matrix
 #'
-#' @return
-#' @export
+#' @keywords internal
 #'
-#' @examples
 CountCovarNumber <- function(covar) {
   if(is.null(covar)){
     return(0)

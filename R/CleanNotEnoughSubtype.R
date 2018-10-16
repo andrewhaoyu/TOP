@@ -1,12 +1,11 @@
-#' Title
+#' TBD
 #'
-#' @param A
-#' @param B
+#' @param A TBD
+#' @param B TBD
 #'
-#' @return
-#' @export
+#' @return TBD
+#' @keywords internal
 #'
-#' @examples
 rowmatch <- function(A,B) {
   # Rows in A that match the rows in B
   f <- function(...) paste(..., sep=":")

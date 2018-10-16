@@ -2,13 +2,19 @@
 % Please edit documentation in R/CleanNotEnoughSubtype.R
 \name{rowmatch}
 \alias{rowmatch}
-\title{Title}
+\title{TBD}
 \usage{
 rowmatch(A, B)
 }
 \arguments{
-\item{B}{}
+\item{A}{TBD}
+
+\item{B}{TBD}
+}
+\value{
+TBD
 }
 \description{
-Title
+TBD
 }
+\keyword{internal}

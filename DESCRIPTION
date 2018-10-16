@@ -1,12 +1,11 @@
-Package: bc2
+Package: TOP
 Type: Package
-Title: Breast Cancer Prediction
+Title: Two-stage Polytomous Logistic regression
 Version: 0.1.2
-Author: Haoyu Zhang 
+Author: Haoyu Zhang [aut,cre], William Wheeler [aut]
 Maintainer: Haoyu Zhang <andrew.haoyu@gmail.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: MIT
+Description: This package implement the two-stage polytomous model to handle data with multivariate disease characteristics.
+License: GPL-3
 Depends:
   R (>= 3.1.0)
 Imports:

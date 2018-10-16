@@ -7,8 +7,12 @@
 lsos(..., n = 10)
 }
 \arguments{
-\item{n}{}
+\item{n}{TBD}
+}
+\value{
+TBD
 }
 \description{
 Title
 }
+\keyword{internal}

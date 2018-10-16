@@ -2,13 +2,14 @@
 % Please edit documentation in R/CountTumorNumber.R
 \name{CountCovarNumber}
 \alias{CountCovarNumber}
-\title{Title}
+\title{Count variable number}
 \usage{
 CountCovarNumber(covar)
 }
 \arguments{
-\item{covar}{}
+\item{covar}{the covariate matrix}
 }
 \description{
-Title
+Count variable number
 }
+\keyword{internal}

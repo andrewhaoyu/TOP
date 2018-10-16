@@ -8,8 +8,22 @@ ls.objects(pos = 1, pattern, order.by, decreasing = FALSE, head = FALSE,
   n = 5)
 }
 \arguments{
-\item{n}{}
+\item{pos}{TBD}
+
+\item{pattern}{TBD}
+
+\item{order.by}{TBD}
+
+\item{decreasing}{TBD}
+
+\item{head}{TBD}
+
+\item{n}{TBD}
+}
+\value{
+TBD
 }
 \description{
 Title
 }
+\keyword{internal}

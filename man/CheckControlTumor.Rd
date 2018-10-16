@@ -2,13 +2,19 @@
 % Please edit documentation in R/CheckControlTumor.R
 \name{CheckControlTumor}
 \alias{CheckControlTumor}
-\title{Title}
+\title{Check whether control subtypes tumor characteristics is NA}
 \usage{
 CheckControlTumor(y.case.control, y.tumor)
 }
 \arguments{
-\item{y.tumor}{}
+\item{y.case.control}{the case control vector, should be coded as 0, 1.}
+
+\item{y.tumor}{the tumor characteristics matrix of all the subjects}
+}
+\value{
+checking result
 }
 \description{
-Title
+Check whether control subtypes tumor characteristics is NA
 }
+\keyword{internal}

@@ -2,13 +2,16 @@
 % Please edit documentation in R/convert.R
 \name{convert}
 \alias{convert}
-\title{Title}
+\title{Convert the impute 2 data into the 0, 1, 2 coding}
 \usage{
 convert(snppro, n)
 }
 \arguments{
-\item{n}{}
+\item{snppro}{impute 2 data with 3 probabilities for every SNP (aa, Aa, AA)}
+
+\item{n}{the number of subjects}
 }
 \description{
-Title
+Convert the impute 2 data into the 0, 1, 2 coding
 }
+\keyword{internal}

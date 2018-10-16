@@ -1,17 +1,16 @@
 
 #' Title
 #'
-#' @param pos
-#' @param pattern
-#' @param order.by
-#' @param decreasing
-#' @param head
-#' @param n
+#' @param pos TBD
+#' @param pattern TBD
+#' @param order.by TBD
+#' @param decreasing TBD
+#' @param head TBD
+#' @param n TBD
 #'
-#' @return
-#' @export
-#'
-#' @examples
+#' @return TBD
+#' @keywords internal
+
 ls.objects <- function (pos = 1, pattern, order.by,
                          decreasing=FALSE, head=FALSE, n=5) {
   napply <- function(names, fn) sapply(names, function(x)
@@ -38,12 +37,12 @@ ls.objects <- function (pos = 1, pattern, order.by,
 
 
 #' Title
-#' @param n
+#' @param n TBD
 #'
-#' @return
-#' @export
+#' @return TBD
+#' @keywords internal
 #'
-#' @examples
+
 lsos <- function(..., n=10) {
   ls.objects(..., order.by="Size", decreasing=TRUE, head=TRUE, n=n)
 }
