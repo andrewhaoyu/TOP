@@ -2,13 +2,18 @@
 % Please edit documentation in R/display_95CI_p.R
 \name{DisplayFixedScoreTestResult}
 \alias{DisplayFixedScoreTestResult}
-\title{Title}
+\title{Calcualte the fixed effect score test p value based on score and information matrix}
 \usage{
 DisplayFixedScoreTestResult(score, infor, places = 5)
 }
 \arguments{
-\item{places}{}
+\item{score}{the score vector}
+
+\item{infor}{the information matrix for the score}
+
+\item{places}{the numerical places to keep}
 }
 \description{
-Title
+Calcualte the fixed effect score test p value based on score and information matrix
 }
+\keyword{internal}

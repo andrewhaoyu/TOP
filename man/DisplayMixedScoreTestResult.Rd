@@ -2,14 +2,20 @@
 % Please edit documentation in R/display_95CI_p.R
 \name{DisplayMixedScoreTestResult}
 \alias{DisplayMixedScoreTestResult}
-\title{Title}
+\title{Calculate the mixed effect model p value based on score and information matrix}
 \usage{
-DisplayMixedScoreTestResult(score.baseline, infor.baseline, score.casecase,
-  infor.casecase)
+DisplayMixedScoreTestResult(score.fix, infor.fix, score.random, infor.random)
 }
 \arguments{
-\item{infor.casecase}{}
+\item{score.fix}{fixed effect score}
+
+\item{infor.fix}{fixed effect information matrix}
+
+\item{score.random}{random effect score}
+
+\item{infor.random}{random effect information matrix}
 }
 \description{
-Title
+Calculate the mixed effect model p value based on score and information matrix
 }
+\keyword{internal}

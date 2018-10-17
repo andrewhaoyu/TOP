@@ -2,13 +2,30 @@
 % Please edit documentation in R/EMmvpoly.R
 \name{GenerateZstandard}
 \alias{GenerateZstandard}
-\title{Title}
+\title{Generate the combinations of all the tumor characteristics.}
 \usage{
 GenerateZstandard(y, missingTumorIndicator = 888)
 }
 \arguments{
-\item{missingTumorIndicator}{}
+\item{y}{the phenotype file. The first column is the case control disease status. The other columns are the tumor characteristics status}
+
+\item{missingTumorIndicator}{The indicators to show the tumor characteristics are missing. In the example, we put missing tumor characteristics as 888. Note, for all the controls subjects, they don't have tumor characteristics. So their tumor characteristics are put as NA instead of 888 to differentiate with cases missing tumor characteristics.}
+}
+\value{
+a matrix with all the combinations of tumor characteristics. All the subtypes with less than 10 are removed by default.
 }
 \description{
-Title
+Generate the combinations of all the tumor characteristics.
+}
+\examples{
+data(data, package="TOP") #load in the breast cancer example
+#this is a simulated breast cancer example
+#there are around 5000 breast cancer cases and 5000 controls, i.e. people without disease
+data[1:5,]
+#four different tumor characteristics were included, ER (positive vs negative), PR (positive vs negative), HER2 (positive vs negative), grade (ordinal 1, 2, 3)
+#the phenotype file
+y <- data[,1:5]
+#generate the combinations of all the subtypes
+#by default, we remove all the subtypes with less than 10 cases
+z.standard <- GenerateZstandard(y)
 }

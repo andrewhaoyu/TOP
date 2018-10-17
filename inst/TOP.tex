@@ -1,0 +1,439 @@
+\documentclass[11pt,]{article}
+\usepackage[left=1in,top=1in,right=1in,bottom=1in]{geometry}
+\newcommand*{\authorfont}{\fontfamily{phv}\selectfont}
+\usepackage[]{mathpazo}
+
+
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+
+
+
+\usepackage{abstract}
+\renewcommand{\abstractname}{}    % clear the title
+\renewcommand{\absnamepos}{empty} % originally center
+
+\renewenvironment{abstract}
+ {{%
+    \setlength{\leftmargin}{0mm}
+    \setlength{\rightmargin}{\leftmargin}%
+  }%
+  \relax}
+ {\endlist}
+
+\makeatletter
+\def\@maketitle{%
+  \newpage
+%  \null
+%  \vskip 2em%
+%  \begin{center}%
+  \let \footnote \thanks
+    {\fontsize{18}{20}\selectfont\raggedright  \setlength{\parindent}{0pt} \@title \par}%
+}
+%\fi
+\makeatother
+
+
+
+
+\setcounter{secnumdepth}{0}
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+
+
+\title{Two-stage polytmous logistic regression tutorial  }
+
+
+
+\author{\Large Haoyu Zhang\vspace{0.05in} \newline\normalsize\emph{Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
+U.S.A.}   \and \Large Ni Zhao\vspace{0.05in} \newline\normalsize\emph{Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
+U.S.A.}   \and \Large Thomas U. Ahearn\vspace{0.05in} \newline\normalsize\emph{National Cancer Institute, Division of Cancer Epidemiology and Genetics,
+Rockville, MD, U.S.A.}   \and \Large Montserrat García-Closas\vspace{0.05in} \newline\normalsize\emph{National Cancer Institute, Division of Cancer Epidemiology and Genetics,
+Rockville, MD, U.S.A.}   \and \Large William Wheeler\vspace{0.05in} \newline\normalsize\emph{Information Management Services, Inc., Rockville, MD, U.S.A}   \and \Large Nilanjan Chatterjee\vspace{0.05in} \newline\normalsize\emph{Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
+USA}  }
+
+
+\date{}
+
+\usepackage{titlesec}
+
+\titleformat*{\section}{\normalsize\bfseries}
+\titleformat*{\subsection}{\normalsize\itshape}
+\titleformat*{\subsubsection}{\normalsize\itshape}
+\titleformat*{\paragraph}{\normalsize\itshape}
+\titleformat*{\subparagraph}{\normalsize\itshape}
+
+
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+\usepackage[strings]{underscore} % protect underscores in most circumstances
+
+
+
+\newtheorem{hypothesis}{Hypothesis}
+\usepackage{setspace}
+
+\makeatletter
+\@ifpackageloaded{hyperref}{}{%
+\ifxetex
+  \PassOptionsToPackage{hyphens}{url}\usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \PassOptionsToPackage{hyphens}{url}\usepackage[unicode=true]{hyperref}
+\fi
+}
+
+\@ifpackageloaded{color}{
+    \PassOptionsToPackage{usenames,dvipsnames}{color}
+}{%
+    \usepackage[usenames,dvipsnames]{color}
+}
+\makeatother
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={Haoyu Zhang (Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
+U.S.A.) and Ni Zhao (Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
+U.S.A.) and Thomas U. Ahearn (National Cancer Institute, Division of Cancer Epidemiology and Genetics,
+Rockville, MD, U.S.A.) and Montserrat García-Closas (National Cancer Institute, Division of Cancer Epidemiology and Genetics,
+Rockville, MD, U.S.A.) and William Wheeler (Information Management Services, Inc., Rockville, MD, U.S.A) and Nilanjan Chatterjee (Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
+USA)},
+             pdfkeywords = {Two-stage polytomous model; Susceptibility variants; Cancer subtypes; EM
+algorithm; Score tests; Etiologic heterogeneity.},  
+            pdftitle={Two-stage polytmous logistic regression tutorial},
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+% add tightlist ----------
+\providecommand{\tightlist}{%
+\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\begin{document}
+	
+% \pagenumbering{arabic}% resets `page` counter to 1 
+%
+% \maketitle
+
+{% \usefont{T1}{pnc}{m}{n}
+\setlength{\parindent}{0pt}
+\thispagestyle{plain}
+{\fontsize{18}{20}\selectfont\raggedright 
+\maketitle  % title \par  
+
+}
+
+{
+   \vskip 13.5pt\relax \normalsize\fontsize{11}{12} 
+\textbf{\authorfont Haoyu Zhang} \hskip 15pt \emph{\small Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
+U.S.A.}   \par \textbf{\authorfont Ni Zhao} \hskip 15pt \emph{\small Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
+U.S.A.}   \par \textbf{\authorfont Thomas U. Ahearn} \hskip 15pt \emph{\small National Cancer Institute, Division of Cancer Epidemiology and Genetics,
+Rockville, MD, U.S.A.}   \par \textbf{\authorfont Montserrat García-Closas} \hskip 15pt \emph{\small National Cancer Institute, Division of Cancer Epidemiology and Genetics,
+Rockville, MD, U.S.A.}   \par \textbf{\authorfont William Wheeler} \hskip 15pt \emph{\small Information Management Services, Inc., Rockville, MD, U.S.A}   \par \textbf{\authorfont Nilanjan Chatterjee} \hskip 15pt \emph{\small Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
+USA}   
+
+}
+
+}
+
+
+
+
+
+
+
+
+\begin{abstract}
+
+    \hbox{\vrule height .2pt width 39.14pc}
+
+    \vskip 8.5pt % \small 
+
+\noindent Cancers are routinely classified into subtypes according to various
+features, including histo pathological characteristics and molecular
+markers. Genomic investigations have reported heterogeneous association
+between loci and cancer subtypes. However, it is not evident what is the
+optimal modeling strategy for handling correlated tumor features,
+missing data, and increased degrees-of-freedom in the underlying tests
+of associations. In this tutorial, we proposed a two-stage polytomous
+regression framework to handle cancer data with multivariate tumor
+characteristics. In the first stage, a standard polytomous model is used
+to specify for all subtypes defined by the cross-classification of
+different markers. In the second stage, the subtype-specific
+case-control odds ratios are specified using a more parsimonious model
+based on the case-control odds ratio for a baseline subtype, and the
+case-case parameters associated with tumor markers. Further, to reduce
+the degrees-of-freedom, we allow to specify case-case parameters for
+additional markers using a random-effect model. We use the EM algorithm
+to account for missing data on tumor markers. The score-test
+distribution theory is developed by borrowing analogous techniques from
+group-based association tests. Through simulations across a range of
+realistic scenarios, we show the proposed methods outperforms
+alternative methods for identifying heterogenous associations between
+risk loci and tumor subtypes.
+
+
+\vskip 8.5pt \noindent \emph{Keywords}: Two-stage polytomous model; Susceptibility variants; Cancer subtypes; EM
+algorithm; Score tests; Etiologic heterogeneity. \par
+
+    \hbox{\vrule height .2pt width 39.14pc}
+
+
+
+\end{abstract}
+
+
+\vskip 6.5pt
+
+
+\noindent  \section{Overview}\label{overview}
+
+This vegnette provides an introduction to the `TOP' package. To load the
+package, users need to install package from CRAN and TOP from github.
+The package can be loaded with the following command:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# install.packages("devtools")}
+\KeywordTok{library}\NormalTok{(devtools)  }
+\CommentTok{#install_github("andrewhaoyu/TOP")}
+\KeywordTok{library}\NormalTok{(TOP)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Two-stage polytomous model}\label{two-stage-polytomous-model}
+
+In this vegnette, we will decomstrate the methods with a breast cancer
+example. There are around 5,112 cases and 4,888 controls in the dataset.
+Four different tumor characteristics were included: ER (positive vs
+negative), PR (positive vs negative), HER2 (positive vs negative), grade
+(ordinal 0, 1, 2).
+
+For simplicity, we will first demonstrate the two-stage model with three
+binary tumor characteristics (ER, PR, and HER2). These three tumor
+characteristics could define 8 different breast cancer subtypes
+(8=2x2x2). We included two covariates, one is a SNP that we are
+interested. The second one is the first principal component (PC1). Let
+\(D_{i}\) denote the disease status, taking values in
+\(\{0,1,2,\cdots,8\}\), of the \(i\)th (\(i \in 1, \cdots, 10,000\))
+subject in the study. \(D_{i}=0\) represents a control, and \(D_{i}=m\)
+represent a subject with disease of subtype \(m\). Let \(G_i\) be the
+genotype for \(i\)th subject and \(X_i\) be the PC1 for the \(i\)th
+subject. In the first-stage model, we use the standard ``saturated''
+polytomous logistic regression model
+\[ Pr(D_{i}=m|G_i,X_{i})=\frac{\exp(\beta_m G_i+\eta_m X_i)}{1+\sum_{m=1}^{8}\exp(\beta_m G_i+\eta_{m}X_{i})}\]
+where \(\beta_{m}\) and \(\eta_{m}\) is the regression coefficients for
+the SNP and PC1 for association with the \(m\)th subtype.
+
+Because each cancer subtype \(m\) is defined through a unique
+combination of the 4 characteristics, we can always alternatively index
+the parameters \(\beta_m\) as \(\beta_{s_1s_2s_3}\), where
+\(s_1,s_2,s_3\in\{0,1\}\) for the three binary tumor characteristics.
+Originally \(\beta_1\) could be the coefficient of cancer subtype
+ER-PR-HER2-. With the new index, \(\beta_1\) could be written as
+\(\beta_{000}\), which means the ER, PR, HER2 are all negative. With
+this new index, we can represent the log odds ratio as
+\[\beta_{s_{1}s_{2}s_{3}}=\theta^{(0)}+\theta_{1}^{(1)}s_{1}+\theta_{2}^{(1)}s_{2}+\theta_{3}^{(1)}s_{3}+\theta_{12}^{(2)}s_{1}s_{2}+\theta_{13}^{(2)}s_{1}s_{3}+\theta_{23}^{(2)}s_{2}s_{3}
++\theta_{123}^{(3)}(s_{1}s_{2}s_{3}).\] Here \(\theta^{(0)}\) represents
+the standard case-control log odds ratio for a reference disease subtype
+compared to the control and \(\theta_{k}^{(1)}\) represents a case-case
+log odds ratio associated with the levels of \(k\)th tumor
+characteristics after adjusting for other tumor characteristics, and
+\(\theta_{k_1k_2}^{(2)}\) represent case-case log odds ratios associated
+with pairwise interactions among the tumor characteristics and so on.
+This decomposition is equivalent with the first stage model. Since both
+the first stage and second stage have 8 parameters. We called this
+saturated model. The users could construct different two-stage model by
+assuming different second stage parameters to be 0. For example, the
+baseline only model: \[\beta_{s_{1}s_{2}s_{3}}=\theta^{(0)}.\] This
+model assumes all of the subtypes have the same log odds ratio. So it is
+equivalent to the standard logistic regression. We can also construct
+the additive two-stage model by assuming all of the second stage
+interactions parameters are 0, then the second stage decomposition
+becomes,
+\[\beta_{s_{1}s_{2}s_{3}}=\theta^{(0)}+\theta_{1}^{(1)}s_{1}+\theta_{2}^{(1)}s_{2}+\theta_{3}^{(1)}s_{3}\]
+Furthermore, we could construct the pairwise interaction two-stage model
+by assuming all of the second stage higher order interactions parameters
+are 0, then the second stage decomposition becomes,
+\[\beta_{s_{1}s_{2}s_{3}}=\theta^{(0)}+\theta_{1}^{(1)}s_{1}+\theta_{2}^{(1)}s_{2}+\theta_{3}^{(1)}s_{3}+\theta_{12}^{(2)}s_{1}s_{2}+\theta_{13}^{(2)}s_{1}s_{3}+\theta_{23}^{(2)}s_{2}s_{3}\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(TOP)}
+\CommentTok{#load in the breast cancer example}
+\KeywordTok{data}\NormalTok{(data, }\DataTypeTok{package=}\StringTok{"TOP"}\NormalTok{)}
+\CommentTok{#this is a simulated breast cancer example}
+\CommentTok{#there are around 5000 breast cancer cases and 5000 controls disease}
+\NormalTok{data[}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{,]}
+\CommentTok{#four different tumor characteristics were included, }
+\CommentTok{#ER (positive vs negative), }
+\CommentTok{#PR (positive vs negative),}
+\CommentTok{#HER2 (positive vs negative)}
+\CommentTok{#the phenotype file}
+\NormalTok{y <-}\StringTok{ }\NormalTok{data[,}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{]}
+\CommentTok{#one SNP}
+\CommentTok{#one Principal components (PC1) are the covariates}
+\NormalTok{SNP <-}\StringTok{ }\NormalTok{data[,}\DecValTok{6}\NormalTok{,drop=F]}
+\NormalTok{PC1 <-}\StringTok{ }\NormalTok{data[,}\DecValTok{7}\NormalTok{,drop=F]}
+\CommentTok{#fit the additive two-stage model}
+\NormalTok{model.}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{TwoStageModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}\DataTypeTok{additive=}\KeywordTok{cbind}\NormalTok{(SNP,PC1),}
+                         \DataTypeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#the model result is a list}
+\CommentTok{#model.1[[4]] are the second stage odds ratio (95% CI) }
+\CommentTok{#and p-value, the baseline effect is the case-control }
+\CommentTok{#odds ratio of the reference subtype (ER-,PR-,HER2-,grade0). }
+\CommentTok{#The main effect are the case-case odds ratio of the tumor characteristics.}
+\NormalTok{(model.}\DecValTok{1}\NormalTok{[[}\DecValTok{4}\NormalTok{]])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Covariate SecondStageEffect OddsRatio OddsRatio(95%CI low)
+## 1       SNP   baseline effect      0.97                 0.84
+## 2       SNP    ER main effect      0.98                 0.87
+## 3       SNP    PR main effect      1.06                 0.93
+## 4       SNP  HER2 main effect      1.15                 0.99
+## 5       PC1   baseline effect      1.13                 1.03
+## 6       PC1    ER main effect      1.01                 0.93
+## 7       PC1    PR main effect      0.95                 0.88
+## 8       PC1  HER2 main effect      0.94                 0.86
+##   OddsRatio(95%CI high)  Pvalue
+## 1                  1.13 0.69200
+## 2                  1.11 0.76700
+## 3                  1.20 0.37000
+## 4                  1.33 0.06380
+## 5                  1.24 0.00755
+## 6                  1.08 0.87100
+## 7                  1.03 0.21500
+## 8                  1.03 0.17700
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#model.1[[5]] are the global association test and }
+\CommentTok{#global heterogeneity test result of the covariates.}
+\NormalTok{model.}\DecValTok{1}\NormalTok{[[}\DecValTok{5}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Covariate Global test for association Global test for heterogeneity
+## 1       SNP                     0.10100                         0.248
+## 2       PC1                     0.00921                         0.466
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#model.1[[7]] are the case-control odds ratios }
+\CommentTok{#for all of the subtypes.}
+\KeywordTok{head}\NormalTok{(model.}\DecValTok{1}\NormalTok{[[}\DecValTok{7}\NormalTok{]])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Covariate    Subtypes OddsRatio OddsRatio(95%CI low)
+## 1       SNP ER0PR0HER20      0.97                 0.84
+## 2       PC1 ER0PR0HER20      1.13                 1.03
+## 3       SNP ER1PR0HER20      0.95                 0.81
+## 4       PC1 ER1PR0HER20      1.14                 1.03
+## 5       SNP ER0PR1HER20      1.03                 0.94
+## 6       PC1 ER0PR1HER20      1.08                 1.02
+##   OddsRatio(95%CI high)  Pvalue
+## 1                  1.13 0.69200
+## 2                  1.24 0.00755
+## 3                  1.12 0.55900
+## 4                  1.26 0.01010
+## 5                  1.12 0.52700
+## 6                  1.14 0.00623
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#instead of additive model, you can also try }
+\CommentTok{#different combinations. For example, for the PC1,}
+\CommentTok{#we use the additive model, but for SNP,}
+\CommentTok{#we use the baseline only model.}
+\NormalTok{model.}\DecValTok{2}\NormalTok{ <-}\StringTok{ }\KeywordTok{TwoStageModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}\DataTypeTok{baselineonly =}\NormalTok{ SNP,}
+                         \DataTypeTok{additive=}\NormalTok{PC1,}
+                         \DataTypeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The results of the function contain three elements: 1. p.dir is the
+p-value of likelihood ratio test based on emprical distrition. 2. p.aud
+is the p-value by approximating the null distribution as a mixture of a
+point mass at zero with probability b and weighted chi square
+distribution with d degrees of freedom with probality of 1-b. 3. LR is
+the likelihood ratio test statistics.
+
+\section{References}\label{references}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  N. Zhao, H. Zhang, J. Clark, A. Maity, M. Wu. Composite Kernel Machine
+  Regression based on Likelihood Ratio Test with Application for
+  Combined Genetic and Gene-environment Interaction Effect (Submitted)
+\end{enumerate}
+
+
+
+
+\newpage
+\singlespacing 
+\end{document}

@@ -2,15 +2,49 @@
 % Please edit documentation in R/ScoreTestSupportMixedModel.R
 \name{ScoreTestSupportMixedModel}
 \alias{ScoreTestSupportMixedModel}
-\title{Title}
+\title{Generate the support list for score test
+To construct a score test, we need to first fit the model under the null hypothesis. This function fitts the model under the null hypothesis, then saved all the necessary results into a list to pass to the score test function.}
 \usage{
 ScoreTestSupportMixedModel(y, baselineonly = NULL, additive = NULL,
   pairwise.interaction = NULL, saturated = NULL,
   missingTumorIndicator = 888, delta0 = NULL)
 }
 \arguments{
-\item{missingTumorIndicator}{}
+\item{y}{the phenotype file. The first column is the case control disease status. The other columns are the tumor characteristics status}
+
+\item{baselineonly}{the covariates to be adjusted used baseline effect only model. This assumes the odds ratio of the covariates for all the subtpes to be the same.}
+
+\item{additive}{the covariates to be adjusted used the additive two-stage model}
+
+\item{pairwise.interaction}{the covariates to be adjusted used the pairwise interaction two-stage model}
+
+\item{saturated}{the covariates to be adjusted used the saturated two-stage model. This model assumes every subtype has their specific odds ratio. It's equivalent to the polytmous model.}
+
+\item{missingTumorIndicator}{The indicators to show the tumor characteristics are missing. In the example, we put missing tumor characteristics as 888. Note, for all the controls subjects, they don't have tumor characteristics. So their tumor characteristics are put as NA instead of 888 to differentiate with cases missing tumor characteristics.}
+}
+\value{
+return a list for score test function
 }
 \description{
-Title
+Generate the support list for score test
+To construct a score test, we need to first fit the model under the null hypothesis. This function fitts the model under the null hypothesis, then saved all the necessary results into a list to pass to the score test function.
+}
+\examples{
+data(data, package="TOP") #load in the breast cancer example
+#this is a simulated breast cancer example
+#there are around 5000 breast cancer cases and 5000 controls, i.e. people without disease
+data[1:5,]
+
+#four different tumor characteristics were included, ER (positive vs negative), PR (positive vs negative), HER2 (positive vs negative), grade (ordinal 1, 2, 3)
+#the phenotype file
+y <- data[,1:5]
+
+#one SNP and one Principal components (PC1) are the covariates
+SNP <- data[,6,drop=F]
+PC1 <- data[,7,drop=F]
+
+#fit the additive two-stage model under the null hypothesis that the second stage parameters of SNP is 0
+score.support <- ScoreTestSupportMixedModel(y=y,
+               additive=PC1,
+               missingTumorIndicato#'r=888)
 }

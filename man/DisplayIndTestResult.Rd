@@ -2,13 +2,18 @@
 % Please edit documentation in R/display_95CI_p.R
 \name{DisplayIndTestResult}
 \alias{DisplayIndTestResult}
-\title{Title}
+\title{Calculate the individual test p value}
 \usage{
 DisplayIndTestResult(logodds, sigma, places = 5)
 }
 \arguments{
-\item{places}{}
+\item{logodds}{the log odds ratio vector}
+
+\item{sigma}{the covariance matrix of the log odds ratio}
+
+\item{places}{the numerical places to keep}
 }
 \description{
-Title
+Calculate the individual test p value
 }
+\keyword{internal}

@@ -2,13 +2,20 @@
 % Please edit documentation in R/display_95CI_p.R
 \name{DisplaySecondStageTestResult}
 \alias{DisplaySecondStageTestResult}
-\title{Title}
+\title{DisplaySecondStageTestResult}
 \usage{
 DisplaySecondStageTestResult(logodds, sigma, self.design = F, places = 5)
 }
 \arguments{
-\item{places}{}
+\item{logodds}{the log odds ratio vector}
+
+\item{sigma}{the covariance matrix of the log odds ratio vector}
+
+\item{self.design}{self design matrix}
+
+\item{places}{numerical places to keep}
 }
 \description{
-Title
+DisplaySecondStageTestResult
 }
+\keyword{internal}

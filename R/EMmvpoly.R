@@ -1,12 +1,24 @@
-#' Title
+#' Generate the combinations of all the tumor characteristics.
 #'
-#' @param y
-#' @param missingTumorIndicator
+#' @param y the phenotype file. The first column is the case control disease status. The other columns are the tumor characteristics status
+#' @param missingTumorIndicator The indicators to show the tumor characteristics are missing. In the example, we put missing tumor characteristics as 888. Note, for all the controls subjects, they don't have tumor characteristics. So their tumor characteristics are put as NA instead of 888 to differentiate with cases missing tumor characteristics.
 #'
-#' @return
+#' @return a matrix with all the combinations of tumor characteristics. All the subtypes with less than 10 are removed by default.
 #' @export
 #'
 #' @examples
+#' data(data, package="TOP") #load in the breast cancer example
+#'#this is a simulated breast cancer example
+#'#there are around 5000 breast cancer cases and 5000 controls, i.e. people without disease
+#' data[1:5,]
+
+#'#four different tumor characteristics were included, ER (positive vs negative), PR (positive vs negative), HER2 (positive vs negative), grade (ordinal 1, 2, 3)
+#'#the phenotype file
+#'y <- data[,1:5]
+#'#generate the combinations of all the subtypes
+#'#by default, we remove all the subtypes with less than 10 cases
+#'z.standard <- GenerateZstandard(y)
+
 GenerateZstandard <- function(y,
                               missingTumorIndicator = 888){
   if(is.null(missingTumorIndicator)){
@@ -64,20 +76,18 @@ GenerateZstandard <- function(y,
   }
 
 }
-#' Title
+#' Two-stage model MLE estimation with EM algorithm
 #'
-#' @param y
-#' @param baselineonly
-#' @param additive
-#' @param pairwise.interaction
-#' @param saturated
-#' @param missingTumorIndicator
-#' @param delta0
+#' @param y the phenotype file. The first column is the case control disease status. The other columns are the tumor characteristics status
+#' @param baselineonly the covariates to be adjusted used baseline effect only model. This assumes the odds ratio of the covariates for all the subtpes to be the same. 
+#' @param additive the covariates to be adjusted used the additive two-stage model
+#' @param pairwise.interaction the covariates to be adjusted used the pairwise interaction two-stage model
+#' @param saturated the covariates to be adjusted used the saturated two-stage model. This model assumes every subtype has their specific odds ratio. It's equivalent to the polytmous model. 
+#' @param missingTumorIndicator The indicators to show the tumor characteristics are missing. In the example, we put missing tumor characteristics as 888. Note, for all the controls subjects, they don't have tumor characteristics. So their tumor characteristics are put as NA instead of 888 to differentiate with cases missing tumor characteristics.
+#' @param delta0 the starting value for the second stage parameters. By defualt, we will use the empirical distribution of the subtypes.
 #'
-#' @return
-#' @export
+#' @keywords internal
 #'
-#' @examples
 EMmvpoly <- function(y,
                           baselineonly=NULL,
                           additive=NULL,

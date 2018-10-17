@@ -1,0 +1,154 @@
+---
+output: 
+  pdf_document:
+    citation_package: natbib
+    keep_tex: true
+    fig_caption: true
+    latex_engine: pdflatex
+    template: /Users/haoyuzhang/GoogleDrive/TOP_develop/inst/svm.tex
+title: "Two-stage polytmous logistic regression tutorial"
+#thanks: "Replication files are available on the author's Github account..."
+author:
+- name: Haoyu Zhang
+  affiliation: Department of Biostatistics, Johns Hopkins University, Baltimore, MD, U.S.A.
+- name: Ni Zhao
+  affiliation: Department of Biostatistics, Johns Hopkins University, Baltimore, MD, U.S.A.
+- name: Thomas U. Ahearn
+  affiliation: National Cancer Institute, Division of Cancer Epidemiology and Genetics, Rockville, MD, U.S.A.
+- name: Montserrat García-Closas
+  affiliation: National Cancer Institute, Division of Cancer Epidemiology and Genetics, Rockville, MD, U.S.A. 
+- name: William Wheeler
+  affiliation: Information Management Services, Inc., Rockville, MD, U.S.A
+- name: Nilanjan Chatterjee
+  affiliation: Department of Biostatistics, Johns Hopkins University, Baltimore, MD, USA
+
+abstract: "	Cancers are routinely classified into subtypes according to various features, including histo pathological characteristics and molecular markers. Genomic investigations have reported heterogeneous association between loci and cancer subtypes. However, it is not evident what is the optimal modeling strategy for handling correlated tumor features, missing data, and increased degrees-of-freedom in the underlying tests of associations. In this tutorial, we proposed a two-stage polytomous regression framework to handle cancer data with multivariate tumor characteristics. In the first stage, a standard polytomous model is used to specify for all subtypes defined by the cross-classification of different markers. In the second stage, the subtype-specific case-control odds ratios are specified using a more parsimonious model based on the case-control odds ratio for a baseline subtype, and the case-case parameters associated with tumor markers. Further, to reduce the degrees-of-freedom, we allow to specify case-case parameters for additional markers using a random-effect model. We use the EM algorithm to account for missing data on tumor markers. The score-test distribution theory is developed by borrowing analogous techniques from group-based association tests. Through simulations across a range of realistic scenarios, we show the proposed methods outperforms alternative methods for identifying heterogenous associations between risk loci and tumor subtypes."
+keywords: "Two-stage polytomous model; Susceptibility variants; Cancer subtypes; EM algorithm; Score tests; Etiologic heterogeneity."
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+geometry: margin=1in
+fontfamily: mathpazo
+fontsize: 11pt
+# spacing: double
+#bibliography: ~/Dropbox/master.bib
+#biblio-style: apsr
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Overview
+This vegnette provides an introduction to the 'TOP' package. To load the package, users need to install package from CRAN and TOP from github. The package can be loaded with the following command:
+```{r, include=T}
+# install.packages("devtools")
+library(devtools)  
+#install_github("andrewhaoyu/TOP")
+library(TOP)
+```
+
+# Two-stage polytomous model
+In this vegnette, we will decomstrate the methods with a breast cancer example. There are around 5,112 cases and 4,888 controls in the dataset. Four different tumor characteristics were included: ER (positive vs negative), PR (positive vs negative), HER2 (positive vs negative), grade (ordinal 0, 1, 2). 
+
+For simplicity, we will first demonstrate the two-stage model with three binary tumor characteristics (ER, PR, and HER2). These three tumor characteristics could define 8 different breast cancer subtypes (8=2x2x2). We included two covariates, one is a SNP that we are interested. The second one is the first principal component (PC1). 
+Let $D_{i}$ denote the disease status, taking values in $\{0,1,2,\cdots,8\}$, of the $i$th ($i \in 1, \cdots, 10,000$) subject in the study. $D_{i}=0$ represents a control, and $D_{i}=m$ represent a subject with disease of 
+subtype $m$. Let $G_i$ be the genotype for $i$th subject  and $X_i$ be the PC1 for the $i$th subject.
+In the first-stage model, we use the standard ``saturated'' polytomous logistic regression model
+$$ Pr(D_{i}=m|G_i,X_{i})=\frac{\exp(\beta_m G_i+\eta_m X_i)}{1+\sum_{m=1}^{8}\exp(\beta_m G_i+\eta_{m}X_{i})}$$
+where $\beta_{m}$ and $\eta_{m}$ is the regression coefficients for the SNP and PC1 for association with the $m$th subtype. 
+
+Because each cancer subtype $m$ is defined through a unique combination of the 4 characteristics, we can always
+alternatively index the parameters $\beta_m$ as $\beta_{s_1s_2s_3}$, where 
+$s_1,s_2,s_3\in\{0,1\}$ for the three binary tumor characteristics. Originally $\beta_1$ could be the coefficient of cancer subtype ER-PR-HER2-. With the new index, $\beta_1$ could be written as $\beta_{000}$, which means the ER, PR, HER2 are all negative. With this new index, we can represent the log odds ratio as
+$$\beta_{s_{1}s_{2}s_{3}}=\theta^{(0)}+\theta_{1}^{(1)}s_{1}+\theta_{2}^{(1)}s_{2}+\theta_{3}^{(1)}s_{3}+\theta_{12}^{(2)}s_{1}s_{2}+\theta_{13}^{(2)}s_{1}s_{3}+\theta_{23}^{(2)}s_{2}s_{3}
++\theta_{123}^{(3)}(s_{1}s_{2}s_{3}).$$
+Here $\theta^{(0)}$ represents the standard case-control log odds ratio for a reference disease subtype compared to the control and $\theta_{k}^{(1)}$ represents a case-case log odds ratio associated with the levels of $k$th tumor characteristics after
+adjusting for other tumor characteristics, and $\theta_{k_1k_2}^{(2)}$
+represent case-case log odds ratios associated with pairwise interactions
+among the tumor characteristics and so on. 
+This decomposition is equivalent with the first stage model. Since both the first stage and second stage have 8 parameters. We called this saturated model. The users could construct different two-stage model by assuming different second stage parameters to be 0. For example, the baseline only model:
+$$\beta_{s_{1}s_{2}s_{3}}=\theta^{(0)}.$$
+This model assumes all of the subtypes have the same log odds ratio. So it is equivalent to the standard logistic regression. 
+We can also construct the additive two-stage model by assuming all of the second stage interactions parameters are 0, then the second stage decomposition becomes,
+$$\beta_{s_{1}s_{2}s_{3}}=\theta^{(0)}+\theta_{1}^{(1)}s_{1}+\theta_{2}^{(1)}s_{2}+\theta_{3}^{(1)}s_{3}$$
+Furthermore, we could construct the pairwise interaction two-stage model by assuming all of the second stage higher order interactions parameters are 0, then the second stage decomposition becomes,
+$$\beta_{s_{1}s_{2}s_{3}}=\theta^{(0)}+\theta_{1}^{(1)}s_{1}+\theta_{2}^{(1)}s_{2}+\theta_{3}^{(1)}s_{3}+\theta_{12}^{(2)}s_{1}s_{2}+\theta_{13}^{(2)}s_{1}s_{3}+\theta_{23}^{(2)}s_{2}s_{3}$$
+```{r, echo=T, results='hide',cache=T}
+library(TOP)
+#load in the breast cancer example
+data(data, package="TOP")
+#this is a simulated breast cancer example
+#there are around 5000 breast cancer cases and 5000 controls disease
+data[1:5,]
+#four different tumor characteristics were included, 
+#ER (positive vs negative), 
+#PR (positive vs negative),
+#HER2 (positive vs negative)
+#the phenotype file
+y <- data[,1:4]
+#one SNP
+#one Principal components (PC1) are the covariates
+SNP <- data[,6,drop=F]
+PC1 <- data[,7,drop=F]
+#fit the additive two-stage model
+model.1 <- TwoStageModel(y=y,additive=cbind(SNP,PC1),
+                         missingTumorIndicator = 888)
+```
+
+
+```{r, echo=T,cache=T}
+#the model result is a list
+#model.1[[4]] are the second stage odds ratio (95% CI) 
+#and p-value, the baseline effect is the case-control 
+#odds ratio of the reference subtype (ER-,PR-,HER2-,grade0). 
+#The main effect are the case-case odds ratio of the tumor characteristics.
+(model.1[[4]])
+
+#model.1[[5]] are the global association test and 
+#global heterogeneity test result of the covariates.
+model.1[[5]]
+#model.1[[7]] are the case-control odds ratios 
+#for all of the subtypes.
+head(model.1[[7]])
+```
+
+```{r, echo=T, results='hide',cache=T}
+#instead of additive model, you can also try 
+#different combinations. For example, for the PC1,
+#we use the additive model, but for SNP,
+#we use the baseline only model.
+model.2 <- TwoStageModel(y=y,baselineonly = SNP,
+                         additive=PC1,
+                         missingTumorIndicator = 888)
+
+```
+The result is a list containing 9 elements. 1. the second stage parameters 2. the covariance matrix for the second stage parameters. 3. the second stage parameters organzied for each covariate. 4. The case-control odds ratio and case-case odds ratios of tumor characteristics. 5. Global association test and global heterogeneity test result (Wald test based) 6. The first stage parameter organized for each covariate 7. First stage odds ratio of all the subtypes. 8. Likelihood 9. AIC
+
+
+# Two-stage polytomous model self design second stage
+Instead of using the hierarchical second stage decomposition we discussed in last section, the two-stage model also allows the user to self design the second stage matrix. For example, we could define five intrinsic breast cancer subtypes based on the four tumor characteristics: ER, PR, HER2, grade. The five intrinsic subtypes are: 1. (ER or PR)+, HER2-, grade 1 or 2; 2. (ER or PR)+, HER2+; 3. (ER or PR)+, HER2-, grade 3; 4. (ER & PR)-, HER2-; 5. ER-PR-HER2-. We are interested in estimating the case-control log odds ratios of these intrinsic subtypes. 
+```{r, echo=T, results='hide',cache=T}
+library(TOP)
+#load in the breast cancer example
+data(data, package="TOP")
+#this is a simulated breast cancer example
+#there are around 5000 breast cancer cases and 5000 controls disease
+data[1:5,]
+#four different tumor characteristics were included, 
+#ER (positive vs negative), 
+#PR (positive vs negative),
+#HER2 (positive vs negative)
+#grade (oridinal 1,2,3)
+#the phenotype file
+y <- data[,1:5]
+
+```
+
+
+
+
+
+
+
+
+# References
+1. N. Zhao, H. Zhang, J. Clark, A. Maity, M. Wu. Composite Kernel Machine Regression based on Likelihood Ratio Test with Application for Combined Genetic and Gene-environment Interaction Effect (Submitted)
+

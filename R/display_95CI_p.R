@@ -3,17 +3,15 @@
 
 
 
-#' Title
+#' DisplaySecondStageTestResult
 #'
-#' @param logodds
-#' @param sigma
-#' @param self.design
-#' @param places
+#' @param logodds the log odds ratio vector
+#' @param sigma the covariance matrix of the log odds ratio vector
+#' @param self.design self design matrix
+#' @param places numerical places to keep
 #'
-#' @return
-#' @export
+#' @keywords internal
 #'
-#' @examples
 DisplaySecondStageTestResult = function(logodds,sigma,self.design=F,
                                         places= 5){
   var.logodds <- diag(sigma)
@@ -45,16 +43,14 @@ DisplaySecondStageTestResult = function(logodds,sigma,self.design=F,
 
 
 
-#' Title
+#' Display the first stage parameters
 #'
-#' @param logodds
-#' @param sigma
-#' @param places
+#' @param logodds the log odds ratio vectors
+#' @param sigma the covariance matrix for the log odds ratio vectors
+#' @param places the numerical places to keep
 #'
-#' @return
-#' @export
+#' @keywords internal
 #'
-#' @examples
 DisplayFirstStageTestResult = function(logodds,sigma,
                                        places = 5){
   var.logodds <- diag(sigma)
@@ -85,16 +81,16 @@ DisplayFirstStageTestResult = function(logodds,sigma,
 
 
 
-#' Title
+#' Calcualte the fixed effect score test p value based on score and information matrix
 #'
-#' @param score
-#' @param infor
-#' @param places
+#' @param score the score vector
+#' @param infor the information matrix for the score
+#' @param places the numerical places to keep
 #'
-#' @return
-#' @export
+
+#' @keywords internal
 #'
-#' @examples
+
 DisplayFixedScoreTestResult <- function(score,infor,
                                         places=5){
   p.value.GTA <- ScoreGlobalTestForAssoc(score,infor)
@@ -102,38 +98,34 @@ DisplayFixedScoreTestResult <- function(score,infor,
   return(p.value.GTA)
 }
 
-#' Title
+#' Calculate the mixed effect model p value based on score and information matrix
 #'
-#' @param score.baseline
-#' @param infor.baseline
-#' @param score.casecase
-#' @param infor.casecase
+#' @param score.fix fixed effect score
+#' @param infor.fix fixed effect information matrix
+#' @param score.random random effect score
+#' @param infor.random random effect information matrix
 #'
-#' @return
-#' @export
+#' @keywords internal
 #'
-#' @examples
-DisplayMixedScoreTestResult <- function(score.baseline,infor.baseline,score.casecase,infor.casecase){
-  p.value.GTH.mixed <- ScoreMixedGlobalTestForHeter(score.casecase,infor.casecase)
+DisplayMixedScoreTestResult <- function(score.fix,infor.fix,score.random,infor.random){
+  p.value.GTH.mixed <- ScoreMixedGlobalTestForHeter(score.random,infor.random)
   p.value.GTA.mixed <- ScoreMixedGlobalTestForAssoc(p.value.GTH.mixed,
-                                                    score.baseline,
-                                                    infor.baseline)
+                                                    score.fix,
+                                                    infor.fix)
   result <- c(p.value.GTA.mixed,p.value.GTH.mixed)
   return(result)
 }
 
 
 
-#' Title
+#' Calculate the individual test p value
 #'
-#' @param logodds
-#' @param sigma
-#' @param places
+#' @param logodds the log odds ratio vector
+#' @param sigma the covariance matrix of the log odds ratio
+#' @param places the numerical places to keep
 #'
-#' @return
-#' @export
+#' @keywords internal
 #'
-#' @examples
 DisplayIndTestResult = function(logodds,sigma,
                                 places=5){
   var.logodds <- diag(sigma)
