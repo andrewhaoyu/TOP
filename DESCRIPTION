@@ -1,7 +1,7 @@
 Package: TOP
 Type: Package
 Title: Two-stage Polytomous Logistic regression
-Version: 0.1.2
+Version: 1.0.2
 Author: Haoyu Zhang [aut,cre], William Wheeler [aut]
 Maintainer: Haoyu Zhang <andrew.haoyu@gmail.com>
 Description: This package implement the two-stage polytomous model to handle data with multivariate disease characteristics.
