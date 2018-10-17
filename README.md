@@ -5,7 +5,7 @@ Two-stage polytomous logistic regression (TOP): in this package, we developed a 
 Usage
 =======
 
-[The 'TOP' vignette](https://github.com/andrewhaoyu/CKLRT/blob/master/inst/CKLRT_package.pdf) will provide a good start point for using TOP package.
+[The 'TOP' vignette](https://github.com/andrewhaoyu/TOP/blob/master/inst/TOP.pdf) will provide a good start point for using TOP package.
 
 
 Development 
