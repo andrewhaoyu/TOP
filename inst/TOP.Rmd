@@ -15,10 +15,10 @@ author:
   affiliation: Department of Biostatistics, Johns Hopkins University, Baltimore, MD, U.S.A.
 - name: Thomas U. Ahearn
   affiliation: National Cancer Institute, Division of Cancer Epidemiology and Genetics, Rockville, MD, U.S.A.
-- name: Montserrat García-Closas
-  affiliation: National Cancer Institute, Division of Cancer Epidemiology and Genetics, Rockville, MD, U.S.A. 
 - name: William Wheeler
   affiliation: Information Management Services, Inc., Rockville, MD, U.S.A
+- name: Montserrat García-Closas
+  affiliation: National Cancer Institute, Division of Cancer Epidemiology and Genetics, Rockville, MD, U.S.A. 
 - name: Nilanjan Chatterjee
   affiliation: Department of Biostatistics, Johns Hopkins University, Baltimore, MD, USA
 
