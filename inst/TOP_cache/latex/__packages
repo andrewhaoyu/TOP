@@ -1,9 +1,3 @@
 base
 devtools
-CKLRT
-nlme
-mgcv
-MASS
-Rcpp
-RcppEigen
 TOP

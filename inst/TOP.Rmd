@@ -5,7 +5,7 @@ output:
     keep_tex: true
     fig_caption: true
     latex_engine: pdflatex
-    template: /Users/haoyuzhang/GoogleDrive/TOP_develop/inst/svm.tex
+    template: /Users/zhangh24/GoogleDrive/TOP_develop/inst/svm.tex
 title: "Two-stage polytmous logistic regression tutorial"
 #thanks: "Replication files are available on the author's Github account..."
 author:
@@ -53,18 +53,16 @@ Let $D_{i}$ denote the disease status, taking values in $\{0,1,2,\cdots,8\}$, of
 subtype $m$. Let $G_i$ be the genotype for $i$th subject  and $X_i$ be the PC1 for the $i$th subject.
 In the first-stage model, we use the standard ``saturated'' polytomous logistic regression model
 $$ Pr(D_{i}=m|G_i,X_{i})=\frac{\exp(\beta_m G_i+\eta_m X_i)}{1+\sum_{m=1}^{8}\exp(\beta_m G_i+\eta_{m}X_{i})}$$
-where $\beta_{m}$ and $\eta_{m}$ is the regression coefficients for the SNP and PC1 for association with the $m$th subtype. 
+where $\beta_{m}$ and $\eta_{m}$ are the regression coefficients for the SNP and PC1 for association with the $m$th subtype. 
 
-Because each cancer subtype $m$ is defined through a unique combination of the 4 characteristics, we can always
+Because each cancer subtype $m$ is defined through a unique combination of the 3 characteristics, we can always
 alternatively index the parameters $\beta_m$ as $\beta_{s_1s_2s_3}$, where 
 $s_1,s_2,s_3\in\{0,1\}$ for the three binary tumor characteristics. Originally $\beta_1$ could be the coefficient of cancer subtype ER-PR-HER2-. With the new index, $\beta_1$ could be written as $\beta_{000}$, which means the ER, PR, HER2 are all negative. With this new index, we can represent the log odds ratio as
 $$\beta_{s_{1}s_{2}s_{3}}=\theta^{(0)}+\theta_{1}^{(1)}s_{1}+\theta_{2}^{(1)}s_{2}+\theta_{3}^{(1)}s_{3}+\theta_{12}^{(2)}s_{1}s_{2}+\theta_{13}^{(2)}s_{1}s_{3}+\theta_{23}^{(2)}s_{2}s_{3}
 +\theta_{123}^{(3)}(s_{1}s_{2}s_{3}).$$
-Here $\theta^{(0)}$ represents the standard case-control log odds ratio for a reference disease subtype compared to the control and $\theta_{k}^{(1)}$ represents a case-case log odds ratio associated with the levels of $k$th tumor characteristics after
-adjusting for other tumor characteristics, and $\theta_{k_1k_2}^{(2)}$
-represent case-case log odds ratios associated with pairwise interactions
-among the tumor characteristics and so on. 
-This decomposition is equivalent with the first stage model. Since both the first stage and second stage have 8 parameters. We called this saturated model. The users could construct different two-stage model by assuming different second stage parameters to be 0. For example, the baseline only model:
+Here $\theta^{(0)}$ represents the standard case-control log odds ratio for a reference disease subtype compared to the control. $\theta_{k}^{(1)}$ represents a case-case log odds ratio associated with the levels of $k$th tumor characteristics after
+adjusting for other tumor characteristics. We also refer $\theta_{k}^{(1)}$ as the main effect of the $k$th tumor characteristic. And $\theta_{k_1k_2}^{(2)}$
+represents how the case-case log odds ratio associated $k_1$th tumor characteristic is modified by the levels of the $k_2$th tumor characteristic and vice versa. We also refer $\theta_{k_1k_2}^{(2)}$ as the pairwise interaction between the $k_1$th and $k_2$th tumor characteristic. And $\theta_{123}^{(3)}$ represent the third order interactions among the three tumor characteristics. This decomposition is equivalent with the first stage model. Since both the first stage and second stage have 8 parameters. We called this saturated model. The users could construct different two-stage model by assuming different second stage parameters to be 0. For example, the baseline only model:
 $$\beta_{s_{1}s_{2}s_{3}}=\theta^{(0)}.$$
 This model assumes all of the subtypes have the same log odds ratio. So it is equivalent to the standard logistic regression. 
 We can also construct the additive two-stage model by assuming all of the second stage interactions parameters are 0, then the second stage decomposition becomes,
