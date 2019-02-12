@@ -476,7 +476,7 @@ intrinsic subtypes.
 \CommentTok{#for first subtype HR+_HER2-_lowgrade}
 \NormalTok{idx.}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{which}\NormalTok{((z.standard[,}\DecValTok{1}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\OperatorTok{|}\NormalTok{z.standard[,}\DecValTok{2}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\NormalTok{)}
                \OperatorTok{&}\NormalTok{z.standard[,}\DecValTok{3}\NormalTok{]}\OperatorTok{==}\DecValTok{0}
-               \OperatorTok{&}\NormalTok{(z.standard[,}\DecValTok{4}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\OperatorTok{|}\NormalTok{z.standard[,}\DecValTok{4}\NormalTok{]}\OperatorTok{==}\DecValTok{2}\NormalTok{))}
+               \OperatorTok{&}\NormalTok{(z.standard[,}\DecValTok{4}\NormalTok{]}\OperatorTok{==}\DecValTok{0}\OperatorTok{|}\NormalTok{z.standard[,}\DecValTok{4}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\NormalTok{))}
 \NormalTok{z.design[idx.}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\DecValTok{1}
 \CommentTok{#for second subtype HR+_HER2+}
 \NormalTok{idx.}\DecValTok{2}\NormalTok{ <-}\StringTok{ }\KeywordTok{which}\NormalTok{((z.standard[,}\DecValTok{1}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\OperatorTok{|}\NormalTok{z.standard[,}\DecValTok{2}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\NormalTok{)}
@@ -485,7 +485,7 @@ intrinsic subtypes.
 \CommentTok{#for third subtype HR+_HER2-_highgrade}
 \NormalTok{idx.}\DecValTok{3}\NormalTok{ <-}\StringTok{ }\KeywordTok{which}\NormalTok{((z.standard[,}\DecValTok{1}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\OperatorTok{|}\NormalTok{z.standard[,}\DecValTok{2}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\NormalTok{)}
                \OperatorTok{&}\NormalTok{z.standard[,}\DecValTok{3}\NormalTok{]}\OperatorTok{==}\DecValTok{0}
-               \OperatorTok{&}\NormalTok{z.standard[,}\DecValTok{4}\NormalTok{]}\OperatorTok{==}\DecValTok{3}\NormalTok{)}
+               \OperatorTok{&}\NormalTok{z.standard[,}\DecValTok{4}\NormalTok{]}\OperatorTok{==}\DecValTok{2}\NormalTok{)}
 \NormalTok{z.design[idx.}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{] <-}\StringTok{ }\DecValTok{1}
 \CommentTok{#for third subtype HR-_HER2+}
 \NormalTok{idx.}\DecValTok{4}\NormalTok{ <-}\StringTok{ }\KeywordTok{which}\NormalTok{(z.standard[,}\DecValTok{1}\NormalTok{]}\OperatorTok{==}\DecValTok{0}\OperatorTok{&}\NormalTok{z.standard[,}\DecValTok{2}\NormalTok{]}\OperatorTok{==}\DecValTok{0}
