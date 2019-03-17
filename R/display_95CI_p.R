@@ -10,7 +10,7 @@
 #' @param self.design self design matrix
 #' @param places numerical places to keep
 #'
-#' @keywords internal
+#' @export
 #'
 DisplaySecondStageTestResult = function(logodds,sigma,self.design=F,
                                         places= 5){
@@ -49,7 +49,7 @@ DisplaySecondStageTestResult = function(logodds,sigma,self.design=F,
 #' @param sigma the covariance matrix for the log odds ratio vectors
 #' @param places the numerical places to keep
 #'
-#' @keywords internal
+#' @export
 #'
 DisplayFirstStageTestResult = function(logodds,sigma,
                                        places = 5){
@@ -88,7 +88,7 @@ DisplayFirstStageTestResult = function(logodds,sigma,
 #' @param places the numerical places to keep
 #'
 
-#' @keywords internal
+#' @export
 #'
 
 DisplayFixedScoreTestResult <- function(score,infor,
@@ -105,7 +105,7 @@ DisplayFixedScoreTestResult <- function(score,infor,
 #' @param score.random random effect score
 #' @param infor.random random effect information matrix
 #'
-#' @keywords internal
+#' @export
 #'
 DisplayMixedScoreTestResult <- function(score.fix,infor.fix,score.random,infor.random){
   p.value.GTH.mixed <- ScoreMixedGlobalTestForHeter(score.random,infor.random)
@@ -124,7 +124,7 @@ DisplayMixedScoreTestResult <- function(score.fix,infor.fix,score.random,infor.r
 #' @param sigma the covariance matrix of the log odds ratio
 #' @param places the numerical places to keep
 #'
-#' @keywords internal
+#' @export
 #'
 DisplayIndTestResult = function(logodds,sigma,
                                 places=5){

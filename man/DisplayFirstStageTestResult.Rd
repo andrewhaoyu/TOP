@@ -16,4 +16,3 @@ DisplayFirstStageTestResult(logodds, sigma, places = 5)
 \description{
 Display the first stage parameters
 }
-\keyword{internal}

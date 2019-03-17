@@ -16,4 +16,3 @@ DisplayIndTestResult(logodds, sigma, places = 5)
 \description{
 Calculate the individual test p value
 }
-\keyword{internal}

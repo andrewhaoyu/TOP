@@ -18,4 +18,3 @@ DisplayMixedScoreTestResult(score.fix, infor.fix, score.random, infor.random)
 \description{
 Calculate the mixed effect model p value based on score and information matrix
 }
-\keyword{internal}

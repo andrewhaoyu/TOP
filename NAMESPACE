@@ -2,6 +2,11 @@
 
 export(CompleteCasesScoreTestSupport)
 export(ComputeLogLikelihood)
+export(DisplayFirstStageTestResult)
+export(DisplayFixedScoreTestResult)
+export(DisplayIndTestResult)
+export(DisplayMixedScoreTestResult)
+export(DisplaySecondStageTestResult)
 export(EMScoreTestSupport)
 export(EMStep)
 export(EMStepScoreTestSupport)

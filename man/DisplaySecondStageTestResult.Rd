@@ -18,4 +18,3 @@ DisplaySecondStageTestResult(logodds, sigma, self.design = F, places = 5)
 \description{
 DisplaySecondStageTestResult
 }
-\keyword{internal}

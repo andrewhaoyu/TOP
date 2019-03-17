@@ -16,4 +16,3 @@ DisplayFixedScoreTestResult(score, infor, places = 5)
 \description{
 Calcualte the fixed effect score test p value based on score and information matrix
 }
-\keyword{internal}
