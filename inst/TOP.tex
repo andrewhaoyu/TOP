@@ -342,6 +342,7 @@ are 0, then the second stage decomposition becomes,
 \CommentTok{#and p-value, the baseline effect is the case-control }
 \CommentTok{#odds ratio of the reference subtype (ER-,PR-,HER2-,grade0). }
 \CommentTok{#The main effect are the case-case odds ratio of the tumor characteristics.}
+\CommentTok{#the p-value is for individual tumor heterogeneity test of each second stage parameter. }
 \NormalTok{(model.}\DecValTok{1}\NormalTok{[[}\DecValTok{4}\NormalTok{]])}
 \end{Highlighting}
 \end{Shaded}
@@ -511,6 +512,7 @@ intrinsic subtypes.
 \begin{Highlighting}[]
 \CommentTok{#model.3[[4]] are the second stage odds ratio (95% CI) }
 \CommentTok{#and p-value of the intrinsic subtypes}
+\CommentTok{#the second stage odds ratios under this model are the case-control odds ratios for the intrinsic subtypes.}
 \NormalTok{(model.}\DecValTok{3}\NormalTok{[[}\DecValTok{4}\NormalTok{]])}
 \end{Highlighting}
 \end{Shaded}
@@ -555,12 +557,12 @@ intrinsic subtypes.
 
 \begin{verbatim}
 ##   Covariate          Subtypes OddsRatio OddsRatio(95%CI low)
-## 1       SNP ER1PR0HER20grade1      1.02                 0.93
-## 2       SNP ER0PR1HER20grade1      1.09                 0.97
-## 3       SNP ER1PR1HER20grade1      1.02                 0.93
-## 4       SNP ER0PR0HER21grade1      1.04                 0.97
-## 5       SNP ER1PR0HER21grade1      1.02                 0.93
-## 6       SNP ER0PR1HER21grade1      1.03                 0.94
+## 1       SNP ER1PR0HER20grade0      1.02                 0.93
+## 2       SNP ER0PR1HER20grade0      1.09                 0.97
+## 3       SNP ER1PR1HER20grade0      1.02                 0.93
+## 4       SNP ER0PR0HER21grade0      1.04                 0.97
+## 5       SNP ER1PR0HER21grade0      1.02                 0.93
+## 6       SNP ER0PR1HER21grade0      1.03                 0.94
 ##   OddsRatio(95%CI high) Pvalue
 ## 1                  1.12  0.710
 ## 2                  1.23  0.150
@@ -579,7 +581,7 @@ that the second stage parameters of SNP is 0. In other words, null of
 the subytpes is associated with the SNP. Second we need should compute
 the score and information matrix for each SNP. Based on the score and
 information matrix, we could construct the score test statistics for
-global association test
+global association test.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -619,6 +621,28 @@ global association test
 \begin{verbatim}
 ## [1] 0.0539
 \end{verbatim}
+
+In general, I don't recommend to do the global heterogeneity test under
+the fixed-effect two-stage model. Since the global heterogeneity test
+requires to estimate the baseline effect of every single SNP, it loses
+the advantage of score test that it only needs to estimate the
+parameters of the other covariates under the null hypothesis for one
+time. Instead, I recommend using Wald test to do the global
+heterogeneity test. It will automatically give you the results of global
+heterogeneity test (model.1{[}{[}4{]}{]}) and individual heterogeneity
+test (model.1{[}{[}5{]}{]}). And the Wald test and score test
+asymptotically have similar power.
+
+The general analysis pipeline is like this: First, we performed the
+global association test for the whole genome. This step is fast since we
+only need to fit the function ScoreTestSupportMixedModel one time under
+the null hypothesis, every single SNP only needs to run the function
+ScoreTestMixedModel. Then we have the potential regions with SNPs
+genome-wide significant associated with the disease. For every SNP in
+these regions, we can fit the function TwoStageModel. This function will
+give you the global heterogeneity test and individual heterogeneity test
+results. Since there are limited number of SNPs in these regions, this
+process won't cost too much time.
 
 \section{Mixed effect two-stage model score test
 (MTOP)}\label{mixed-effect-two-stage-model-score-test-mtop}
@@ -693,9 +717,11 @@ the mixed effect two-stage model.
 \CommentTok{#and random effect score, infor, }
 \CommentTok{#we can combine them through the following function. }
 \CommentTok{#two p value will be generated.}
-\CommentTok{#the first p value for global association test.}
+\CommentTok{#the first p value for null hypothesis that}
+\CommentTok{#both the fixed effect and the variance of the random effects are 0}
+\CommentTok{#under this case, the first p-value is for the global association test.}
 \CommentTok{#the second p value is for the null hypothesis }
-\CommentTok{#that random effect is 0}
+\CommentTok{#that the variance of random effect is 0}
 \CommentTok{#Under this situation, the second p value is NOT }
 \CommentTok{#the global heterogeneity test p value since ER is fixed}
 \NormalTok{p.value.mtop <-}\StringTok{ }\KeywordTok{DisplayMixedScoreTestResult}\NormalTok{(}
@@ -709,7 +735,117 @@ the mixed effect two-stage model.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.09988282 0.14110544
+## [1] 0.09988269 0.14110520
+\end{verbatim}
+
+The second p.value of p.value.mtop is for null hypothesis that the
+random effect is 0. Under this particular situation, the second p.value
+is not for the p-value of global heterogeneity test, since ER is fixed.
+To construct the global heterogeneity test for this setting, we need
+four steps. First, we need to fit the model under the null hypothesis
+that the fixed effect (ER) and variance of the random effects (PR, HER2,
+and grade) is 0. In other words, only the baseline effect can be
+non-zero. Second, we need should compute the score and information
+matrix of fixed effect (ER) for each SNP. Then, we need to fit the model
+under the null that the variance of random effect is 0. Finally, we need
+to compute the score and information matrix of the random effect terms.
+With the score and information of fixed effect and random effect, we
+could construct the global association test for the mixed effect
+two-stage model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#we are going to build a two-stage model with }
+\CommentTok{#baseline parameter and ER case-case parameter as fixed}
+\CommentTok{#We assume the PR, HER2, grade case-case parameter }
+\CommentTok{#to be random.}
+\CommentTok{#fit the two-stage model under the null hypothesis}
+\CommentTok{#that the fixed effect (ER) and }
+\CommentTok{#variance of the random effects (PR, HER2, and grade) is 0.}
+\CommentTok{#the model will have two covariates, }
+\CommentTok{#PC1 and the fixed effect of SNP.}
+\CommentTok{#Generate the z design matrix for fixed effect}
+\NormalTok{z.design.fixed.baseline <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{1}\NormalTok{,}\KeywordTok{nrow}\NormalTok{(z.standard),}\DecValTok{1}\NormalTok{)}
+\CommentTok{#compute the score and information matrix for fixed effect}
+\NormalTok{score.support.fixed <-}\StringTok{ }\KeywordTok{ScoreTestSupportMixedModelSelfDesign}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}
+                        \DataTypeTok{x.self.design  =}\NormalTok{ SNP,}
+                        \DataTypeTok{z.design =}\NormalTok{ z.design.fixed.baseline,}
+                        \DataTypeTok{additive =}\NormalTok{ PC1,}
+                        \DataTypeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "EM Algorithm Converged"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{z.design.ER <-}\StringTok{ }\NormalTok{z.standard[,}\DecValTok{1}\NormalTok{,drop=F]}
+\NormalTok{score.test.fixed <-}\StringTok{ }\KeywordTok{ScoreTestMixedModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}
+                    \DataTypeTok{x=}\NormalTok{SNP,}
+                    \DataTypeTok{z.design=}\NormalTok{z.design.ER,}
+                    \DataTypeTok{score.test.support=}\NormalTok{score.support.fixed,}
+                    \DataTypeTok{missingTumorIndicator=}\DecValTok{888}\NormalTok{)}
+\CommentTok{#the first element is the score}
+\CommentTok{#the second element is the information matrix}
+\NormalTok{score.fixed <-}\StringTok{ }\NormalTok{score.test.fixed[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{infor.fixed <-}\StringTok{ }\NormalTok{score.test.fixed[[}\DecValTok{2}\NormalTok{]]}
+
+\CommentTok{#fit the two-stage model under the null hypothesis}
+\CommentTok{#that only the random effect is 0}
+\CommentTok{#the model will have two covariates, }
+\CommentTok{#PC1 and the fixed effect of SNP}
+\NormalTok{z.design.fixed <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(z.design.fixed.baseline,z.design.ER)}
+\NormalTok{score.support.random <-}\StringTok{ }\KeywordTok{ScoreTestSupportMixedModelSelfDesign}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}
+                        \DataTypeTok{x.self.design  =}\NormalTok{ SNP,}
+                        \DataTypeTok{z.design =}\NormalTok{ z.design.fixed,}
+                        \DataTypeTok{additive =}\NormalTok{ PC1,}
+                        \DataTypeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "EM Algorithm Converged"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Generate the z design matrix for random effect}
+\CommentTok{#PR, HER2 and grade is random effect}
+\NormalTok{z.design.random <-}\StringTok{ }\NormalTok{z.standard[,}\DecValTok{2}\OperatorTok{:}\DecValTok{4}\NormalTok{]}
+
+\CommentTok{#compute the score and information matrix for random effect}
+\NormalTok{score.test.random <-}\StringTok{ }\KeywordTok{ScoreTestMixedModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}
+                                         \DataTypeTok{x=}\NormalTok{SNP,}
+                                         \DataTypeTok{z.design=}\NormalTok{z.design.random,}
+                                         \DataTypeTok{score.test.support=}\NormalTok{score.support.random,}
+                                         \DataTypeTok{missingTumorIndicator=}\DecValTok{888}\NormalTok{)}
+\CommentTok{#the first element is the score}
+\CommentTok{#the second element is the information matrix}
+\NormalTok{score.random <-}\StringTok{ }\NormalTok{score.test.random[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{infor.random <-}\StringTok{ }\NormalTok{score.test.random[[}\DecValTok{2}\NormalTok{]]}
+
+\CommentTok{#after we get the the fixed effect score, infor }
+\CommentTok{#and random effect score, infor, }
+\CommentTok{#we can combine them through the following function. }
+\CommentTok{#two p value will be generated.}
+\CommentTok{#the first p value for null hypothesis that}
+\CommentTok{#both the fixed effect and the variance of the random effects are 0}
+\CommentTok{#under this case, the first p-value is for the global heterogeneity test.}
+\CommentTok{#the second p.value don't have a good interpretation under this case}
+\NormalTok{p.value.mtop <-}\StringTok{ }\KeywordTok{DisplayMixedScoreTestResult}\NormalTok{(}
+\NormalTok{  score.fixed,}
+\NormalTok{  infor.fixed,}
+\NormalTok{  score.random,}
+\NormalTok{  infor.random}
+\NormalTok{)  }
+\KeywordTok{print}\NormalTok{(p.value.mtop)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.2700321 0.1411052
 \end{verbatim}
 
 \section{References}\label{references}

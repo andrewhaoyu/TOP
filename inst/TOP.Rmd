@@ -98,6 +98,7 @@ model.1 <- TwoStageModel(y=y,additive=cbind(SNP,PC1),
 #and p-value, the baseline effect is the case-control 
 #odds ratio of the reference subtype (ER-,PR-,HER2-,grade0). 
 #The main effect are the case-case odds ratio of the tumor characteristics.
+#the p-value is for individual tumor heterogeneity test of each second stage parameter. 
 (model.1[[4]])
 
 #model.1[[5]] are the global association test and 
@@ -191,6 +192,7 @@ model.3 <- EMmvpolySelfDesign(y,
 ```{r, echo=T,cache=T}
 #model.3[[4]] are the second stage odds ratio (95% CI) 
 #and p-value of the intrinsic subtypes
+#the second stage odds ratios under this model are the case-control odds ratios for the intrinsic subtypes.
 (model.3[[4]])
 #model.1[[5]] are the global association test and 
 #global heterogeneity test result of the covariates.
@@ -205,7 +207,7 @@ head(model.3[[7]])
 
 # Fixed effect two-stage model score test (FTOP)
 To construct the score test for a fixed effect two stage model, we need two steps. First, we need to fit the model under the null hypothesis that the second stage parameters of SNP is 0. In other words, null of the subytpes is associated with the SNP. Second we need should compute the score and information matrix for each SNP.
-Based on the score and information matrix, we could construct the score test statistics for global association test
+Based on the score and information matrix, we could construct the score test statistics for global association test.
 ```{r, echo=T,cache=T}
 #fit the two-stage model under the null hypothesis
 #that the second stage parameters of SNP is 0
@@ -231,6 +233,10 @@ infor.fixed <- score.test.fixed[[2]]
 p.value.ftop <- DisplayFixedScoreTestResult(score.fixed,infor.fixed) 
 print(p.value.ftop)
 ```
+
+In general, I don't recommend to do the global heterogeneity test under the fixed-effect two-stage model. Since the global heterogeneity test requires to estimate the baseline effect of every single SNP, it loses the advantage of score test that it only needs to estimate the parameters of the other covariates under the null hypothesis for one time. Instead, I recommend using Wald test to do the global heterogeneity test. It will automatically give you the results of global heterogeneity test (model.1[[4]]) and individual heterogeneity test (model.1[[5]]). And the Wald test and score test asymptotically have similar power. 
+
+The general analysis pipeline is like this: First, we performed the global association test for the whole genome. This step is fast since we only need to fit the function ScoreTestSupportMixedModel one time under the null hypothesis, every single SNP only needs to run the function ScoreTestMixedModel. Then we have the potential regions with SNPs genome-wide significant associated with the disease. For every SNP in these regions, we can fit the function TwoStageModel. This function will give you the global heterogeneity test and individual heterogeneity test results. Since there are limited number of SNPs in these regions, this process won't cost too much time. 
 
 
 
@@ -259,11 +265,84 @@ score.test.fixed <- ScoreTestMixedModel(y=y,
 #the second element is the information matrix
 score.fixed <- score.test.fixed[[1]]
 infor.fixed <- score.test.fixed[[2]]
+#fit the two-stage model under the null hypothesis
+#that only the random effect is 0
+#the model will have two covariates, 
+#PC1 and the fixed effect of SNP
+score.support.random <- ScoreTestSupportMixedModelSelfDesign(y=y,
+                        x.self.design  = SNP,
+                        z.design = z.design.fixed,
+                        additive = PC1,
+                        missingTumorIndicator = 888)
+#Generate the z design matrix for random effect
+#PR, HER2 and grade is random effect
+z.design.random <- z.standard[,2:4]
+#compute the score and information matrix for random effect
+score.test.random <- ScoreTestMixedModel(y=y,
+                                         x=SNP,
+                                         z.design=z.design.random,
+                                         score.test.support=score.support.random,
+                                         missingTumorIndicator=888)
+#the first element is the score
+#the second element is the information matrix
+score.random <- score.test.random[[1]]
+infor.random <- score.test.random[[2]]
+#after we get the the fixed effect score, infor 
+#and random effect score, infor, 
+#we can combine them through the following function. 
+#two p value will be generated.
+#the first p value for null hypothesis that
+#both the fixed effect and the variance of the random effects are 0
+#under this case, the first p-value is for the global association test.
+#the second p value is for the null hypothesis 
+#that the variance of random effect is 0
+#Under this situation, the second p value is NOT 
+#the global heterogeneity test p value since ER is fixed
+p.value.mtop <- DisplayMixedScoreTestResult(
+  score.fixed,
+  infor.fixed,
+  score.random,
+  infor.random
+)  
+print(p.value.mtop)
+```
+The second p.value of p.value.mtop is for null hypothesis that the random effect is 0. Under this particular situation, the second p.value is not for the p-value of global heterogeneity test, since ER is fixed. To construct the global heterogeneity test for this setting, we need four steps. First, we need to fit the model under the null hypothesis that the fixed effect (ER) and variance of the random effects (PR, HER2, and grade) is 0. In other words, only the baseline effect can be non-zero. Second, we need should compute the score and information matrix of fixed effect (ER) for each SNP. Then, we need to fit the model under the null that the variance of random effect is 0. Finally, we need to compute the score and information matrix of the random effect terms. With the score and information of fixed effect and random effect, we could construct the global association test for the mixed effect two-stage model.
+
+```{r, echo=T,cache=T}
+#we are going to build a two-stage model with 
+#baseline parameter and ER case-case parameter as fixed
+#We assume the PR, HER2, grade case-case parameter 
+#to be random.
+#fit the two-stage model under the null hypothesis
+#that the fixed effect (ER) and 
+#variance of the random effects (PR, HER2, and grade) is 0.
+#the model will have two covariates, 
+#PC1 and the fixed effect of SNP.
+#Generate the z design matrix for fixed effect
+z.design.fixed.baseline <- matrix(1,nrow(z.standard),1)
+#compute the score and information matrix for fixed effect
+score.support.fixed <- ScoreTestSupportMixedModelSelfDesign(y=y,
+                        x.self.design  = SNP,
+                        z.design = z.design.fixed.baseline,
+                        additive = PC1,
+                        missingTumorIndicator = 888)
+
+z.design.ER <- z.standard[,1,drop=F]
+score.test.fixed <- ScoreTestMixedModel(y=y,
+                    x=SNP,
+                    z.design=z.design.ER,
+                    score.test.support=score.support.fixed,
+                    missingTumorIndicator=888)
+#the first element is the score
+#the second element is the information matrix
+score.fixed <- score.test.fixed[[1]]
+infor.fixed <- score.test.fixed[[2]]
 
 #fit the two-stage model under the null hypothesis
 #that only the random effect is 0
 #the model will have two covariates, 
 #PC1 and the fixed effect of SNP
+z.design.fixed <- cbind(z.design.fixed.baseline,z.design.ER)
 score.support.random <- ScoreTestSupportMixedModelSelfDesign(y=y,
                         x.self.design  = SNP,
                         z.design = z.design.fixed,
@@ -288,11 +367,10 @@ infor.random <- score.test.random[[2]]
 #and random effect score, infor, 
 #we can combine them through the following function. 
 #two p value will be generated.
-#the first p value for global association test.
-#the second p value is for the null hypothesis 
-#that random effect is 0
-#Under this situation, the second p value is NOT 
-#the global heterogeneity test p value since ER is fixed
+#the first p value for null hypothesis that
+#both the fixed effect and the variance of the random effects are 0
+#under this case, the first p-value is for the global heterogeneity test.
+#the second p.value don't have a good interpretation under this case
 p.value.mtop <- DisplayMixedScoreTestResult(
   score.fixed,
   infor.fixed,
@@ -301,10 +379,6 @@ p.value.mtop <- DisplayMixedScoreTestResult(
 )  
 print(p.value.mtop)
 ```
-
-
-
-
 
 # References
 1. Zhang, H., Zhao, N., Ahearn, T.U, Wheeler W., García-Closas, M., Chatterjee, N., A mixed-model approach for powerful testing of genetic associations with cancer risk incorporating tumor characteristics (Submitted)
