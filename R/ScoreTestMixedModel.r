@@ -23,8 +23,8 @@ ScoreTestMixedModel <- function(y,x,z.design = z.design,score.test.support=NULL,
 
 
   tumor.number <- ncol(y)-1
-  y.case.control <- y[,1]
-  y.tumor <- y[,2:(tumor.number+1)]
+  y.case.control <- y[,1,drop=F]
+  y.tumor <- y[,2:(tumor.number+1),drop=F]
   y.pheno.complete <- GenerateCompleteYPheno(y,missingTumorIndicator)
   freq.subtypes <- GenerateFreqTable(y.pheno.complete)
   if(CheckControlTumor(y.case.control,y.tumor)==1){

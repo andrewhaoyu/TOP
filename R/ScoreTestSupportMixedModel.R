@@ -40,8 +40,8 @@ ScoreTestSupportMixedModel <- function(y,
 
   y <- as.matrix(y)
   tumor.number <- ncol(y)-1
-  y.case.control <- y[,1]
-  y.tumor <- y[,2:(tumor.number+1)]
+  y.case.control <- y[,1,drop=F]
+  y.tumor <- y[,2:(tumor.number+1),drop=F]
   y.pheno.complete <- GenerateCompleteYPheno(y,missingTumorIndicator)
   freq.subtypes <- GenerateFreqTable(y.pheno.complete)
   if(CheckControlTumor(y.case.control,y.tumor)==1){
@@ -60,14 +60,22 @@ ScoreTestSupportMixedModel <- function(y,
                                                tumor.number,
                                                tumor.names,
                                                freq.subtypes)
-  z.design.pairwise.interaction <- GenerateZDesignPairwiseInteraction(tumor.character.cat,
-                                                                      tumor.number,
-                                                                      tumor.names,
-                                                                      freq.subtypes)
-  z.design.saturated <- GenerateZDesignSaturated(tumor.character.cat,
-                                                 tumor.number,
-                                                 tumor.names,
-                                                 freq.subtypes)
+  
+  if(tumor.number>=2){
+    z.design.pairwise.interaction <- GenerateZDesignPairwiseInteraction(tumor.character.cat,
+                                                                        tumor.number,
+                                                                        tumor.names,
+                                                                        freq.subtypes)
+    z.design.saturated <- GenerateZDesignSaturated(tumor.character.cat,
+                                                   tumor.number,
+                                                   tumor.names,
+                                                   freq.subtypes)
+    
+  }else{
+    z.design.pairwise.interaction <- z.design.additive
+    z.design.saturated <- z.design.additive
+    
+  }
   z.all <- ZDesigntoZall(baselineonly,
                          additive,
                          pairwise.interaction,
@@ -89,7 +97,7 @@ ScoreTestSupportMixedModel <- function(y,
   ###z standard matrix means the additive model z design matrix without baseline effect
   ###z standard matrix is used to match the missing tumor characteristics to the complete subtypes
 
-  z.standard <- z.design.additive[,-1]
+  z.standard <- z.design.additive[,-1,drop=F]
 
   Score.Support = EMStepScoreTestSupportMixedModel(delta0,y,x.all,z.standard,z.all,missingTumorIndicator)
 
