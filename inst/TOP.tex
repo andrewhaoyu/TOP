@@ -343,7 +343,7 @@ are 0, then the second stage decomposition becomes,
 \CommentTok{#odds ratio of the reference subtype (ER-,PR-,HER2-,grade0). }
 \CommentTok{#The main effect are the case-case odds ratio of the tumor characteristics.}
 \CommentTok{#the p-value is for individual tumor heterogeneity test of each second stage parameter. }
-\NormalTok{(model.}\DecValTok{1}\NormalTok{[[}\DecValTok{4}\NormalTok{]])}
+\NormalTok{model.}\DecValTok{1}\NormalTok{[[}\DecValTok{4}\NormalTok{]]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -679,7 +679,6 @@ the mixed effect two-stage model.
 \CommentTok{#the second element is the information matrix}
 \NormalTok{score.fixed <-}\StringTok{ }\NormalTok{score.test.fixed[[}\DecValTok{1}\NormalTok{]]}
 \NormalTok{infor.fixed <-}\StringTok{ }\NormalTok{score.test.fixed[[}\DecValTok{2}\NormalTok{]]}
-
 \CommentTok{#fit the two-stage model under the null hypothesis}
 \CommentTok{#that only the random effect is 0}
 \CommentTok{#the model will have two covariates, }
@@ -701,7 +700,6 @@ the mixed effect two-stage model.
 \CommentTok{#Generate the z design matrix for random effect}
 \CommentTok{#PR, HER2 and grade is random effect}
 \NormalTok{z.design.random <-}\StringTok{ }\NormalTok{z.standard[,}\DecValTok{2}\OperatorTok{:}\DecValTok{4}\NormalTok{]}
-
 \CommentTok{#compute the score and information matrix for random effect}
 \NormalTok{score.test.random <-}\StringTok{ }\KeywordTok{ScoreTestMixedModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}
                                          \DataTypeTok{x=}\NormalTok{SNP,}
@@ -712,7 +710,6 @@ the mixed effect two-stage model.
 \CommentTok{#the second element is the information matrix}
 \NormalTok{score.random <-}\StringTok{ }\NormalTok{score.test.random[[}\DecValTok{1}\NormalTok{]]}
 \NormalTok{infor.random <-}\StringTok{ }\NormalTok{score.test.random[[}\DecValTok{2}\NormalTok{]]}
-
 \CommentTok{#after we get the the fixed effect score, infor }
 \CommentTok{#and random effect score, infor, }
 \CommentTok{#we can combine them through the following function. }
