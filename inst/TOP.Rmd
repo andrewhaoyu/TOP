@@ -99,7 +99,7 @@ model.1 <- TwoStageModel(y=y,additive=cbind(SNP,PC1),
 #odds ratio of the reference subtype (ER-,PR-,HER2-,grade0). 
 #The main effect are the case-case odds ratio of the tumor characteristics.
 #the p-value is for individual tumor heterogeneity test of each second stage parameter. 
-(model.1[[4]])
+model.1[[4]]
 
 #model.1[[5]] are the global association test and 
 #global heterogeneity test result of the covariates.

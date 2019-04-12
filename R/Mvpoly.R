@@ -70,7 +70,7 @@ if(is.null(delta0)){
 #x.all has no intercept yet
 #we will add the intercept in C code
 x.all <- GenerateXAll(y,baselineonly,additive,pairwise.interaction,saturated)
-z.standard <- z.design.additive[,-1]
+z.standard <- z.design.additive[,-1,drop=F]
 
 y.fit <- ProbFitting(delta0,y,x.all,z.standard,z.all,missingTumorIndicator=NULL)[[1]]
 
