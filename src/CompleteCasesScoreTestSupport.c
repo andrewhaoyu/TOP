@@ -874,34 +874,34 @@ double **ret;
       /* Copy initial estimates to delta0 */
         for (i=0; i<Nparm; i++) delta0[i] = deltai[i];
         /*print_dMat(tXXZ,(Ncov-1)*Ncatp1+M,M*N,tXXZ);*/
-            if (DEBUG) Rprintf("Begin Weighted Least Sqaure Maximization\n");
+          /*  if (DEBUG) Rprintf("Begin Weighted Least Sqaure Maximization\n");*/
         for (iter=1; iter<=Niter; iter++) {
-          if (DEBUG) Rprintf("Weighted Least Sqaure Iteration: %d\n", iter);
+        /*  if (DEBUG) Rprintf("Weighted Least Sqaure Iteration: %d\n", iter);*/
 
-          if (DEBUG) Rprintf("Compute lxx\n");
+         /* if (DEBUG) Rprintf("Compute lxx\n");*/
           get_lxx(Z, Znr, Znc, delta0, X, N, Ncov, M,lxx);
-          if (DEBUG) Rprintf("Compute pxx\n");
+        /*  if (DEBUG) Rprintf("Compute pxx\n");*/
           get_pxx(lxx, N, M, ret_p);
-          if (DEBUG) Rprintf("Compute weighted matrix\n");
+          /*if (DEBUG) Rprintf("Compute weighted matrix\n");*/
           Weighted_W(ret_p, W, N, M);
-          if (DEBUG) Rprintf("Compute XmWXm matrix\n");
+         /* if (DEBUG) Rprintf("Compute XmWXm matrix\n");*/
           get_XmWXm(XX,X,W, M,N, Ncov,XmWXm);
-          if (DEBUG) Rprintf("Compute information matrix\n");
+         /* if (DEBUG) Rprintf("Compute information matrix\n");*/
           /*get_Info(X, N, Ncov, M, Z, Znr, Znc, pxx, Info);*/
             QuadXtKX(Z,XmWXm, Znr,Znc, Info);
-          if (DEBUG) Rprintf("Compute covariance matrix\n");
+          /*if (DEBUG) Rprintf("Compute covariance matrix\n");*/
           rc = cov_inv(Info, Znc, Inv);
           if (rc) {
             Rprintf("ERROR computing inverse of information matrix\n");
             error("ERROR");
           }
-          if (DEBUG) Rprintf("Compute W_y\n");
+         /* if (DEBUG) Rprintf("Compute W_y\n");*/
           get_Wy(Y, lxx, ret_p, N, M,W,w_y);
-          if (DEBUG) Rprintf("Compute delta\n");
+        /*  if (DEBUG) Rprintf("Compute delta\n");*/
 
           get_delta(Inv, Nparm, tXXZ, N, M, w_y, ret_delta);
 
-          if (DEBUG) print_dVec(ret_delta, Nparm, "delta");
+        /*  if (DEBUG) print_dVec(ret_delta, Nparm, "delta");*/
 
           /* Check for non-finite values */
             if (!all_finite(ret_delta, Nparm)) {
@@ -909,7 +909,7 @@ double **ret;
               error("ERROR");
             }
 
-          if (DEBUG) Rprintf("Check Weighted Least Square stopping criteria\n");
+         /* if (DEBUG) Rprintf("Check Weighted Least Square stopping criteria\n");*/
           rerror = checkStop(ret_delta, delta0, Nparm);
           if (rerror <= tolMStep) {
             conv = 1;
@@ -917,7 +917,7 @@ double **ret;
           }
 
           /* Update delta0 */
-            if (DEBUG) Rprintf("Update parameters\n");
+           /* if (DEBUG) Rprintf("Update parameters\n");*/
           for (i=0; i<Nparm; i++) delta0[i] = ret_delta[i];
         }
 
@@ -971,31 +971,31 @@ static void Free_Mem(double * XX,double **tXXZ,int Nparm,double**X,int N,
                      int DEBUG, double **Info
                      ,double **WX,
                      double** WXZ){
-  if (DEBUG) Rprintf("Free memory\n");
-  if (DEBUG) Rprintf("Free XX\n");
+ /* if (DEBUG) Rprintf("Free memory\n");*/
+  /*if (DEBUG) Rprintf("Free XX\n");*/
   free(XX);
-  if (DEBUG) Rprintf("Free tXXZ\n");
+  /*if (DEBUG) Rprintf("Free tXXZ\n");*/
   matrix_free((void **)tXXZ, Nparm);
 
-  if (DEBUG) Rprintf("Free X\n");
+  /*if (DEBUG) Rprintf("Free X\n");*/
   matrix_free((void **)X, N);
-  if (DEBUG) Rprintf("Free delta0\n");
+  /*if (DEBUG) Rprintf("Free delta0\n");*/
   free(delta0);
-  if (DEBUG) Rprintf("Free Z\n");
+  /*if (DEBUG) Rprintf("Free Z\n");*/
   matrix_free((void **)Z, Znr);
-  if (DEBUG) Rprintf("Free XmWXm\n");
+  /*if (DEBUG) Rprintf("Free XmWXm\n");*/
   matrix_free((void**) XmWXm, Znr);
-  if (DEBUG) Rprintf("Free lxx\n");
+  /*if (DEBUG) Rprintf("Free lxx\n");*/
   free(lxx);
-  if (DEBUG) Rprintf("Begin fill Mat\n");
+  /*if (DEBUG) Rprintf("Begin fill Mat\n");*/
   fill_SysMat(Info,ret_info,Nparm);
-  if (DEBUG) Rprintf("Free Inv\n");
+ /* if (DEBUG) Rprintf("Free Inv\n");*/
   matrix_free((void **)Inv, Znc);
-  if (DEBUG) Rprintf("Free W_y\n");
+ /* if (DEBUG) Rprintf("Free W_y\n");*/
   free(w_y);
-  if (DEBUG) Rprintf("Free beta\n");
+  /*if (DEBUG) Rprintf("Free beta\n");*/
   free(beta);
-  if (DEBUG) Rprintf("Free Info\n");
+  /*if (DEBUG) Rprintf("Free Info\n");*/
   matrix_free((void **)Info,Znc);
   matrix_free((void**) WX,M*N);
   matrix_free((void**) WXZ,N*M);
@@ -1042,7 +1042,7 @@ int *pNparm, *pN, *pM, *pNcov, *pNiter, *ret_rc, *pDEBUG,*Zallnr,*Zallnc;
       if (Nparm != Znc) error("Nparm != Znc\n");
 
     /* Allocate memory for matrix of covariates and Z map matrix */
-      if (DEBUG) Rprintf("Allocate memory\n");
+     /* if (DEBUG) Rprintf("Allocate memory\n");*/
     tXXZ     = dMat_alloc(Nparm, NM, 0, 0.0);
 
     X        = dMat_alloc(N, Ncov, 0, 0.0); /* X doesn't have intercept*/
@@ -1062,19 +1062,19 @@ int *pNparm, *pN, *pM, *pNcov, *pNiter, *ret_rc, *pDEBUG,*Zallnr,*Zallnc;
     WXZ = dMat_alloc(N*M,Znc,0,0.0);
 
     /* Copy initial estimates to delta0 */
-    if (DEBUG) Rprintf("Copy data\n");
+    /*if (DEBUG) Rprintf("Copy data\n");*/
     for (i=0; i<Nparm; i++) delta0[i] = deltai[i];
     fillMat(Xvec, N, Ncov0, 1, X);
 
     /* fillMat(Zvec, M, Ncatp1, 0, Z_design);*/
-    if (DEBUG) Rprintf("Get the matrix Z\n");
+   /* if (DEBUG) Rprintf("Get the matrix Z\n");*/
     fillMat(ZallVec,Znr,Znc,0,Z);
     /* Get the matrix t(XXZ) */
-    if (DEBUG) Rprintf("Get the matrix t(XXZ)\n");
+    /*if (DEBUG) Rprintf("Get the matrix t(XXZ)\n");*/
     get_tXXZ(X, N, Ncov, M, Znc, Z, tXXZ);
-    if(DEBUG) Rprintf("Get beta\n");
+    /*if(DEBUG) Rprintf("Get beta\n");*/
     X_y(Z, Znr, Znc, delta0, beta);
-    if(DEBUG) Rprintf("Get Matrix XX\n");
+   /* if(DEBUG) Rprintf("Get Matrix XX\n");*/
     get_XX(X,Ncov,N,XX);
     Mvpoly(deltai,Nparm, Y,
            X, Z,Znr,Znc,
@@ -1091,14 +1091,14 @@ int *pNparm, *pN, *pM, *pNcov, *pNiter, *ret_rc, *pDEBUG,*Zallnr,*Zallnc;
     conv = 1;
 
 
-    if (DEBUG) Rprintf("Get Information Matrix Matrix Inverse\n");
+   /* if (DEBUG) Rprintf("Get Information Matrix Matrix Inverse\n");*/
     cov_inv(Info,Znc,Inv);
-    if (DEBUG) Rprintf("Get Y-P\n");
+    /*if (DEBUG) Rprintf("Get Y-P\n");*/
     VectorMinus(Y,ret_p,NM,YminusP);
     fill_SysMat(Inv,ret_Inv_info_vec,Znc);
-    if (DEBUG) Rprintf("Get W\n");
+    /*if (DEBUG) Rprintf("Get W\n");*/
 
-    if (DEBUG) Rprintf("Get WXZ\n");
+   /* if (DEBUG) Rprintf("Get WXZ\n");*/
 
     get_WXZ(M,N,Ncov,X, W,
     WX,WXZ, Nparm,Z, Znc,

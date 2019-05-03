@@ -845,6 +845,114 @@ two-stage model.
 ## [1] 0.2700321 0.1411052
 \end{verbatim}
 
+\section{Two-stage polytomous model on complete
+data}\label{two-stage-polytomous-model-on-complete-data}
+
+All the previous models are focusing on data with missing tumor
+characteristics. In this section, we want to show some models on
+complete data. The coding are the same as previous sections. We only
+need to put the missingTumorIndicator as NULL.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(TOP)}
+\CommentTok{#load in the breast cancer example}
+\NormalTok{y <-}\StringTok{ }\NormalTok{data[,}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{]}
+\CommentTok{#find out all the subjects with missing tumor characteristics}
+\NormalTok{missing.data.vec <-}\StringTok{ }\KeywordTok{GenerateMissingPosition}\NormalTok{(y,}\DataTypeTok{missingTumorIndicator=}\DecValTok{888}\NormalTok{)}
+\NormalTok{data.complete <-}\StringTok{ }\NormalTok{data[}\OperatorTok{-}\NormalTok{missing.data.vec,,drop=F]}
+\NormalTok{y.c <-}\StringTok{ }\NormalTok{data.complete[,}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{]}
+\NormalTok{SNP.c <-}\StringTok{ }\NormalTok{data.complete[,}\DecValTok{6}\NormalTok{,drop=F]}
+\NormalTok{PC1.c <-}\StringTok{ }\NormalTok{data.complete[,}\DecValTok{7}\NormalTok{,drop=F]}
+
+\CommentTok{#fit the additive two-stage model for complete data}
+\NormalTok{model.}\DecValTok{4}\NormalTok{ <-}\StringTok{ }\KeywordTok{TwoStageModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y.c,}\DataTypeTok{additive=}\KeywordTok{cbind}\NormalTok{(SNP.c,PC1.c),}
+                         \DataTypeTok{missingTumorIndicator =} \OtherTok{NULL}\NormalTok{)}
+
+
+\CommentTok{#perform the score test for complete data}
+\NormalTok{score.support.fixed <-}\StringTok{ }\KeywordTok{ScoreTestSupportMixedModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y.c,}
+                                                  \DataTypeTok{additive=}\NormalTok{PC1.c,}
+                                                  \DataTypeTok{missingTumorIndicator=}\OtherTok{NULL}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Algorithm Converged"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Generate the additive second stage design matrix}
+\NormalTok{z.additive <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{,z.standard)}
+\CommentTok{#compute the score and information matrix for SNP}
+\NormalTok{z.design.fixed <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{,z.standard[,}\DecValTok{1}\NormalTok{])}
+\CommentTok{#compute the score and information matrix for fixed effect}
+\NormalTok{score.test.fixed <-}\StringTok{ }\KeywordTok{ScoreTestMixedModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y.c,}
+                    \DataTypeTok{x=}\NormalTok{SNP.c,}
+                    \DataTypeTok{z.design=}\NormalTok{z.design.fixed,}
+                    \DataTypeTok{score.test.support=}\NormalTok{score.support.fixed,}
+                    \DataTypeTok{missingTumorIndicator=}\OtherTok{NULL}\NormalTok{)}
+\CommentTok{#the first element is the score}
+\CommentTok{#the second element is the information matrix}
+\NormalTok{score.fixed <-}\StringTok{ }\NormalTok{score.test.fixed[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{infor.fixed <-}\StringTok{ }\NormalTok{score.test.fixed[[}\DecValTok{2}\NormalTok{]]}
+\CommentTok{#fit the two-stage model under the null hypothesis}
+\CommentTok{#that only the random effect is 0}
+\CommentTok{#the model will have two covariates, }
+\CommentTok{#PC1 and the fixed effect of SNP}
+\NormalTok{score.support.random <-}\StringTok{ }\KeywordTok{ScoreTestSupportMixedModelSelfDesign}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y.c,}
+                        \DataTypeTok{x.self.design  =}\NormalTok{ SNP.c,}
+                        \DataTypeTok{z.design =}\NormalTok{ z.design.fixed,}
+                        \DataTypeTok{additive =}\NormalTok{ PC1.c,}
+                        \DataTypeTok{missingTumorIndicator =} \OtherTok{NULL}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Algorithm Converged"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Generate the z design matrix for random effect}
+\CommentTok{#PR, HER2 and grade is random effect}
+\NormalTok{z.design.random <-}\StringTok{ }\NormalTok{z.standard[,}\DecValTok{2}\OperatorTok{:}\DecValTok{4}\NormalTok{]}
+\CommentTok{#compute the score and information matrix for random effect}
+\NormalTok{score.test.random <-}\StringTok{ }\KeywordTok{ScoreTestMixedModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y.c,}
+                                         \DataTypeTok{x=}\NormalTok{SNP.c,}
+                                         \DataTypeTok{z.design=}\NormalTok{z.design.random,}
+                                         \DataTypeTok{score.test.support=}\NormalTok{score.support.random,}
+                                         \DataTypeTok{missingTumorIndicator=}\OtherTok{NULL}\NormalTok{)}
+\CommentTok{#the first element is the score}
+\CommentTok{#the second element is the information matrix}
+\NormalTok{score.random <-}\StringTok{ }\NormalTok{score.test.random[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{infor.random <-}\StringTok{ }\NormalTok{score.test.random[[}\DecValTok{2}\NormalTok{]]}
+\CommentTok{#after we get the the fixed effect score, infor }
+\CommentTok{#and random effect score, infor, }
+\CommentTok{#we can combine them through the following function. }
+\CommentTok{#two p value will be generated.}
+\CommentTok{#the first p value for null hypothesis that}
+\CommentTok{#both the fixed effect and the variance of the random effects are 0}
+\CommentTok{#under this case, the first p-value is for the global association test.}
+\CommentTok{#the second p value is for the null hypothesis }
+\CommentTok{#that the variance of random effect is 0}
+\CommentTok{#Under this situation, the second p value is NOT }
+\CommentTok{#the global heterogeneity test p value since ER is fixed}
+\NormalTok{p.value.mtop <-}\StringTok{ }\KeywordTok{DisplayMixedScoreTestResult}\NormalTok{(}
+\NormalTok{  score.fixed,}
+\NormalTok{  infor.fixed,}
+\NormalTok{  score.random,}
+\NormalTok{  infor.random}
+\NormalTok{)  }
+\KeywordTok{print}\NormalTok{(p.value.mtop)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.8220986 0.7314814
+\end{verbatim}
+
 \section{References}\label{references}
 
 \begin{enumerate}

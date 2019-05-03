@@ -8,6 +8,7 @@
 #' @param pairwise.interaction
 #' @param saturated
 #' @param missingTumorIndicator
+#' @param cutoff 
 #'
 #' @return
 #' @export
@@ -18,7 +19,8 @@ EMScoreTestSupport <- function(y,
                              additive,
                              pairwise.interaction,
                              saturated,
-                             missingTumorIndicator){
+                             missingTumorIndicator,
+                             cutoff=10){
   y <- as.matrix(y)
   tumor.number <- ncol(y)-1
   y.case.control <- y[,1]
@@ -36,19 +38,23 @@ EMScoreTestSupport <- function(y,
   z.design.baselineonly <- GenerateZDesignBaselineonly(tumor.character.cat,
                                                        tumor.number,
                                                        tumor.names,
-                                                       freq.subtypes)
+                                                       freq.subtypes,
+                                                       cutoff)
   z.design.additive <- GenerateZDesignAdditive(tumor.character.cat,
                                                     tumor.number,
                                                     tumor.names,
-                                                    freq.subtypes)
+                                                    freq.subtypes,
+                                               cutoff)
   z.design.pairwise.interaction <- GenerateZDesignPairwiseInteraction(tumor.character.cat,
                                                                       tumor.number,
                                                                       tumor.names,
-                                                                      freq.subtypes)
+                                                                      freq.subtypes,
+                                                                      cutoff)
   z.design.saturated <- GenerateZDesignSaturated(tumor.character.cat,
                                                  tumor.number,
                                                  tumor.names,
-                                                 freq.subtypes)
+                                                 freq.subtypes,
+                                                 cutoff)
   z.all <- ZDesigntoZall(baselineonly,
                          additive,
                          pairwise.interaction,

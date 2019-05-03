@@ -12,6 +12,7 @@
 
 #' @param z.all if you want to have differnt self designed second stage matrix for different covariantes, then you can directly construct the second stage matrix for all of the covariates.
 #' @param delta0 the starting value for the second stage parameters. By defualt, we will use the empirical distribution of the subtypes.
+#' @param cutoff by default, the model will remove the subtypes with less than 10 cases, the user can specify other values by changing the cutoff. But we don't recommend to set the cutoff too low, since the asymptotic convergence requires enough sample size
 #'
 #'
 #' @return the result is a list containing 9 elements. 1. the second stage parameters 2. the covariance matrix for the second stage parameters. 3. the second stage parameters organzied for the self desinged covariate 4. The odds ratio of the self designed subtypes5. Global association test and global heterogeneity test result (Wald test based) 6. The first stage parameter organized for self designed covariates 7. First stage odds test results of all the subtypes. 8. Likelihood 9. AIC
@@ -76,8 +77,6 @@
 #'                              z.design = z.design,
 #'                              additive=PC1,
 #'                              missingTumorIndicator = 888)
-
-
 EMmvpolySelfDesign <- function(y,
                                x.self.design,
                                z.design,
@@ -87,7 +86,8 @@ EMmvpolySelfDesign <- function(y,
                                saturated=NULL,
                                missingTumorIndicator = 888,
                                z.all=NULL,
-                               delta0 = NULL){
+                               delta0 = NULL,
+                               cutoff=10){
   if(is.null(z.all)){
     missing.data.vec <- GenerateMissingPosition(y,missingTumorIndicator)
     y.pheno.complete <- y[-missing.data.vec,,drop=F]
@@ -97,7 +97,8 @@ EMmvpolySelfDesign <- function(y,
                                 pairwise.interaction,
                                 saturated,
                                 x.self.design,
-                                z.design
+                                z.design,
+                                cutoff=cutoff
     )
     ###z standard matrix means the additive model z design matrix without baseline effect
     ###z standard matrix is used to match the missing tumor characteristics to the complete subtypes

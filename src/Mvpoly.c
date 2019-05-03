@@ -812,40 +812,40 @@ static void LogLikelihood(double *Y, double *ret_p,double *loglikelihood, int N,
       /* Copy initial estimates to delta0 */
         for (i=0; i<Nparm; i++) delta0[i] = deltai[i];
         /*print_dMat(tXXZ,(Ncov-1)*Ncatp1+M,M*N,tXXZ);*/
-            if (DEBUG) Rprintf("Begin Weighted Least Sqaure Maximization\n");
+            /*if (DEBUG) Rprintf("Begin Weighted Least Sqaure Maximization\n");*/
         for (iter=1; iter<=Niter; iter++) {
-          if (DEBUG) Rprintf("Weighted Least Sqaure Iteration: %d\n", iter);
+          /*if (DEBUG) Rprintf("Weighted Least Sqaure Iteration: %d\n", iter);*/
 
-          if (DEBUG) Rprintf("Compute lxx\n");
+          /*if (DEBUG) Rprintf("Compute lxx\n");*/
           get_lxx(Z, Znr, Znc, delta0, X, N, Ncov, M,lxx);
-          if (DEBUG) Rprintf("Compute pxx\n");
+         /* if (DEBUG) Rprintf("Compute pxx\n");*/
           get_pxx(lxx, N, M, ret_p);
-          if (DEBUG) Rprintf("Compute weighted matrix\n");
+         /* if (DEBUG) Rprintf("Compute weighted matrix\n");*/
           Weighted_W(ret_p, W, N, M);
-          if (DEBUG) Rprintf("Compute XmWXm matrix\n");
+          /*if (DEBUG) Rprintf("Compute XmWXm matrix\n");*/
           get_XmWXm(XX,X,W, M,N, Ncov,XmWXm);
           /*print_dMat(XmWXm,Znr,Znr,"XmWXm");*/
-            if (DEBUG) Rprintf("Compute information matrix\n");
+           /* if (DEBUG) Rprintf("Compute information matrix\n");*/
 
           /*get_Info(X, N, Ncov, M, Z, Znr, Znc, pxx, Info);*/
 
             QuadXKX(Z,XmWXm, Znr,Znc, Info);
           /* print_dMat(XmWXm,Znr,Znr,"Info");*/
 
-            if (DEBUG) Rprintf("Compute covariance matrix\n");
+           /* if (DEBUG) Rprintf("Compute covariance matrix\n");*/
           rc = cov_inv_new(Info, Znc, Inv);
           if (rc) {
             Rprintf("ERROR computing inverse of information matrix\n");
             error("ERROR");
           }
 
-          if (DEBUG) Rprintf("Compute W_y\n");
+         /* if (DEBUG) Rprintf("Compute W_y\n");*/
           get_Wy(Y, lxx, ret_p, N, M,W,w_y);
-          if (DEBUG) Rprintf("Compute delta\n");
+         /* if (DEBUG) Rprintf("Compute delta\n");*/
 
           get_delta(Inv, Nparm, tXXZ, N, M, w_y, ret_delta);
 
-          if (DEBUG) print_dVec(ret_delta, Nparm, "delta");
+         /* if (DEBUG) print_dVec(ret_delta, Nparm, "delta");*/
 
           /* Check for non-finite values */
             if (!all_finite(ret_delta, Nparm)) {
@@ -853,7 +853,7 @@ static void LogLikelihood(double *Y, double *ret_p,double *loglikelihood, int N,
               error("ERROR");
             }
 
-          if (DEBUG) Rprintf("Check Weighted Least Square stopping criteria\n");
+         /* if (DEBUG) Rprintf("Check Weighted Least Square stopping criteria\n");*/
           rerror = checkStop(ret_delta, delta0, Nparm);
           if (rerror <= tol) {
             conv = 1;
@@ -861,7 +861,7 @@ static void LogLikelihood(double *Y, double *ret_p,double *loglikelihood, int N,
           }
 
           /* Update delta0 */
-            if (DEBUG) Rprintf("Update parameters\n");
+          /*  if (DEBUG) Rprintf("Update parameters\n");*/
           for (i=0; i<Nparm; i++) delta0[i] = ret_delta[i];
         }
 
@@ -885,30 +885,30 @@ static void Free_Mem(double * XX,double **tXXZ,int Nparm,double**X,int N,
                      double *lxx, double* ret_info,
                      double **Inv, double *w_y, double *W,double *beta,
                      int DEBUG, double **Info){
-  if (DEBUG) Rprintf("Free memory\n");
+ /* if (DEBUG) Rprintf("Free memory\n");*/
   free(XX);
-  if (DEBUG) Rprintf("Free tXXZ\n");
+  /*if (DEBUG) Rprintf("Free tXXZ\n");*/
   matrix_free((void **)tXXZ, Nparm);
-  if (DEBUG) Rprintf("Free X\n");
+ /* if (DEBUG) Rprintf("Free X\n");*/
   matrix_free((void **)X, N);
-  if (DEBUG) Rprintf("Free delta0\n");
+  /*if (DEBUG) Rprintf("Free delta0\n");*/
   free(delta0);
-  if (DEBUG) Rprintf("Free Z\n");
+ /* if (DEBUG) Rprintf("Free Z\n");*/
   matrix_free((void **)Z, Znr);
-  if (DEBUG) Rprintf("Free XmWXm\n");
+  /*if (DEBUG) Rprintf("Free XmWXm\n");*/
   matrix_free((void**) XmWXm, Znr);
-  if (DEBUG) Rprintf("Free lxx\n");
+ /* if (DEBUG) Rprintf("Free lxx\n");*/
   free(lxx);
 
-  if (DEBUG) Rprintf("Free Inv\n");
+  /*if (DEBUG) Rprintf("Free Inv\n");*/
   matrix_free((void **)Inv, Znc);
-  if (DEBUG) Rprintf("Free w_y\n");
+ /* if (DEBUG) Rprintf("Free w_y\n");*/
   free(w_y);
-  if (DEBUG) Rprintf("Free W\n");
+  /*if (DEBUG) Rprintf("Free W\n");*/
   free(W);
-  if (DEBUG) Rprintf("Free beta\n");
+  /*if (DEBUG) Rprintf("Free beta\n");*/
   free(beta);
-  if (DEBUG) Rprintf("Free Info\n");
+ /* if (DEBUG) Rprintf("Free Info\n");*/
   matrix_free((void **)Info,Znc);
 
 }
@@ -949,7 +949,7 @@ int *pNparm, *pN, *pM, *pNcov, *pNiter, *ret_rc, *pDEBUG,*Zallnr,*Zallnc;
       if (Nparm != Znc) error("Nparm != Znc\n");
 
     /* Allocate memory for matrix of covariates and Z map matrix */
-      if (DEBUG) Rprintf("Allocate memory\n");
+     /* if (DEBUG) Rprintf("Allocate memory\n");*/
     tXXZ     = dMat_alloc(Nparm, NM, 0, 0.0);
 
     X        = dMat_alloc(N, Ncov, 0, 0.0); /* X doesn't have intercept*/
@@ -966,19 +966,19 @@ int *pNparm, *pN, *pM, *pNcov, *pNiter, *ret_rc, *pDEBUG,*Zallnr,*Zallnc;
 
     XX = dVec_alloc((N*Ncov*Ncov),0,0.0);
     /* Copy initial estimates to delta0 */
-    if (DEBUG) Rprintf("Copy data\n");
+  /*  if (DEBUG) Rprintf("Copy data\n");*/
     for (i=0; i<Nparm; i++) delta0[i] = deltai[i];
     fillMat(Xvec, N, Ncov0, 1, X);
 
     /* fillMat(Zvec, M, Ncatp1, 0, Z_design);*/
-    if (DEBUG) Rprintf("Get the matrix Z\n");
+   /* if (DEBUG) Rprintf("Get the matrix Z\n");*/
     fillMat(ZallVec,Znr,Znc,0,Z);
     /* Get the matrix t(XXZ) */
-    if (DEBUG) Rprintf("Get the matrix t(XXZ)\n");
+  /*  if (DEBUG) Rprintf("Get the matrix t(XXZ)\n");*/
     get_tXXZ(X, N, Ncov, M, Znc, Z, tXXZ);
-    if(DEBUG) Rprintf("Get beta\n");
+   /* if(DEBUG) Rprintf("Get beta\n");*/
     X_y(Z, Znr, Znc, delta0, beta);
-    if(DEBUG) Rprintf("Get Matrix XX\n");
+    /*if(DEBUG) Rprintf("Get Matrix XX\n");*/
     get_XX(X,Ncov,N,XX);
     /* Compute beta = Z*delta */
 
@@ -995,7 +995,7 @@ int *pNparm, *pN, *pM, *pNcov, *pNiter, *ret_rc, *pDEBUG,*Zallnr,*Zallnc;
     }
 
     LogLikelihood(Y, ret_p,loglikelihood, N,M);
-    if (DEBUG) Rprintf("Fill Info\n");
+   /* if (DEBUG) Rprintf("Fill Info\n");*/
     fill_Info(Info,ret_info,Nparm);
 
 

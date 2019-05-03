@@ -38,11 +38,13 @@ GenerateZstandard <- function(y,
   z.design.baselineonly <- GenerateZDesignBaselineonly(tumor.character.cat,
                                                        tumor.number,
                                                        tumor.names,
-                                                       freq.subtypes)
+                                                       freq.subtypes,
+                                                       cutoff)
   z.design.additive <- GenerateZDesignAdditive(tumor.character.cat,
                                                tumor.number,
                                                tumor.names,
-                                               freq.subtypes)
+                                               freq.subtypes,
+                                               cutoff)
   z.standard <- z.design.additive[,-1,drop=F]
   return(z.standard)
 
@@ -85,6 +87,7 @@ GenerateZstandard <- function(y,
 #' @param saturated the covariates to be adjusted used the saturated two-stage model. This model assumes every subtype has their specific odds ratio. It's equivalent to the polytmous model. 
 #' @param missingTumorIndicator The indicators to show the tumor characteristics are missing. In the example, we put missing tumor characteristics as 888. Note, for all the controls subjects, they don't have tumor characteristics. So their tumor characteristics are put as NA instead of 888 to differentiate with cases missing tumor characteristics.
 #' @param delta0 the starting value for the second stage parameters. By defualt, we will use the empirical distribution of the subtypes.
+#' @param cutoff by default, the model will remove the subtypes with less than 10 cases, the user can specify other values by changing the cutoff. But we don't recommend to set the cutoff too low, since the asymptotic convergence requires enough sample size
 #'
 #' @keywords internal
 #'
@@ -94,7 +97,8 @@ EMmvpoly <- function(y,
                           pairwise.interaction=NULL,
                           saturated=NULL,
                           missingTumorIndicator = 888,
-                     delta0= NULL){
+                     delta0= NULL,
+                     cutoff = 10){
 
   missing.data.vec <- GenerateMissingPosition(y,missingTumorIndicator)
   y.pheno.complete <- y[-missing.data.vec,,drop=F]
@@ -102,7 +106,8 @@ EMmvpoly <- function(y,
                            baselineonly,
                            additive,
                            pairwise.interaction,
-                           saturated
+                           saturated,
+                           cutoff =cutoff
   )
   ###z standard matrix means the additive model z design matrix without baseline effect
   ###z standard matrix is used to match the missing tumor characteristics to the complete subtypes

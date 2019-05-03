@@ -25,9 +25,19 @@ EMStepScoreTestSupportMixedModel <- function(delta0,y,x.all,z.standard,z.all,mis
                                  z.standard,z.all,missingTumorIndicator)
   y_em <- prob.fit.result[[1]]
   missing.vec <- as.numeric(as.vector(prob.fit.result[[2]]))
-  missing.mat.vec <- as.numeric(as.vector(prob.fit.result[[3]]))
+  missing.mat <- prob.fit.result[[3]]
+  missing.mat.vec <- as.numeric(as.vector(missing.mat))
   missing.number <- as.integer(length(missing.vec))
-
+  idx.drop = prob.fit.result[[4]]
+  #remove all the subtypes below the cutoff threshold
+  if(length(idx.drop)!=0){
+    x.all <- x.all[-idx.drop,,drop=F]
+    y_em <- y_em[-idx.drop,,drop=F]
+  }
+  for(k in 1:length(missing.vec)){
+    missing.vec[k] <- missing.vec[k]-sum(missing.vec[k]>=idx.drop)
+  }
+  
   # sof <- "try5.so"
   # dyn.load(sof)
 
@@ -83,7 +93,7 @@ EMStepScoreTestSupportMixedModel <- function(delta0,y,x.all,z.standard,z.all,mis
   rm(temp)
 
 
-  return(list(inv_info_vec=inv_info_vec,YminusP=YminusP,W_obs=W_obs,zc=z.all,x.all=x.all))
+  return(list(inv_info_vec=inv_info_vec,YminusP=YminusP,W_obs=W_obs,zc=z.all,x.all=x.all,idx.drop=idx.drop))
   #  return(temp)
 }
 

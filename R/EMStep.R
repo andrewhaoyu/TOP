@@ -32,6 +32,17 @@ EMStep <- function(delta0,y,x.all,z.standard,z.all,missingTumorIndicator){
   missing.mat <- prob.fit.result[[3]]
   missing.mat.vec <- as.numeric(as.vector(missing.mat))
   missing.number <- as.integer(length(missing.vec))
+  idx.drop = prob.fit.result[[4]]
+  #remove all the subtypes below the cutoff threshold
+  if(length(idx.drop)!=0){
+    x.all <- x.all[-idx.drop,,drop=F]
+    y_em <- y_em[-idx.drop,,drop=F]
+  }
+  for(k in 1:length(missing.vec)){
+    missing.vec[k] <- missing.vec[k]-sum(missing.vec[k]>=idx.drop)
+  }
+  
+  
 
   # sof <- "try4.so"
   # dyn.load(sof)

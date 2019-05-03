@@ -6,7 +6,7 @@
 \usage{
 EMmvpoly(y, baselineonly = NULL, additive = NULL,
   pairwise.interaction = NULL, saturated = NULL,
-  missingTumorIndicator = 888, delta0 = NULL)
+  missingTumorIndicator = 888, delta0 = NULL, cutoff = 10)
 }
 \arguments{
 \item{y}{the phenotype file. The first column is the case control disease status. The other columns are the tumor characteristics status}
@@ -22,6 +22,8 @@ EMmvpoly(y, baselineonly = NULL, additive = NULL,
 \item{missingTumorIndicator}{The indicators to show the tumor characteristics are missing. In the example, we put missing tumor characteristics as 888. Note, for all the controls subjects, they don't have tumor characteristics. So their tumor characteristics are put as NA instead of 888 to differentiate with cases missing tumor characteristics.}
 
 \item{delta0}{the starting value for the second stage parameters. By defualt, we will use the empirical distribution of the subtypes.}
+
+\item{cutoff}{by default, the model will remove the subtypes with less than 10 cases, the user can specify other values by changing the cutoff. But we don't recommend to set the cutoff too low, since the asymptotic convergence requires enough sample size}
 }
 \description{
 Two-stage model MLE estimation with EM algorithm

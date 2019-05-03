@@ -5,10 +5,10 @@
 \title{Title}
 \usage{
 GenerateZDesignPairwiseInteraction(tumor.character.cat, tumor.number,
-  tumor.names, freq.subtypes)
+  tumor.names, freq.subtypes, cutoff = 10)
 }
 \arguments{
-\item{freq.subtypes}{}
+\item{cutoff}{}
 }
 \description{
 Title

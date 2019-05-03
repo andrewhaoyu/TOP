@@ -8,6 +8,7 @@
 #' @param saturated
 #' @param x.self.design
 #' @param z.design
+#' @param cutoff 
 #'
 #' @return
 #' @export
@@ -21,7 +22,8 @@ InitialSetup <- function(y.pheno.complete,
                          pairwise.interaction,
                          saturated,
                          x.self.design= NULL,
-                         z.design = NULL
+                         z.design = NULL,
+                         cutoff
                          ){
   if(is.null(x.self.design)==T){
     y <- y.pheno.complete
@@ -40,20 +42,24 @@ InitialSetup <- function(y.pheno.complete,
     z.design.baselineonly <- GenerateZDesignBaselineonly(tumor.character.cat,
                                                          tumor.number,
                                                          tumor.names,
-                                                         freq.subtypes)
+                                                         freq.subtypes,
+                                                         cutoff)
     z.design.additive <- GenerateZDesignAdditive(tumor.character.cat,
                                                  tumor.number,
                                                  tumor.names,
-                                                 freq.subtypes)
+                                                 freq.subtypes,
+                                                 cutoff)
     if(tumor.number>=2){
       z.design.pairwise.interaction <- GenerateZDesignPairwiseInteraction(tumor.character.cat,
                                                                           tumor.number,
                                                                           tumor.names,
-                                                                          freq.subtypes)
+                                                                          freq.subtypes,
+                                                                          cutoff)
       z.design.saturated <- GenerateZDesignSaturated(tumor.character.cat,
                                                      tumor.number,
                                                      tumor.names,
-                                                     freq.subtypes)
+                                                     freq.subtypes,
+                                                     cutoff)
       
     }else{
       z.design.pairwise.interaction <- z.design.additive
@@ -96,7 +102,8 @@ InitialSetup <- function(y.pheno.complete,
     z.design.baselineonly <- GenerateZDesignBaselineonly(tumor.character.cat,
                                                          tumor.number,
                                                          tumor.names,
-                                                         freq.subtypes)
+                                                         freq.subtypes,
+                                                         cutoff)
     z.design.additive <- GenerateZDesignAdditive(tumor.character.cat,
                                                  tumor.number,
                                                  tumor.names,

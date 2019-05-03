@@ -9,6 +9,7 @@
 #' @param saturated the covariates to be adjusted used the saturated two-stage model. This model assumes every subtype has their specific odds ratio. It's equivalent to the polytmous model. 
 #' @param missingTumorIndicator The indicators to show the tumor characteristics are missing. In the example, we put missing tumor characteristics as 888. Note, for all the controls subjects, they don't have tumor characteristics. So their tumor characteristics are put as NA instead of 888 to differentiate with cases missing tumor characteristics.
 #' @param delta0 the starting value for the second stage parameters. By defualt, we will use the empirical distribution of the subtypes.
+#' @param cutoff by default, the model will remove the subtypes with less than 10 cases, the user can specify other values by changing the cutoff. But we don't recommend to set the cutoff too low, since the asymptotic convergence requires enough sample size
 #'
 #' @return the result is a list containing 9 elements. 1. the second stage parameters 2. the covariance matrix for the second stage parameters. 3. the second stage parameters organzied for each covariate. 4. The case-control odds ratio and case-case odds ratios of tumor characteristics. 5. Global association test and global heterogeneity test result (Wald test based) 6. The first stage parameter organized for each covariate 7. First stage odds ratio of all the subtypes. 8. Likelihood 9. AIC
 #' @export
@@ -55,14 +56,16 @@ TwoStageModel <- function(y,
                           pairwise.interaction=NULL,
                           saturated=NULL,
                           missingTumorIndicator = NULL,
-                          delta0 = NULL){
+                          delta0 = NULL,
+                          cutoff = 10){
   if(is.null(missingTumorIndicator)==1){
     return(Mvpoly(y,
                   baselineonly,
                   additive,
                   pairwise.interaction,
                   saturated,
-                  delta0 = delta0))
+                  delta0 = delta0,
+                  cutoff = cutoff))
   }else{
 
       return(EMmvpoly(y,
@@ -71,7 +74,8 @@ TwoStageModel <- function(y,
                       pairwise.interaction,
                       saturated,
                       missingTumorIndicator,
-                      delta0 = delta0))
+                      delta0 = delta0,
+                      cutoff = cutoff))
 
 
   }

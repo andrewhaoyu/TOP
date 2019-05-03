@@ -6,6 +6,8 @@
 #' @param additive
 #' @param pairwise.interaction
 #' @param saturated
+#' @param delta0 
+#' @param cutoff 
 #'
 #' @return
 #' @export
@@ -17,68 +19,82 @@ Mvpoly <- function(y,
                           additive,
                           pairwise.interaction,
                           saturated,
-                   delta0 = NULL){
-y.pheno.complete <- y
-
-
-freq.subtypes <- GenerateFreqTable(y.pheno.complete)
-y.case.control <- y[,1]
-y.tumor <- y[,2:ncol(y)]
-if(CheckControlTumor(y.case.control,y.tumor)==1){
-  return(print("ERROR:The tumor characteristics for control subtypes should put as NA"))
-}
-tumor.names <- colnames(y.tumor)
-tumor.number <- ncol(y)-1
-if(is.null(tumor.names)){
-  tumor.names <- paste0(c(1:tumor.number))
-}
-tumor.character.cat = GenerateTumorCharacterCat(y.pheno.complete)
-z.design.baselineonly <- GenerateZDesignBaselineonly(tumor.character.cat,
-                                                     tumor.number,
-                                                     tumor.names,
-                                                     freq.subtypes)
-z.design.additive <- GenerateZDesignAdditive(tumor.character.cat,
-                                             tumor.number,
-                                             tumor.names,
-                                             freq.subtypes)
-z.design.pairwise.interaction <- GenerateZDesignPairwiseInteraction(tumor.character.cat,
-                                                                    tumor.number,
-                                                                    tumor.names,
-                                                                    freq.subtypes)
-z.design.saturated <- GenerateZDesignSaturated(tumor.character.cat,
+                   delta0 = NULL,
+                   cutoff = 10){
+  y.pheno.complete <- y
+  
+  
+  freq.subtypes <- GenerateFreqTable(y.pheno.complete)
+  y.case.control <- y[,1,drop=F]
+  y.tumor <- y[,2:ncol(y),drop=F]
+  if(CheckControlTumor(y.case.control,y.tumor)==1){
+    return(print("ERROR:The tumor characteristics for control subtypes should put as NA"))
+  }
+  tumor.names <- colnames(y.tumor)
+  tumor.number <- ncol(y)-1
+  if(is.null(tumor.names)){
+    tumor.names <- paste0(c(1:tumor.number))
+  }
+  tumor.character.cat = GenerateTumorCharacterCat(y.pheno.complete)
+  z.design.baselineonly <- GenerateZDesignBaselineonly(tumor.character.cat,
+                                                       tumor.number,
+                                                       tumor.names,
+                                                       freq.subtypes,
+                                                       cutoff)
+  z.design.additive <- GenerateZDesignAdditive(tumor.character.cat,
                                                tumor.number,
                                                tumor.names,
-                                               freq.subtypes)
-full.second.stage.names <- colnames(z.design.saturated)
-covar.names <- GenerateCovarName(baselineonly,
-                                 additive,
-                                 pairwise.interaction,
-                                 saturated)
-
-z.all <- ZDesigntoZall(baselineonly,
-                       additive,
-                       pairwise.interaction,
-                       saturated,
-                       z.design.baselineonly,
-                       z.design.additive,
-                       z.design.pairwise.interaction,
-                       z.design.saturated)
-if(is.null(delta0)){
-  delta0 <-StartValueFunction(freq.subtypes,y.case.control,z.all)
-}
-
-#x.all has no intercept yet
-#we will add the intercept in C code
-x.all <- GenerateXAll(y,baselineonly,additive,pairwise.interaction,saturated)
-z.standard <- z.design.additive[,-1,drop=F]
-
-y.fit <- ProbFitting(delta0,y,x.all,z.standard,z.all,missingTumorIndicator=NULL)[[1]]
+                                               freq.subtypes,
+                                               cutoff)
+  z.design.pairwise.interaction <- GenerateZDesignPairwiseInteraction(tumor.character.cat,
+                                                                      tumor.number,
+                                                                      tumor.names,
+                                                                      freq.subtypes,
+                                                                      cutoff)
+  z.design.saturated <- GenerateZDesignSaturated(tumor.character.cat,
+                                                 tumor.number,
+                                                 tumor.names,
+                                                 freq.subtypes,
+                                                 cutoff)
+  full.second.stage.names <- colnames(z.design.saturated)
+  covar.names <- GenerateCovarName(baselineonly,
+                                   additive,
+                                   pairwise.interaction,
+                                   saturated)
+  
+  z.all <- ZDesigntoZall(baselineonly,
+                         additive,
+                         pairwise.interaction,
+                         saturated,
+                         z.design.baselineonly,
+                         z.design.additive,
+                         z.design.pairwise.interaction,
+                         z.design.saturated)
+  if(is.null(delta0)){
+    delta0 <-StartValueFunction(freq.subtypes,y.case.control,z.all)
+  }
+  
+  #x.all has no intercept yet
+  #we will add the intercept in C code
+  x.all <- GenerateXAll(y,baselineonly,additive,pairwise.interaction,saturated)
+  z.standard <- z.design.additive[,-1,drop=F]
+  
+  
+  fit.result <- ProbFitting(delta0,y,x.all,z.standard,z.all,missingTumorIndicator=888)
+  y.fit <- fit.result[[1]]
+  idx.drop = fit.result[[4]]
+  
+  if(length(idx.drop)!=0){
+    x.all <- x.all[-idx.drop,,drop=F]
+    y.fit <- y.fit[-idx.drop,,drop=F]
+  }
+  
+  
 
 
 x.all <- as.matrix(x.all)
 z.standard <- z.design.additive[,-1]
 M <- as.integer(nrow(z.standard))
-p.main <- ncol(z.standard)+1
 
 tol <- as.numeric(1e-04)
 

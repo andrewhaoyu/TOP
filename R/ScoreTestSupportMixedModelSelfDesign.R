@@ -28,7 +28,12 @@ ScoreTestSupportMixedModelSelfDesign <- function(y,
   tumor.number <- ncol(y)-1
   y.case.control <- y[,1,drop=F]
   y.tumor <- y[,2:(tumor.number+1),drop=F]
-  y.pheno.complete <- GenerateCompleteYPheno(y,missingTumorIndicator)
+  if(is.null(missingTumorIndicator)==T){
+    y.pheno.complete = y  
+  }else{
+    y.pheno.complete <- GenerateCompleteYPheno(y,missingTumorIndicator)
+  }
+  
   freq.subtypes <- GenerateFreqTable(y.pheno.complete)
   if(CheckControlTumor(y.case.control,y.tumor)==1){
     return(print("ERROR:The tumor characteristics for control subtypes should put as NA"))
@@ -85,19 +90,18 @@ ScoreTestSupportMixedModelSelfDesign <- function(y,
 
   z.standard <- z.design.additive[,-1,drop=F]
 
-  Score.Support = EMStepScoreTestSupportMixedModel(delta0,y,x.all,z.standard,z.all,missingTumorIndicator)
-
+  if(is.null(missingTumorIndicator)==T){
+    Score.Support <- StepScoreTestSupportMixedModel(delta0,y,x.all,z.standard,z.all)
+  }else{
+    Score.Support = EMStepScoreTestSupportMixedModel(delta0,y,x.all,z.standard,z.all,missingTumorIndicator)
+  }
 
   # score_support_result <- score_support(pxx,x.all,baselineonly,z.all,z.standard,y_em)
   #score_test_mis <- score_test_mis(y_em,baselineonly,score_support_result)
   #return(list(score_c=score_test_mis$score_c,infor_c = score_test_mis$infor_c))
 
   result <- Score.Support
-  result[[6]] <- z.design.baselineonly
-  result[[7]] <- z.design.additive
-  result[[8]] <- z.design.pairwise.interaction
-  result[[9]] <- z.design.saturated
-  result[[10]] <- z.standard
+  result[[7]] <- z.standard
   return(result)
 
 }
