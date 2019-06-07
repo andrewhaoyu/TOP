@@ -18,7 +18,7 @@ ScoreTestMixedModel <- function(y,x,z.design = z.design,score.test.support=NULL,
   # }else{
   #   interested.variable.number = ncol(x)
   # }
-  x <- as.vector(x)
+  x <- as.vector(as.numeric(x))
  
   z.intere <- z.design
 
