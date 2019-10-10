@@ -100,7 +100,7 @@ Mvpoly <- function(y,
 
 
 x.all <- as.matrix(x.all)
-z.standard <- z.design.additive[,-1]
+z.standard <- z.design.additive[,-1,drop=F]
 M <- as.integer(nrow(z.standard))
 
 tol <- as.numeric(1e-04)
