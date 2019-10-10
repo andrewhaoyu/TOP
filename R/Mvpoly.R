@@ -46,16 +46,23 @@ Mvpoly <- function(y,
                                                tumor.names,
                                                freq.subtypes,
                                                cutoff)
-  z.design.pairwise.interaction <- GenerateZDesignPairwiseInteraction(tumor.character.cat,
-                                                                      tumor.number,
-                                                                      tumor.names,
-                                                                      freq.subtypes,
-                                                                      cutoff)
-  z.design.saturated <- GenerateZDesignSaturated(tumor.character.cat,
-                                                 tumor.number,
-                                                 tumor.names,
-                                                 freq.subtypes,
-                                                 cutoff)
+  if(tumor.number>=2){
+    z.design.pairwise.interaction <- GenerateZDesignPairwiseInteraction(tumor.character.cat,
+                                                                        tumor.number,
+                                                                        tumor.names,
+                                                                        freq.subtypes,
+                                                                        cutoff)
+    z.design.saturated <- GenerateZDesignSaturated(tumor.character.cat,
+                                                   tumor.number,
+                                                   tumor.names,
+                                                   freq.subtypes,
+                                                   cutoff)
+    
+  }else{
+    z.design.pairwise.interaction <- z.design.additive
+    z.design.saturated <- z.design.additive
+    
+  }
   full.second.stage.names <- colnames(z.design.saturated)
   covar.names <- GenerateCovarName(baselineonly,
                                    additive,
