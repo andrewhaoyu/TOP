@@ -46,7 +46,7 @@ GenerateZstandard <- function(y,
                                                freq.subtypes,
                                                cutoff)
   z.standard <- z.design.additive[,-1,drop=F]
-  return(z.standard)
+  return(as.matrix(z.standard))
 
   }else{
     missing.data.vec <- GenerateMissingPosition(y,missingTumorIndicator)
@@ -73,7 +73,7 @@ GenerateZstandard <- function(y,
                                                  tumor.names,
                                                  freq.subtypes)
     z.standard <- z.design.additive[,-1,drop=F]
-    return(z.standard)
+    return(as.matrix(z.standard))
 
   }
 
