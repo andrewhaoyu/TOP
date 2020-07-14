@@ -459,6 +459,75 @@ p.value.mtop <- DisplayMixedScoreTestResult(
 print(p.value.mtop)
 ```
 
+
+
+# Two-stage polytomous model on data with only cases
+The  two-stage polytomous model is based on a case-control design. Sometimes, the researchers are interested in estimating the case-case parameters with a case only study. Under this case, the researchers can generate the sudo-data for controls to let the code run. The generated controls will only affect the baseline parameter estimation. Under this case, the estimation and interpretation for the case-case parameter is still valid. The global heterogeneity test is still valid. But the global association test is not valid anymore since the controls are simulated data. Let's take a look at an example. 
+```{r, echo=T,cache=F}
+library(TOP)
+#load in the breast cancer example
+head(data)
+#only keep the cases
+idx <- which(data[,1]==1)
+#data.caseonly is a case only study
+data.caseonly <- data[idx,]
+n.case <- nrow(data.caseonly)
+
+#generate control data
+#suppose we generate the control data with same sample size as cases
+#the sample size of the control will only affect the standard error
+#for baseline parameter
+#it will not affect the standard error for case-case parameter
+n.control <- n.case
+case.control <- rep(0,n.control)
+ER = PR = HER2= grade = rep(NA,n.control)
+#sample the SNP data from the cases to keep the same distribution
+#sample the PC1 data from the cases to keep the same distribution
+SNP = sample(data.caseonly[,"SNP"],n.control,replace=T)
+PC1 = sample(data.caseonly[,"PC1"],n.control,replace=T)
+data.control <- data.frame(case.control,ER,PR,HER2,grade,SNP,PC1)
+
+new.data <- rbind(data.caseonly,data.control)
+
+y <- new.data[,1:4]
+SNP <- new.data[,6,drop=F]
+PC1 <- new.data[,7,drop=F]
+
+#fit the additive two-stage model for case only data
+model.5 <- TwoStageModel(y=y,additive=cbind(SNP,PC1),
+                         missingTumorIndicator = 888)
+#model.5[[4]] contain the second stage parameter estimates
+#the baseline estimate can't be interpreted under this case
+#but the case-case parameter is valid
+model.5[[4]]
+#if we compare this results with model.1[[4]], we will see that the baeline estimate is not the same, but the case-case parameter is close since case-case parameter is only based on case information (the little difference can be due to numerical reason. But the two estimates are asympotocally the same)
+
+#suppose we increase the controls size to 10 times of the cases size
+n.control <- 10*n.case
+case.control <- rep(0,n.control)
+ER = PR = HER2= grade = rep(NA,n.control)
+#sample the SNP data from the cases to keep the same distribution
+#sample the PC1 data from the cases to keep the same distribution
+SNP = sample(data.caseonly[,"SNP"],n.control,replace=T)
+PC1 = sample(data.caseonly[,"PC1"],n.control,replace=T)
+data.control <- data.frame(case.control,ER,PR,HER2,grade,SNP,PC1)
+
+new.data <- rbind(data.caseonly,data.control)
+
+y <- new.data[,1:4]
+SNP <- new.data[,6,drop=F]
+PC1 <- new.data[,7,drop=F]
+
+#fit the additive two-stage model for case only data
+model.6 <- TwoStageModel(y=y,additive=cbind(SNP,PC1),
+                         missingTumorIndicator = 888)
+#we can see the case-case parameters stays similar as model.1[[4]]
+model.6[[4]]
+
+
+
+```
+
 # References
 1. Zhang, H., Zhao, N., Ahearn, T.U, Wheeler W., García-Closas, M., Chatterjee, N., A mixed-model approach for powerful testing of genetic associations with cancer risk incorporating tumor characteristics (Submitted)
 

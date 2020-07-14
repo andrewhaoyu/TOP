@@ -246,12 +246,29 @@ The package can be loaded with the following command:
 \begin{Highlighting}[]
 \CommentTok{# install.packages("devtools")}
 \KeywordTok{library}\NormalTok{(devtools)  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'devtools' was built under R version 4.0.1
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: usethis
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'usethis' was built under R version 4.0.1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \KeywordTok{install_github}\NormalTok{(}\StringTok{"andrewhaoyu/TOP"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## Skipping install of 'TOP' from a github remote, the SHA1 (e3f0186a) has not changed since last install.
+## Skipping install of 'TOP' from a github remote, the SHA1 (a4f24b17) has not changed since last install.
 ##   Use `force = TRUE` to force installation
 \end{verbatim}
 
@@ -403,20 +420,20 @@ are 0, then the second stage decomposition becomes,
 \end{Shaded}
 
 \begin{verbatim}
-##   Covariate    Subtypes OddsRatio OddsRatio(95%CI low)
-## 1       SNP ER0PR0HER20      0.97                 0.84
-## 2       PC1 ER0PR0HER20      1.13                 1.03
-## 3       SNP ER1PR0HER20      0.95                 0.81
-## 4       PC1 ER1PR0HER20      1.14                 1.03
-## 5       SNP ER0PR1HER20      1.03                 0.94
-## 6       PC1 ER0PR1HER20      1.08                 1.02
-##   OddsRatio(95%CI high)  Pvalue
-## 1                  1.13 0.69200
-## 2                  1.24 0.00755
-## 3                  1.12 0.55900
-## 4                  1.26 0.01010
-## 5                  1.12 0.52700
-## 6                  1.14 0.00623
+##   Covariate    Subtypes OddsRatio OddsRatio(95%CI low) OddsRatio(95%CI high)
+## 1       SNP ER0PR0HER20      0.97                 0.84                  1.13
+## 2       PC1 ER0PR0HER20      1.13                 1.03                  1.24
+## 3       SNP ER1PR0HER20      0.95                 0.81                  1.12
+## 4       PC1 ER1PR0HER20      1.14                 1.03                  1.26
+## 5       SNP ER0PR1HER20      1.03                 0.94                  1.12
+## 6       PC1 ER0PR1HER20      1.08                 1.02                  1.14
+##    Pvalue
+## 1 0.69200
+## 2 0.00755
+## 3 0.55900
+## 4 0.01010
+## 5 0.52700
+## 6 0.00623
 \end{verbatim}
 
 \begin{Shaded}
@@ -539,11 +556,11 @@ intrinsic subtypes.
 ## 4       SNP           HR-_HER2+      1.03                 0.73
 ## 5       SNP           HR-_HER2-      0.94                 0.66
 ##   OddsRatio(95%CI high) Pvalue
-## 1                  1.12 0.7100
-## 2                  1.22 0.0161
-## 3                  1.22 0.3890
-## 4                  1.44 0.8750
-## 5                  1.36 0.7570
+## 1                  1.12 0.7050
+## 2                  1.22 0.0158
+## 3                  1.22 0.3860
+## 4                  1.44 0.8740
+## 5                  1.36 0.7580
 \end{verbatim}
 
 \begin{Shaded}
@@ -558,7 +575,7 @@ intrinsic subtypes.
 
 \begin{verbatim}
 ##   Covariate Global test for association Global test for heterogeneity
-## 1       SNP                       0.251                          0.16
+## 1       SNP                       0.248                         0.158
 \end{verbatim}
 
 \begin{Shaded}
@@ -578,12 +595,12 @@ intrinsic subtypes.
 ## 5       SNP ER1PR0HER21grade0      1.02                 0.93
 ## 6       SNP ER0PR1HER21grade0      1.03                 0.94
 ##   OddsRatio(95%CI high) Pvalue
-## 1                  1.12  0.710
-## 2                  1.23  0.150
-## 3                  1.12  0.710
-## 4                  1.12  0.255
-## 5                  1.12  0.710
-## 6                  1.14  0.506
+## 1                  1.12  0.705
+## 2                  1.23  0.152
+## 3                  1.12  0.705
+## 4                  1.12  0.260
+## 5                  1.12  0.705
+## 6                  1.14  0.512
 \end{verbatim}
 
 \hypertarget{fixed-effect-two-stage-model-score-test-ftop}{%
@@ -634,7 +651,7 @@ global association test.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.0539
+## [1] 0.053
 \end{verbatim}
 
 In general, I don't recommend to do the global heterogeneity test under
@@ -748,7 +765,7 @@ the mixed effect two-stage model.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.09988269 0.14110520
+## [1] 0.09833117 0.14079859
 \end{verbatim}
 
 The second p.value of p.value.mtop is for null hypothesis that the
@@ -858,7 +875,7 @@ two-stage model.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.2700321 0.1411052
+## [1] 0.2695795 0.1407986
 \end{verbatim}
 
 \hypertarget{two-stage-polytomous-model-on-complete-data}{%
@@ -968,6 +985,185 @@ need to put the missingTumorIndicator as NULL.
 
 \begin{verbatim}
 ## [1] 0.8220986 0.7314814
+\end{verbatim}
+
+\hypertarget{two-stage-polytomous-model-on-data-with-only-cases}{%
+\section{Two-stage polytomous model on data with only
+cases}\label{two-stage-polytomous-model-on-data-with-only-cases}}
+
+The two-stage polytomous model is based on a case-control design.
+Sometimes, the researchers are interested in estimating the case-case
+parameters with a case only study. Under this case, the researchers can
+generate the sudo-data for controls to let the code run. The generated
+controls will only affect the baseline parameter estimation. Under this
+case, the estimation and interpretation for the case-case parameter is
+still valid. The global heterogeneity test is still valid. But the
+global association test is not valid anymore since the controls are
+simulated data. Let's take a look at an example.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(TOP)}
+\CommentTok{#load in the breast cancer example}
+\KeywordTok{head}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      case.control ER PR HER2 grade SNP        PC1
+## [1,]            0 NA NA   NA    NA   0 -0.4382773
+## [2,]            0 NA NA   NA    NA   0  0.4723048
+## [3,]            1  1  0    1     1   1  0.3012679
+## [4,]            1  1  1  888   888   1 -0.2916645
+## [5,]            1  1  1    0     0   1  0.7650199
+## [6,]            0 NA NA   NA    NA   1 -0.1847614
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#only keep the cases}
+\NormalTok{idx <-}\StringTok{ }\KeywordTok{which}\NormalTok{(data[,}\DecValTok{1}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\NormalTok{)}
+\CommentTok{#data.caseonly is a case only study}
+\NormalTok{data.caseonly <-}\StringTok{ }\NormalTok{data[idx,]}
+\NormalTok{n.case <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(data.caseonly)}
+
+\CommentTok{#generate control data}
+\CommentTok{#suppose we generate the control data with same sample size as cases}
+\CommentTok{#the sample size of the control will only affect the standard error}
+\CommentTok{#for baseline parameter}
+\CommentTok{#it will not affect the standard error for case-case parameter}
+\NormalTok{n.control <-}\StringTok{ }\NormalTok{n.case}
+\NormalTok{case.control <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,n.control)}
+\NormalTok{ER =}\StringTok{ }\NormalTok{PR =}\StringTok{ }\NormalTok{HER2=}\StringTok{ }\NormalTok{grade =}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\OtherTok{NA}\NormalTok{,n.control)}
+\CommentTok{#sample the SNP data from the cases to keep the same distribution}
+\CommentTok{#sample the PC1 data from the cases to keep the same distribution}
+\NormalTok{SNP =}\StringTok{ }\KeywordTok{sample}\NormalTok{(data.caseonly[,}\StringTok{"SNP"}\NormalTok{],n.control,}\DataTypeTok{replace=}\NormalTok{T)}
+\NormalTok{PC1 =}\StringTok{ }\KeywordTok{sample}\NormalTok{(data.caseonly[,}\StringTok{"PC1"}\NormalTok{],n.control,}\DataTypeTok{replace=}\NormalTok{T)}
+\NormalTok{data.control <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(case.control,ER,PR,HER2,grade,SNP,PC1)}
+
+\NormalTok{new.data <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(data.caseonly,data.control)}
+
+\NormalTok{y <-}\StringTok{ }\NormalTok{new.data[,}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{]}
+\NormalTok{SNP <-}\StringTok{ }\NormalTok{new.data[,}\DecValTok{6}\NormalTok{,drop=F]}
+\NormalTok{PC1 <-}\StringTok{ }\NormalTok{new.data[,}\DecValTok{7}\NormalTok{,drop=F]}
+
+\CommentTok{#fit the additive two-stage model for case only data}
+\NormalTok{model}\FloatTok{.5}\NormalTok{ <-}\StringTok{ }\KeywordTok{TwoStageModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}\DataTypeTok{additive=}\KeywordTok{cbind}\NormalTok{(SNP,PC1),}
+                         \DataTypeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Begin EM algorithm"
+## [1] "EM round: 1"
+## EM round: 2
+## EM round: 3
+## EM round: 4
+## EM round: 5
+## EM round: 6
+## EM round: 7
+## EM round: 8
+## EM round: 9
+## EM round: 10
+## [1] "EM Algorithm Converged"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#model.5[[4]] contain the second stage parameter estimates}
+\CommentTok{#the baseline estimate can't be interpreted under this case}
+\CommentTok{#but the case-case parameter is valid}
+\NormalTok{model}\FloatTok{.5}\NormalTok{[[}\DecValTok{4}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Covariate SecondStageEffect OddsRatio OddsRatio(95%CI low)
+## 1       SNP   baseline effect      0.92                 0.80
+## 2       SNP    ER main effect      0.98                 0.87
+## 3       SNP    PR main effect      1.06                 0.93
+## 4       SNP  HER2 main effect      1.15                 0.99
+## 5       PC1   baseline effect      1.07                 0.98
+## 6       PC1    ER main effect      1.01                 0.93
+## 7       PC1    PR main effect      0.95                 0.88
+## 8       PC1  HER2 main effect      0.94                 0.86
+##   OddsRatio(95%CI high) Pvalue
+## 1                  1.07 0.2950
+## 2                  1.11 0.7740
+## 3                  1.20 0.3850
+## 4                  1.33 0.0688
+## 5                  1.17 0.1450
+## 6                  1.08 0.8880
+## 7                  1.03 0.2310
+## 8                  1.03 0.1990
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#if we compare this results with model.1[[4]], we will see that the baeline estimate is not the same, but the case-case parameter is close since case-case parameter is only based on case information (the little difference can be due to numerical reason. But the two estimates are asympotocally the same)}
+
+\CommentTok{#suppose we increase the controls size to 10 times of the cases size}
+\NormalTok{n.control <-}\StringTok{ }\DecValTok{10}\OperatorTok{*}\NormalTok{n.case}
+\NormalTok{case.control <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,n.control)}
+\NormalTok{ER =}\StringTok{ }\NormalTok{PR =}\StringTok{ }\NormalTok{HER2=}\StringTok{ }\NormalTok{grade =}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\OtherTok{NA}\NormalTok{,n.control)}
+\CommentTok{#sample the SNP data from the cases to keep the same distribution}
+\CommentTok{#sample the PC1 data from the cases to keep the same distribution}
+\NormalTok{SNP =}\StringTok{ }\KeywordTok{sample}\NormalTok{(data.caseonly[,}\StringTok{"SNP"}\NormalTok{],n.control,}\DataTypeTok{replace=}\NormalTok{T)}
+\NormalTok{PC1 =}\StringTok{ }\KeywordTok{sample}\NormalTok{(data.caseonly[,}\StringTok{"PC1"}\NormalTok{],n.control,}\DataTypeTok{replace=}\NormalTok{T)}
+\NormalTok{data.control <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(case.control,ER,PR,HER2,grade,SNP,PC1)}
+
+\NormalTok{new.data <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(data.caseonly,data.control)}
+
+\NormalTok{y <-}\StringTok{ }\NormalTok{new.data[,}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{]}
+\NormalTok{SNP <-}\StringTok{ }\NormalTok{new.data[,}\DecValTok{6}\NormalTok{,drop=F]}
+\NormalTok{PC1 <-}\StringTok{ }\NormalTok{new.data[,}\DecValTok{7}\NormalTok{,drop=F]}
+
+\CommentTok{#fit the additive two-stage model for case only data}
+\NormalTok{model}\FloatTok{.6}\NormalTok{ <-}\StringTok{ }\KeywordTok{TwoStageModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}\DataTypeTok{additive=}\KeywordTok{cbind}\NormalTok{(SNP,PC1),}
+                         \DataTypeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Begin EM algorithm"
+## [1] "EM round: 1"
+## EM round: 2
+## EM round: 3
+## EM round: 4
+## EM round: 5
+## EM round: 6
+## EM round: 7
+## EM round: 8
+## EM round: 9
+## [1] "EM Algorithm Converged"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#we can see the case-case parameters stays similar as model.1[[4]]}
+\NormalTok{model}\FloatTok{.6}\NormalTok{[[}\DecValTok{4}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Covariate SecondStageEffect OddsRatio OddsRatio(95%CI low)
+## 1       SNP   baseline effect      0.91                 0.79
+## 2       SNP    ER main effect      0.98                 0.87
+## 3       SNP    PR main effect      1.06                 0.93
+## 4       SNP  HER2 main effect      1.15                 0.99
+## 5       PC1   baseline effect      1.05                 0.97
+## 6       PC1    ER main effect      1.01                 0.93
+## 7       PC1    PR main effect      0.95                 0.88
+## 8       PC1  HER2 main effect      0.94                 0.86
+##   OddsRatio(95%CI high) Pvalue
+## 1                  1.04 0.1700
+## 2                  1.11 0.7770
+## 3                  1.20 0.3890
+## 4                  1.33 0.0703
+## 5                  1.15 0.2430
+## 6                  1.08 0.8870
+## 7                  1.03 0.2280
+## 8                  1.03 0.1970
 \end{verbatim}
 
 \hypertarget{references}{%
