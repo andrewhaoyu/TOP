@@ -21,6 +21,6 @@ install_github("andrewhaoyu/TOP")
 
 References
 =======
-Zhang, H., Zhao, N., Ahearn, T.U, Wheeler W., García-Closas, M., Chatterjee, N., A mixed-model approach for powerful testing of genetic associations with cancer risk incorporating tumor characteristics (Submitted)
+Zhang, Haoyu, et al. "A mixed-model approach for powerful testing of genetic associations with cancer risk incorporating tumor characteristics." Biostatistics 22.4 (2021): 772-788.
 
 

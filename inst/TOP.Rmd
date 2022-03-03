@@ -1,36 +1,56 @@
 ---
-output: 
+title: "Two-stage polytmous logistic regression tutorial"
+author:
+- affiliation: Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
+    U.S.A.
+  name: Haoyu Zhang
+- affiliation: Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
+    U.S.A.
+  name: Ni Zhao
+- affiliation: National Cancer Institute, Division of Cancer Epidemiology and Genetics,
+    Rockville, MD, U.S.A.
+  name: Thomas U. Ahearn
+- affiliation: Information Management Services, Inc., Rockville, MD, U.S.A
+  name: William Wheeler
+- affiliation: National Cancer Institute, Division of Cancer Epidemiology and Genetics,
+    Rockville, MD, U.S.A.
+  name: Montserrat García-Closas
+- affiliation: Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
+    USA
+  name: Nilanjan Chatterjee
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    df_print: paged
   pdf_document:
     citation_package: natbib
-    keep_tex: true
-    fig_caption: true
+    fig_caption: yes
+    keep_tex: yes
     latex_engine: pdflatex
     template: /Users/zhangh24/GoogleDrive/TOP_develop/inst/svm.tex
-title: "Two-stage polytmous logistic regression tutorial"
-#thanks: "Replication files are available on the author's Github account..."
-author:
-- name: Haoyu Zhang
-  affiliation: Department of Biostatistics, Johns Hopkins University, Baltimore, MD, U.S.A.
-- name: Ni Zhao
-  affiliation: Department of Biostatistics, Johns Hopkins University, Baltimore, MD, U.S.A.
-- name: Thomas U. Ahearn
-  affiliation: National Cancer Institute, Division of Cancer Epidemiology and Genetics, Rockville, MD, U.S.A.
-- name: William Wheeler
-  affiliation: Information Management Services, Inc., Rockville, MD, U.S.A
-- name: Montserrat García-Closas
-  affiliation: National Cancer Institute, Division of Cancer Epidemiology and Genetics, Rockville, MD, U.S.A. 
-- name: Nilanjan Chatterjee
-  affiliation: Department of Biostatistics, Johns Hopkins University, Baltimore, MD, USA
-
-abstract: "	Cancers are routinely classified into subtypes according to various features, including histo pathological characteristics and molecular markers. Genomic investigations have reported heterogeneous association between loci and cancer subtypes. However, it is not evident what is the optimal modeling strategy for handling correlated tumor features, missing data, and increased degrees-of-freedom in the underlying tests of associations. In this tutorial, we proposed a two-stage polytomous regression framework to handle cancer data with multivariate tumor characteristics. In the first stage, a standard polytomous model is used to specify for all subtypes defined by the cross-classification of different markers. In the second stage, the subtype-specific case-control odds ratios are specified using a more parsimonious model based on the case-control odds ratio for a baseline subtype, and the case-case parameters associated with tumor markers. Further, to reduce the degrees-of-freedom, we allow to specify case-case parameters for additional markers using a random-effect model. We use the EM algorithm to account for missing data on tumor markers. The score-test distribution theory is developed by borrowing analogous techniques from group-based association tests. Through simulations across a range of realistic scenarios, we show the proposed methods outperforms alternative methods for identifying heterogenous associations between risk loci and tumor subtypes."
-keywords: "Two-stage polytomous model; Susceptibility variants; Cancer subtypes; EM algorithm; Score tests; Etiologic heterogeneity."
-date: "`r format(Sys.time(), '%B %d, %Y')`"
-geometry: margin=1in
-fontfamily: mathpazo
 fontsize: 11pt
-# spacing: double
-#bibliography: ~/Dropbox/master.bib
-#biblio-style: apsr
+geometry: margin=1in
+keywords: Two-stage polytomous model; Susceptibility variants; Cancer subtypes; EM
+  algorithm; Score tests; Etiologic heterogeneity.
+fontfamily: mathpazo
+abstract: "\tCancers are routinely classified into subtypes according to various features,
+  including histo pathological characteristics and molecular markers. Genomic investigations
+  have reported heterogeneous association between loci and cancer subtypes. However,
+  it is not evident what is the optimal modeling strategy for handling correlated
+  tumor features, missing data, and increased degrees-of-freedom in the underlying
+  tests of associations. In this tutorial, we proposed a two-stage polytomous regression
+  framework to handle cancer data with multivariate tumor characteristics. In the
+  first stage, a standard polytomous model is used to specify for all subtypes defined
+  by the cross-classification of different markers. In the second stage, the subtype-specific
+  case-control odds ratios are specified using a more parsimonious model based on
+  the case-control odds ratio for a baseline subtype, and the case-case parameters
+  associated with tumor markers. Further, to reduce the degrees-of-freedom, we allow
+  to specify case-case parameters for additional markers using a random-effect model.
+  We use the EM algorithm to account for missing data on tumor markers. The score-test
+  distribution theory is developed by borrowing analogous techniques from group-based
+  association tests. Through simulations across a range of realistic scenarios, we
+  show the proposed methods outperforms alternative methods for identifying heterogenous
+  associations between risk loci and tumor subtypes."
 ---
 
 ```{r setup, include=FALSE}
