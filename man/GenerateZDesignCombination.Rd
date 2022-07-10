@@ -12,4 +12,3 @@ GenerateZDesignCombination(y, missingTumorIndicator = 888, cutoff = 10)
 \description{
 Generate the three Z design matrix given the tumor characteristics
 }
-\keyword{export}
