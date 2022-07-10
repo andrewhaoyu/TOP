@@ -4,8 +4,13 @@
 \alias{GenerateCovarName}
 \title{Title}
 \usage{
-GenerateCovarName(baselineonly, additive, pairwise.interaction, saturated,
-  x.self.design = NULL)
+GenerateCovarName(
+  baselineonly,
+  additive,
+  pairwise.interaction,
+  saturated,
+  x.self.design = NULL
+)
 }
 \arguments{
 \item{x.self.design}{}

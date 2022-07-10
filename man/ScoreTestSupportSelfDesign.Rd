@@ -4,9 +4,16 @@
 \alias{ScoreTestSupportSelfDesign}
 \title{Title}
 \usage{
-ScoreTestSupportSelfDesign(y, x.self.design, z.design, baselineonly = NULL,
-  additive = NULL, pairwise.interaction = NULL, saturated = NULL,
-  missingTumorIndicator = 888)
+ScoreTestSupportSelfDesign(
+  y,
+  x.self.design,
+  z.design,
+  baselineonly = NULL,
+  additive = NULL,
+  pairwise.interaction = NULL,
+  saturated = NULL,
+  missingTumorIndicator = 888
+)
 }
 \arguments{
 \item{missingTumorIndicator}{}

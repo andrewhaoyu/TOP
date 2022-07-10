@@ -5,9 +5,16 @@
 \title{Generate the support list for score test
 To construct a score test, we need to first fit the model under the null hypothesis. This function fitts the model under the null hypothesis, then saved all the necessary results into a list to pass to the score test function.}
 \usage{
-ScoreTestSupportMixedModel(y, baselineonly = NULL, additive = NULL,
-  pairwise.interaction = NULL, saturated = NULL,
-  missingTumorIndicator = 888, delta0 = NULL, cutoff = 10)
+ScoreTestSupportMixedModel(
+  y,
+  baselineonly = NULL,
+  additive = NULL,
+  pairwise.interaction = NULL,
+  saturated = NULL,
+  missingTumorIndicator = 888,
+  delta0 = NULL,
+  cutoff = 10
+)
 }
 \arguments{
 \item{y}{the phenotype file. The first column is the case control disease status. The other columns are the tumor characteristics status}

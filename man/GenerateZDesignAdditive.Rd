@@ -4,8 +4,13 @@
 \alias{GenerateZDesignAdditive}
 \title{Title}
 \usage{
-GenerateZDesignAdditive(tumor.character.cat, tumor.number, tumor.names,
-  freq.subtypes, cutoff = 10)
+GenerateZDesignAdditive(
+  tumor.character.cat,
+  tumor.number,
+  tumor.names,
+  freq.subtypes,
+  cutoff = 10
+)
 }
 \arguments{
 \item{cutoff}{}

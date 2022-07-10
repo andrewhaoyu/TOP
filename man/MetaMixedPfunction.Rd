@@ -4,8 +4,12 @@
 \alias{MetaMixedPfunction}
 \title{Title}
 \usage{
-MetaMixedPfunction(icog_onco_score_infor_one,
-  icog_onco_score_infor_casecase_one, fixed.second.num, random.second.num)
+MetaMixedPfunction(
+  icog_onco_score_infor_one,
+  icog_onco_score_infor_casecase_one,
+  fixed.second.num,
+  random.second.num
+)
 }
 \arguments{
 \item{random.second.num}{}

@@ -4,8 +4,11 @@
 \alias{ScoreMixedGlobalTestForAssoc}
 \title{Title}
 \usage{
-ScoreMixedGlobalTestForAssoc(p.value.score.heter, score.baseline,
-  infor.baseline)
+ScoreMixedGlobalTestForAssoc(
+  p.value.score.heter,
+  score.baseline,
+  infor.baseline
+)
 }
 \arguments{
 \item{infor.baseline}{}

@@ -4,8 +4,13 @@
 \alias{GenerateSelfFirstStageMat}
 \title{Title}
 \usage{
-GenerateSelfFirstStageMat(beta, x.self.design, z.design, covar.names,
-  subtypes.names)
+GenerateSelfFirstStageMat(
+  beta,
+  x.self.design,
+  z.design,
+  covar.names,
+  subtypes.names
+)
 }
 \arguments{
 \item{subtypes.names}{}

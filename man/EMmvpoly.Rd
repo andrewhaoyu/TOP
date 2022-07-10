@@ -4,9 +4,16 @@
 \alias{EMmvpoly}
 \title{Two-stage model MLE estimation with EM algorithm}
 \usage{
-EMmvpoly(y, baselineonly = NULL, additive = NULL,
-  pairwise.interaction = NULL, saturated = NULL,
-  missingTumorIndicator = 888, delta0 = NULL, cutoff = 10)
+EMmvpoly(
+  y,
+  baselineonly = NULL,
+  additive = NULL,
+  pairwise.interaction = NULL,
+  saturated = NULL,
+  missingTumorIndicator = 888,
+  delta0 = NULL,
+  cutoff = 10
+)
 }
 \arguments{
 \item{y}{the phenotype file. The first column is the case control disease status. The other columns are the tumor characteristics status}

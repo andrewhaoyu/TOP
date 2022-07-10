@@ -4,8 +4,13 @@
 \alias{GenerateZDesignBaselineonly}
 \title{Title}
 \usage{
-GenerateZDesignBaselineonly(tumor.character.cat, tumor.number, tumor.names,
-  freq.subtypes, cutoff = 10)
+GenerateZDesignBaselineonly(
+  tumor.character.cat,
+  tumor.number,
+  tumor.names,
+  freq.subtypes,
+  cutoff = 10
+)
 }
 \arguments{
 \item{cutoff}{}

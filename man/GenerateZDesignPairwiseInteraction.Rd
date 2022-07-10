@@ -4,8 +4,13 @@
 \alias{GenerateZDesignPairwiseInteraction}
 \title{Title}
 \usage{
-GenerateZDesignPairwiseInteraction(tumor.character.cat, tumor.number,
-  tumor.names, freq.subtypes, cutoff = 10)
+GenerateZDesignPairwiseInteraction(
+  tumor.character.cat,
+  tumor.number,
+  tumor.names,
+  freq.subtypes,
+  cutoff = 10
+)
 }
 \arguments{
 \item{cutoff}{}

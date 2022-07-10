@@ -4,8 +4,14 @@
 \alias{GenerateSelfXAll}
 \title{Title}
 \usage{
-GenerateSelfXAll(y, x.self.design, baselineonly, additive, pairwise.interaction,
-  saturated)
+GenerateSelfXAll(
+  y,
+  x.self.design,
+  baselineonly,
+  additive,
+  pairwise.interaction,
+  saturated
+)
 }
 \arguments{
 \item{saturated}{}

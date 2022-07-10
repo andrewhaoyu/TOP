@@ -4,9 +4,17 @@
 \alias{ScoreTestSupportMixedModelSelfDesign}
 \title{Title}
 \usage{
-ScoreTestSupportMixedModelSelfDesign(y, x.self.design, z.design,
-  baselineonly = NULL, additive = NULL, pairwise.interaction = NULL,
-  saturated = NULL, missingTumorIndicator = 888, delta0 = NULL)
+ScoreTestSupportMixedModelSelfDesign(
+  y,
+  x.self.design,
+  z.design,
+  baselineonly = NULL,
+  additive = NULL,
+  pairwise.interaction = NULL,
+  saturated = NULL,
+  missingTumorIndicator = 888,
+  delta0 = NULL
+)
 }
 \arguments{
 \item{delta0}{}

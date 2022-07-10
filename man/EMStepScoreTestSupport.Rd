@@ -4,8 +4,14 @@
 \alias{EMStepScoreTestSupport}
 \title{Title}
 \usage{
-EMStepScoreTestSupport(delta0, y, x.all, z.standard, z.all,
-  missingTumorIndicator)
+EMStepScoreTestSupport(
+  delta0,
+  y,
+  x.all,
+  z.standard,
+  z.all,
+  missingTumorIndicator
+)
 }
 \arguments{
 \item{missingTumorIndicator}{}

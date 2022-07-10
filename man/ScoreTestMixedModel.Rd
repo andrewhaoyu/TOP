@@ -4,8 +4,13 @@
 \alias{ScoreTestMixedModel}
 \title{Title}
 \usage{
-ScoreTestMixedModel(y, x, z.design = z.design, score.test.support = NULL,
-  missingTumorIndicator = NULL)
+ScoreTestMixedModel(
+  y,
+  x,
+  z.design = z.design,
+  score.test.support = NULL,
+  missingTumorIndicator = NULL
+)
 }
 \arguments{
 \item{missingTumorIndicator}{}

@@ -4,9 +4,19 @@
 \alias{GenerateSecondStageMat}
 \title{Title}
 \usage{
-GenerateSecondStageMat(baselineonly, additive, pairwise.interaction, saturated,
-  M, full.second.stage.names, covar.names, delta, z.design.additive,
-  z.design.pairwise.interaction, z.design.saturated)
+GenerateSecondStageMat(
+  baselineonly,
+  additive,
+  pairwise.interaction,
+  saturated,
+  M,
+  full.second.stage.names,
+  covar.names,
+  delta,
+  z.design.additive,
+  z.design.pairwise.interaction,
+  z.design.saturated
+)
 }
 \arguments{
 \item{z.design.saturated}{}

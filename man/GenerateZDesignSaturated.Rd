@@ -4,8 +4,13 @@
 \alias{GenerateZDesignSaturated}
 \title{Title}
 \usage{
-GenerateZDesignSaturated(tumor.character.cat, tumor.number, tumor.names,
-  freq.subtypes, cutoff = 10)
+GenerateZDesignSaturated(
+  tumor.character.cat,
+  tumor.number,
+  tumor.names,
+  freq.subtypes,
+  cutoff = 10
+)
 }
 \arguments{
 \item{cutoff}{}

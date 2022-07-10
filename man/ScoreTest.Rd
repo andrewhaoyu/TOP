@@ -4,8 +4,13 @@
 \alias{ScoreTest}
 \title{ScoreTest}
 \usage{
-ScoreTest(y, x, second.stage.structure = "additive",
-  score.test.support = NULL, missingTumorIndicator = NULL)
+ScoreTest(
+  y,
+  x,
+  second.stage.structure = "additive",
+  score.test.support = NULL,
+  missingTumorIndicator = NULL
+)
 }
 \arguments{
 \item{missingTumorIndicator}{}

@@ -4,8 +4,7 @@
 \alias{ls.objects}
 \title{Title}
 \usage{
-ls.objects(pos = 1, pattern, order.by, decreasing = FALSE, head = FALSE,
-  n = 5)
+ls.objects(pos = 1, pattern, order.by, decreasing = FALSE, head = FALSE, n = 5)
 }
 \arguments{
 \item{pos}{TBD}

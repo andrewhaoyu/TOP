@@ -4,9 +4,16 @@
 \alias{TwoStageModel}
 \title{Two-stage polytomous logistic regression}
 \usage{
-TwoStageModel(y, baselineonly = NULL, additive = NULL,
-  pairwise.interaction = NULL, saturated = NULL,
-  missingTumorIndicator = NULL, delta0 = NULL, cutoff = 10)
+TwoStageModel(
+  y,
+  baselineonly = NULL,
+  additive = NULL,
+  pairwise.interaction = NULL,
+  saturated = NULL,
+  missingTumorIndicator = NULL,
+  delta0 = NULL,
+  cutoff = 10
+)
 }
 \arguments{
 \item{y}{the phenotype file. The first column is the case control disease status. The other columns are the tumor characteristics status}

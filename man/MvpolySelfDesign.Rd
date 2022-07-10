@@ -4,11 +4,26 @@
 \alias{MvpolySelfDesign}
 \title{Title}
 \usage{
-MvpolySelfDesign(y, baselineonly, additive, pairwise.interaction, saturated,
-  delta0 = NULL, cutoff = 10)
+MvpolySelfDesign(
+  y,
+  x.self.design,
+  z.design,
+  baselineonly = NULL,
+  additive = NULL,
+  pairwise.interaction = NULL,
+  saturated = NULL,
+  missingTumorIndicator = 888,
+  z.all = NULL,
+  delta0 = NULL,
+  cutoff = 10
+)
 }
 \arguments{
 \item{y}{}
+
+\item{x.self.design}{}
+
+\item{z.design}{}
 
 \item{baselineonly}{}
 
@@ -17,6 +32,10 @@ MvpolySelfDesign(y, baselineonly, additive, pairwise.interaction, saturated,
 \item{pairwise.interaction}{}
 
 \item{saturated}{}
+
+\item{missingTumorIndicator}{}
+
+\item{z.all}{}
 
 \item{delta0}{}
 

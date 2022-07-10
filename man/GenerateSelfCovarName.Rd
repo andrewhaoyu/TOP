@@ -4,8 +4,13 @@
 \alias{GenerateSelfCovarName}
 \title{Title}
 \usage{
-GenerateSelfCovarName(x.self.design, baselineonly, additive,
-  pairwise.interaction, saturated)
+GenerateSelfCovarName(
+  x.self.design,
+  baselineonly,
+  additive,
+  pairwise.interaction,
+  saturated
+)
 }
 \arguments{
 \item{saturated}{}

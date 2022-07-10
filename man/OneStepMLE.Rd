@@ -4,8 +4,14 @@
 \alias{OneStepMLE}
 \title{Title}
 \usage{
-OneStepMLE(y, baselineonly, additive, pairwise.interaction, saturated,
-  missingTumorIndicator)
+OneStepMLE(
+  y,
+  baselineonly,
+  additive,
+  pairwise.interaction,
+  saturated,
+  missingTumorIndicator
+)
 }
 \arguments{
 \item{missingTumorIndicator}{}

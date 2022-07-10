@@ -4,9 +4,19 @@
 \alias{EMmvpolySelfDesign}
 \title{Two stage model with self design second stage matrix}
 \usage{
-EMmvpolySelfDesign(y, x.self.design, z.design, baselineonly = NULL,
-  additive = NULL, pairwise.interaction = NULL, saturated = NULL,
-  missingTumorIndicator = 888, z.all = NULL, delta0 = NULL, cutoff = 10)
+EMmvpolySelfDesign(
+  y,
+  x.self.design,
+  z.design,
+  baselineonly = NULL,
+  additive = NULL,
+  pairwise.interaction = NULL,
+  saturated = NULL,
+  missingTumorIndicator = 888,
+  z.all = NULL,
+  delta0 = NULL,
+  cutoff = 10
+)
 }
 \arguments{
 \item{y}{the phenotype file. The first column is the case control disease status. The other columns are the tumor characteristics status}

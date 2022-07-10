@@ -4,9 +4,16 @@
 \alias{ZDesigntoZall}
 \title{Title}
 \usage{
-ZDesigntoZall(baselineonly, additive, pairwise.interaction, saturated,
-  z.design.baselineonly, z.design.additive, z.design.pairwise.interaction,
-  z.design.saturated)
+ZDesigntoZall(
+  baselineonly,
+  additive,
+  pairwise.interaction,
+  saturated,
+  z.design.baselineonly,
+  z.design.additive,
+  z.design.pairwise.interaction,
+  z.design.saturated
+)
 }
 \arguments{
 \item{z.design.saturated}{}

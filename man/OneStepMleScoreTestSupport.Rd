@@ -4,8 +4,14 @@
 \alias{OneStepMleScoreTestSupport}
 \title{Title}
 \usage{
-OneStepMleScoreTestSupport(y, baselineonly, additive, pairwise.interaction,
-  saturated, missingTumorIndicator)
+OneStepMleScoreTestSupport(
+  y,
+  baselineonly,
+  additive,
+  pairwise.interaction,
+  saturated,
+  missingTumorIndicator
+)
 }
 \arguments{
 \item{missingTumorIndicator}{}

@@ -4,8 +4,15 @@
 \alias{Mvpoly}
 \title{Title}
 \usage{
-Mvpoly(y, baselineonly, additive, pairwise.interaction, saturated,
-  delta0 = NULL, cutoff = 10)
+Mvpoly(
+  y,
+  baselineonly,
+  additive,
+  pairwise.interaction,
+  saturated,
+  delta0 = NULL,
+  cutoff = 10
+)
 }
 \arguments{
 \item{delta0}{}
