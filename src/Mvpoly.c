@@ -580,7 +580,7 @@ double **ret;
 } /* END: symPosMatInv */
 
   /* Function to compute the inverse of a covariance matrix */
-int cov_inv_new(cov, n, inv)
+static int cov_inv_new(cov, n, inv)
 double **cov;
 int n;
 double **inv; /* Returned inverse */

@@ -623,7 +623,7 @@ double **ret;
 } /* END: symPosMatInv */
 
   /* Function to compute the inverse of a covariance matrix */
-  int cov_inv(cov, n, inv)
+static  int cov_inv(cov, n, inv)
 double **cov;
 int n;
 double **inv; /* Returned inverse */
@@ -1009,6 +1009,7 @@ static void Free_Mem(double * XX,double **tXXZ,int Nparm,double**X,int N,
   matrix_free((void **)Info,Znc);
 
 }
+
 
 void EMStep(deltai, pNparm, Y, Xvec, ZallVec,Zallnr,Zallnc, pN, pM, pNcov, pNiter, ptol,ptolMaxstep,
             pDEBUG, ret_rc, ret_delta,ret_info,ret_p,missing_vec,

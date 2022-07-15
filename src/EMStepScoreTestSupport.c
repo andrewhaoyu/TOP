@@ -875,6 +875,46 @@ double **ret;
                       }
 
 
+/* Function to compute the inverse of a covariance matrix */
+static int cov_inv(cov, n, inv)
+  double **cov;
+int n;
+double **inv; /* Returned inverse */
+{
+  double cc, a, b, d;
+  int ret;
+  
+  switch (n) {
+  case 0:
+    Rprintf("\nERROR: dimension of covariance matrix is 0\n");
+    exit(1);
+  case 1:
+    a = cov[0][0];
+    if (fabs(a) < ALMOST_ZERO) return(ERROR_SINGULAR_MATRIX);
+    inv[0][0] = 1.0/a;
+    break;
+  case 2:
+    a  = cov[0][0];
+    b  = cov[0][1];
+    d  = cov[1][1];
+    cc = a*d - b*b;
+    if (fabs(cc) < ALMOST_ZERO) return(ERROR_SINGULAR_MATRIX);
+    cc = 1.0/cc;
+    inv[0][0] = d*cc;
+    inv[0][1] = -b*cc;
+    inv[1][0] = -b*cc;
+    inv[1][1] = a*cc;
+    break;
+  default:
+    ret = symPosMatInv(cov, n, inv);
+  if (ret) return(ret);
+  break;
+  } /* END: switch */
+
+return(0);
+  
+} /* END: cov_inv_new */
+
 
 /*calculate the weighted matrix for MLE*/
 
