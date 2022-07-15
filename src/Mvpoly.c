@@ -1003,4 +1003,3 @@ int *pNparm, *pN, *pM, *pNcov, *pNiter, *ret_rc, *pDEBUG,*Zallnr,*Zallnc;
 
     return;
 } /* END: Mvpoly */
-

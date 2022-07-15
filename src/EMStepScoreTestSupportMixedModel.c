@@ -709,49 +709,9 @@ int col, Xnr, Xnc, M;
     }
     
     
-    /* calculate WX is a matrix with N*M row and M*p column*/
-    /* WX is decomposed into M*M block, each block has N*p column*/
-    /* Decompose W matrix into M*M block. each block is a diagnonal matrix with N*N */
-    /* i represent the row for the M*M block */
-    /* j represent the column for the M*M block */
-    /* k represent 1 to Ncov column of X */
-    /* v represent 1 to N element of X kth column element */
-    /* W is sysmetric */
-    
-    static void get_WX(int M,int N,int Ncov,double **X, double *W,double **WX){
-      int NM =N*M;
-      double *Wtemp;
-      Wtemp = dVec_alloc(N,0,0.0);
-      for(int i=0;i<M;i++){
-        for(int j=0;j<(i+1);j++){
-          for(int v=0;v<N;v++){
-            Wtemp[v] = W[NM*i+N*j+v];
-          }
-          
-          for(int k=0;k<Ncov;k++){
-            for(int v=0;v<N;v++){
-              /*WX[N*i+v][Ncov*j+k] = */
-              WX[N*j+v][Ncov*i+k] =  WX[N*i+v][Ncov*j+k]=Wtemp[v]*X[v][k];
-              
-            }
-          }
-        }
-      }
-      free(Wtemp);
-    }
-    
-    /* fill matrix into vector */
-    /* vec was ordered by column */
-    static void fill_vec(double **mat,int nr, int nc, double *ret){
-      for(int j=0;j<nc;j++){
-        for(int i=0;i<nr;i++){
-          ret[j*nr+i] = mat[i][j];
-        }
-      }
-    }
-    
   
     
+   
     /* Function to compute the inverse of a covariance matrix */
     /* Returned inverse */
     static  int cov_inv(cov, n, inv)
@@ -956,7 +916,7 @@ int col, Xnr, Xnc, M;
                                           pDEBUG, ret_rc, ret_delta,ret_info,ret_p,missing_vec,
                                           missing_Mat_vec,pmissing_number,ret_Inv_info_vec,YminusP,W_obs, WXZ_vec,WX_vec)
       double *deltai, *Y, *Xvec, *ptol, *ret_delta,*ret_info,*ret_p,*ZallVec,*missing_vec,
-      *missing_Mat_vec,*ptolMaxstep, *ret_Inv_info_vec, *YminusP, *W_obs;
+      *missing_Mat_vec,*ptolMaxstep, *ret_Inv_info_vec, *YminusP, *W_obs, *WXZ_vec, *WX_vec;
     int *pNparm, *pN, *pM, *pNcov, *pNiter, *ret_rc, *pDEBUG,*Zallnr,*Zallnc,*pmissing_number;
     
     {
@@ -1145,5 +1105,3 @@ int col, Xnr, Xnc, M;
       
       return;
     } /* END: Mvpoly */
-      
-      

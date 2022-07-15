@@ -63,23 +63,7 @@ int n;
 } /* END: matrix_free */
 
  
-  /* Multiply to matrices (matrix mult)  */
-  static void matrixMult(m1, m1_nr, m1_nc, m2, m2_nc, ret)
-double **m1, **m2, **ret;
-int m1_nr, m1_nc, m2_nc;
-{
-  int i, j, k;
-  double sum;
-
-  for (i=0; i<m1_nr; i++) {
-    for (j=0; j<m2_nc; j++) {
-      sum = 0.;
-      for (k=0; k<m1_nc; k++) sum += m1[i][k]*m2[k][j];
-      ret[i][j] = sum;
-    }
-  }
-
-} /* END: matrixMult */
+ 
 
 
   /* two matrix minus  */
@@ -92,29 +76,8 @@ int m1_nr, m1_nc, m2_nc;
   }/* END: matrixminus */
 
 
-  /* two vector minus */
-  static void VectorMinus(double *vec1,double*vec2,int N,double *ret){
-    for(int i=0;i<N;i++){
-      ret[i] = vec1[i]-vec2[i];
-    }
-  }
+ 
 
-
-
-
-  /* Function for dot product of two vectors */
-  static double dotProd(v1, v2, n)
-double *v1, *v2;
-int n;
-{
-  int i;
-  double sum=0.0;
-
-  for (i=0; i<n; i++) sum += v1[i]*v2[i];
-
-  return(sum);
-
-} /* END: dotProd */
 
   /* Function to compute Z */
   /*static void get_Z(Z_design, M, Ncatp1, Ncov, out)
@@ -160,31 +123,6 @@ int M, Ncatp1, Ncov;
   }
 
 }  END: get_Z */
-
-  /* Function to get a column of XXZ matrix */
-  static void get_XXZ_col(col, X, Xnr, Xnc, M, Z, dtempvec, out)
-double **X, **Z, *out, *dtempvec; /* dtempvec length M*Xnc */
-  int col, Xnr, Xnc, M;
-{
-  int  i, j, k, zstart;
-  double sum, *pt, *prow, *pout;
-
-  /* Copy column of Z into dtempvec */
-    for (i=0, pt=dtempvec; i<Xnc*M; i++, pt++) *pt = Z[i][col];
-
-    pout = out;
-    for (i=0; i<M; i++) {
-      zstart = i*Xnc;
-      for (j=0; j<Xnr; j++) {
-        sum  = 0.0;
-        for (k=0, prow=X[j], pt=&dtempvec[zstart]; k<Xnc; k++, prow++, pt++) {
-          sum += *prow * *pt;
-        }
-        *pout++ = sum;
-      }
-    }
-
-} /* END: get_XXZ_col */
 
   
 
@@ -237,127 +175,10 @@ int nr, nc, addInt;
 
 } /* END: fillMat */
 
-  /***********************************************************************************/
-  /* For computing inverse */
-  /***********************************************************************************/
-
-  /* Factor a symmetric positive definite matrix */
-  static int symPosFactor(mat, n, ret, retdiag)
-double **mat, **ret, *retdiag;
-int n;
-{
-  int i, j, k;
-  double sum, save, *ptr;
-
-  /* Copy mat to ret */
-    for (i=0; i<n; i++) {
-      for (j=0; j<n; j++) ret[i][j] = mat[i][j];
-    }
-
-  for (i=0, ptr=retdiag; i<n; i++, ptr++) {
-    for (j=i; j<n; j++) {
-      sum = ret[i][j];
-      for (k=i-1; k>-1; k--) sum -= ret[i][k]*ret[j][k];
-      if (i == j) {
-        if (sum < NUM_ZERO) return(ERROR_SINGULAR_MATRIX);
-        save = sqrt(sum);
-        *ptr = save;
-      } else {
-        ret[j][i] = sum/save;
-      }
-    }
-  }
-
-  /* Zero out the diagonal and above */
-    for (i=0; i<n; i++) {
-      for (j=i; j<n; j++) ret[i][j] = 0.;
-    }
-
-  return(0);
-
-} /* END: symPosFactor */
-
-  /* Invert a factor */
-  static void symPosFacInv(L, diag, n, ret)
-double **L, *diag;
-int n;
-double **ret;
-{
-  int i, j, k;
-  double sum;
-
-  /* Copy L to ret */
-    for (i=0; i<n; i++) {
-      for (j=0; j<n; j++) ret[i][j] = L[i][j];
-    }
-
-  for (i=0; i<n; i++) {
-    ret[i][i] = 1./diag[i];
-    for (j=i+1; j<n; j++) {
-      sum = 0.;
-      for (k=i; k<=j-1; k++) sum -= ret[j][k]*ret[k][i];
-
-      ret[j][i] = sum/diag[j];
-    }
-  }
-
-} /* END: symPosFacInv */
-
-  /* Transpose of a square matrix */
-  static void matTranspose(mat, n, ret)
-double **mat;
-int n;
-double **ret;
-{
-  int i, j;
-
-  for (i=0; i<n; i++) {
-    for (j=0; j<n; j++) ret[j][i] = mat[i][j];
-  }
-
-} /* END: rmatTranspose */
 
   
-  /*calculate the weighted matrix for MLE*/
-  /* W is a long vector with length N*(M+1)*M/2*/
-  /* since W is sysmetric , we only need to record the lower triangle*/
-  /* j<==i */
-  /* use the sysmetric to fill in the other side */
-  static void Weighted_W(double *p, double *W,int N,int M){
-    int NM;
-    NM = M*N;
-    /*for(int i=0;i<M;i++){
-      for(int j=0;j<M;j++){
-        if(i==j){
-          for(int k=0;k<N;k++){
-            W[NM*i+N*j+k] = p[N*i+k]-p[N*i+k]*p[N*i+k];
-          }
-        }else{
-          for(int k=0;k<N;k++){
-            W[NM*i+N*j+k] = -p[N*i+k]*p[N*j+k];
-          }
-        }
-
-      }
-    }*/
-      for(int i=0;i<M;i++){
-        for(int j=0;j<(i);j++){
-          for(int k=0;k<N;k++){
-            W[NM*i+N*j+k] = -p[N*i+k]*p[N*j+k];
-            W[NM*j+N*i+k] = W[NM*i+N*j+k]; /* use the sysmetric of W */
-
-          }
-
-        }
-      }
-    for(int i=0;i<M;i++){
-      for(int k=0;k<N;k++){
-        W[NM*i+N*i+k] = p[N*i+k]-p[N*i+k]*p[N*i+k];
-      }
-    }
-
-  }
-
+  
+ 
 /* calculate the vector combination XX*/
   /* X is a vector */
   /* We save X1*X1T for later calculation of XmWXm */
@@ -525,6 +346,38 @@ double **ret;
       score[i] = sum;
     }
   }
+/*function to compute the t(x_intere_M)%*%WXZ */
+/* x_intere_M is sparse */
+/* the output would be a M*zc_nc matrix */
+/* i represent the ith row */
+/* j represent the jth column */
+/* k represent kth element for a N length vector in WXZ */
+static void get_tx_intereWXZ(double* x_intere,double **WXZ,int N,int M,int zc_nc,
+                             double ** tx_intereWXZ){
+  double sum =0.0;
+  for(int i=0;i<M;i++){
+    for(int j=0;j<zc_nc;j++){
+      sum = 0.0;
+      for(int k=0;k<N;k++){
+        sum += WXZ[i*N+k][j]*x_intere[k];
+      }
+      tx_intereWXZ[i][j] = sum;
+    }
+    
+  }
+  
+}
+
+
+/* fill matrix into vector */
+/* vec was ordered by column */
+static void fill_vec(double **mat,int nr, int nc, double *ret){
+  for(int j=0;j<nc;j++){
+    for(int i=0;i<nr;i++){
+      ret[j*nr+i] = mat[i][j];
+    }
+  }
+}
 
 
 

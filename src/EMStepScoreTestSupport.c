@@ -14,6 +14,18 @@
 #define CHECK_MEM(obj) if (obj == NULL) {Rprintf("ERROR: allocating memory \n"); error("1");}
 
 
+static void print_dVec(vec, n, name)
+  double *vec;
+int n;
+char name[10];
+{
+  int i;
+  printf("%s \n", name);
+  for (i=0; i<n; i++) {
+    printf(" %g ", vec[i]);
+  }
+  printf("\n \n");
+}
 /* Function to allocate memory for a double vector */
   static double * dVec_alloc(n, initFlag, initVal)
 int n, initFlag;
@@ -678,7 +690,6 @@ double **ret;
 /* Function for getting the observed weighted matrix  W_com-W_com|mis*/
   static void Get_ObservedW(double *W,double *W_obs,int N,int M, double *Y){
     double * W_mis  ;
-    double **Info_mis, **XmWmisXm;
     W_mis = dVec_alloc((M*M*N),0,0.0);
     Weighted_W(Y, W_mis, N, M);
     VectorMinus(W,W_mis,N*M*M,W_obs);
@@ -823,7 +834,7 @@ return(0);
                      int DEBUG,int* ret_rc,double* ret_delta,double**Info,
                      double *ret_p,double *lxx,double *W,double *beta,
                      double* w_y,double **XmWXm,double **Inv,double **tXXZ,double *XX){
-    int i, iter, NM, rc, conv=0;
+    int i, iter, NM, conv=0;
     double  rerror,*delta0;
     NM      = N*M;
     /*printf("Ncat\tNcatp1\tNcov0\tNcov\tZnr\Znc\n");
@@ -980,7 +991,7 @@ int *pNparm, *pN, *pM, *pNcov, *pNiter, *ret_rc, *pDEBUG,*Zallnr,*Zallnc,*pmissi
 {
   int i, Niter, M, N, Ncov0, Ncov, iter, Znr, Znc, NM, rc, conv=0;
   int Nparm, DEBUG;
-  double tol, **X, **Z_design, *delta0, **Z, rerror, **XmWXm;
+  double tol, **X, *delta0, **Z, rerror, **XmWXm;
   double *w_y, **Inv, **Info,*lxx, **tXXZ;
   double *beta;
   double **missing_Mat;
