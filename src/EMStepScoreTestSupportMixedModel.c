@@ -13,46 +13,6 @@
 #define ERROR_SINGULAR_MATRIX 1
 #define CHECK_MEM(obj) if (obj == NULL) {Rprintf("ERROR: allocating memory \n"); error("1");}
 
-static void print_dVec(vec, n, name)
-  double *vec;
-int n;
-char name[10];
-{
-  int i;
-  printf("%s \n", name);
-  for (i=0; i<n; i++) {
-    printf(" %g ", vec[i]);
-  }
-  printf("\n \n");
-}
-static void print_iVec(vec, n, name)
-  int *vec;
-int n;
-char name[10];
-{
-  int i;
-  printf("%s \n", name);
-  for (i=0; i<n; i++) {
-    printf(" %d ", vec[i]);
-  }
-  printf("\n \n");
-}
-
-
-static void print_dMat(mat, nr, nc, name)
-  double **mat;
-int nr, nc;
-char name[10];
-{
-  int i, j;
-  printf("%s \n", name);
-  for (i=0; i<nr; i++) {
-    for (j=0; j<nc; j++) printf(" %g ", mat[i][j]);
-    printf("\n");
-  }
-  printf("\n \n");
-}
-
 /* Function to allocate memory for a double vector */
 static double * dVec_alloc(n, initFlag, initVal)
   int n, initFlag;
@@ -132,16 +92,6 @@ int m1_nr, m1_nc, m2_nc;
   }
   
 } /* END: matrixMult */
-
-
-/* two matrix minus  */
-static void MatrixMinus(double **mat1,double**mat2,int nr,int nc,double **ret){
-  for(int i=0;i<nr;i++){
-    for(int j=0;j<nc;j++){
-      ret[i][j] = mat1[i][j]-mat2[i][j];
-    }
-  }
-}/* END: matrixminus */
 
 
 /* two vector minus */
@@ -334,41 +284,7 @@ int col, Xnr, Xnc, M;
     
   } /* END: get_pxx */
     
-    /* Function to compute vec1*W*vec2 */
-    static double v1Wv2(p, N, M, vec1, vec2)
-    double *p, *vec1, *vec2;  /* p is stored as a vector, out must be of length NM */
-    int N, M;
-    {
-      int i, ii, jj, NM, MP1, row, NMP1;
-      double sum, prow, *p1, *pv2, *pv1, ret;
-      
-      NM   = N*M;
-      MP1  = M + 1;
-      NMP1 = NM + 1;
-      
-      ret = 0.0;
-      for (row=0, p1=p, pv2=vec2, pv1=vec1; row<NM; row++, p1++, pv2++, pv1++) {
-        prow = *p1;
-        sum  = (prow-prow*prow)* *pv2;
-        ii   = row + N;
-        jj   = row - N;
-        for (i=2; i<MP1; i++) {
-          if (ii < NMP1) {
-            sum += -prow*p[ii]*vec2[ii];
-            ii   = ii + N;
-          }
-          if (jj > -1) {
-            sum += -prow*p[jj]*vec2[jj];
-            jj   = jj - N;
-          }
-        }
-        ret += *pv1 * sum;
-      }
-      
-      return(ret);
-      
-    } /* END: v1Wv2 */
-    
+   
     
     
     /* Function to compute W_y = yy-pxx+W%*%lxx */
@@ -753,32 +669,7 @@ int col, Xnr, Xnc, M;
       }
     }
     
-    /* Function for quadractic computation X^tkX */
-    static void QuadXKXt(double **X,double ** K, int Xnr,int Xnc, double** ret){
-      double sum = 0.0;
-      
-      for(int i=0;i<Xnr;i++){
-        for(int j=0;j<(i+1);j++){
-          /*the ith row and jth column of the ret*/
-          /*the ith row X transpose times K times the jth row of the X */
-          sum = 0.0;
-          /* One vector times K times one Vector*/
-          for(int k=0;k<Xnc;k++){
-            for(int l=0;l<Xnc;l++){
-              
-              sum += X[i][k]*K[k][l]*X[j][l];
-            }
-          }
-          ret[i][j] = sum;
-          /* ret is sysmetric */
-          ret[j][i] = sum;
-          
-        }
-      }
-    }
-    
-    
-    
+  
     
     /* Function for getting the observed weighted matrix  W_com-W_com|mis*/
     static void Get_ObservedW(double *W,double *W_obs,int N,int M, double *Y){
@@ -859,18 +750,7 @@ int col, Xnr, Xnc, M;
       }
     }
     
-    /* get the matrix WXZ */
-    static void get_WXZ(int M,int N,int Ncov,double **X, double *W,
-                        double **WX,double **WXZ,int Nparm,double **Z,int Znc,
-                        double *WXZ_vec,double *WX_vec){
-      /*Rprintf("Get WX");*/
-      get_WX(M,N,Ncov,X, W, WX);
-      fill_vec(WX,N*M,M*Ncov,WX_vec);
-      /*Rprintf("Get WXZ");*/
-      matrixMult(WX, N*M, M*Ncov, Z, Nparm, WXZ);
-      fill_vec(WXZ,N*M,Znc,WXZ_vec);
-      
-    }
+  
     
     /* Function to compute the inverse of a covariance matrix */
     /* Returned inverse */

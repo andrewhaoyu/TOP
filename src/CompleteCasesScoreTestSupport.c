@@ -13,45 +13,6 @@
 #define ERROR_SINGULAR_MATRIX 1
 #define CHECK_MEM(obj) if (obj == NULL) {Rprintf("ERROR: allocating memory \n"); error("1");}
 
-static void print_dVec(vec, n, name)
-double *vec;
-int n;
-char name[10];
-{
-  int i;
-  printf("%s \n", name);
-  for (i=0; i<n; i++) {
-    printf(" %g ", vec[i]);
-  }
-  printf("\n \n");
-}
-static void print_iVec(vec, n, name)
-int *vec;
-int n;
-char name[10];
-{
-  int i;
-  printf("%s \n", name);
-  for (i=0; i<n; i++) {
-    printf(" %d ", vec[i]);
-  }
-  printf("\n \n");
-}
-
-
-static void print_dMat(mat, nr, nc, name)
-double **mat;
-int nr, nc;
-char name[10];
-{
-  int i, j;
-  printf("%s \n", name);
-  for (i=0; i<nr; i++) {
-    for (j=0; j<nc; j++) printf(" %g ", mat[i][j]);
-    printf("\n");
-  }
-  printf("\n \n");
-}
 
 /* Function to allocate memory for a double vector */
   static double * dVec_alloc(n, initFlag, initVal)
@@ -134,15 +95,7 @@ int m1_nr, m1_nc, m2_nc;
 } /* END: matrixMult */
 
 
-  /* two matrix minus  */
-  static void MatrixMinus(double **mat1,double**mat2,int nr,int nc,double **ret){
-    for(int i=0;i<nr;i++){
-      for(int j=0;j<nc;j++){
-        ret[i][j] = mat1[i][j]-mat2[i][j];
-      }
-    }
-  }/* END: matrixminus */
-
+ 
 
   /* two vector minus */
   static void VectorMinus(double *vec1,double*vec2,int N,double *ret){
@@ -335,41 +288,6 @@ int N, M;
       }
 
 } /* END: get_pxx */
-
-  /* Function to compute vec1*W*vec2 */
-  static double v1Wv2(p, N, M, vec1, vec2)
-double *p, *vec1, *vec2;  /* p is stored as a vector, out must be of length NM */
-  int N, M;
-{
-  int i, ii, jj, NM, MP1, row, NMP1;
-  double sum, prow, *p1, *pv2, *pv1, ret;
-
-  NM   = N*M;
-  MP1  = M + 1;
-  NMP1 = NM + 1;
-
-  ret = 0.0;
-  for (row=0, p1=p, pv2=vec2, pv1=vec1; row<NM; row++, p1++, pv2++, pv1++) {
-    prow = *p1;
-    sum  = (prow-prow*prow)* *pv2;
-    ii   = row + N;
-    jj   = row - N;
-    for (i=2; i<MP1; i++) {
-      if (ii < NMP1) {
-        sum += -prow*p[ii]*vec2[ii];
-        ii   = ii + N;
-      }
-      if (jj > -1) {
-        sum += -prow*p[jj]*vec2[jj];
-        jj   = jj - N;
-      }
-    }
-    ret += *pv1 * sum;
-  }
-
-  return(ret);
-
-} /* END: v1Wv2 */
 
 
 
@@ -755,29 +673,6 @@ double **ret;
     }
   }
 
-/* Function for quadractic computation X^tkX */
-  static void QuadXKXt(double **X,double ** K, int Xnr,int Xnc, double** ret){
-    double sum = 0.0;
-
-    for(int i=0;i<Xnr;i++){
-      for(int j=0;j<(i+1);j++){
-        /*the ith row and jth column of the ret*/
-          /*the ith row X transpose times K times the jth row of the X */
-          sum = 0.0;
-          /* One vector times K times one Vector*/
-            for(int k=0;k<Xnc;k++){
-              for(int l=0;l<Xnc;l++){
-
-                sum += X[i][k]*K[k][l]*X[j][l];
-              }
-            }
-          ret[i][j] = sum;
-          /* ret is sysmetric */
-            ret[j][i] = sum;
-
-      }
-    }
-  }
 
 
 
@@ -973,34 +868,6 @@ return(0);
   } /* END: Mvpoly */
 
 
-  static void EstepFitting(double *missing_vec, double **missing_Mat,
-                           double *Y, double **X,double*beta,
-                           int missing_number,int M,int N,int NCOV){
-    double sum=0.0;
-    int temp;
-    int i;
-    for(int t=0;t<missing_number;t++){
-      i = missing_vec[t]-1;
-      sum = 0.0;
-      for(int j=0;j<M;j++){
-        if(missing_Mat[t][j]==1){
-          temp = j*N+i;
-          Y[temp] = 0.0;
-          for(int k=0;k<NCOV;k++){
-            Y[temp] +=  X[i][k]*beta[j*NCOV+k]; /* get X[i,]*beta[,j] if j subtype is potentail true */
-          }
-          Y[temp] = exp(Y[temp]);
-          sum += Y[temp];
-        }
-      }
-      for(int j=0;j<M;j++){
-        if(missing_Mat[t][j]==1){
-          Y[j*N+i] = Y[j*N+i]/sum;
-        }
-      }
-    }
-
-  }
 
 static void Free_Mem(double * XX,double **tXXZ,int Nparm,double**X,int N,
                      double *delta0,double**Z,int M,

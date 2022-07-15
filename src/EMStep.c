@@ -14,45 +14,6 @@
 #define ERROR_SINGULAR_MATRIX 1
 #define CHECK_MEM(obj) if (obj == NULL) {Rprintf("ERROR: allocating memory \n"); error("1");}
 
-static void print_dVec(vec, n, name)
-double *vec;
-int n;
-char name[10];
-{
-  int i;
-  printf("%s \n", name);
-  for (i=0; i<n; i++) {
-    printf(" %g ", vec[i]);
-  }
-  printf("\n \n");
-}
-static void print_iVec(vec, n, name)
-int *vec;
-int n;
-char name[10];
-{
-  int i;
-  printf("%s \n", name);
-  for (i=0; i<n; i++) {
-    printf(" %d ", vec[i]);
-  }
-  printf("\n \n");
-}
-
-
-static void print_dMat(mat, nr, nc, name)
-double **mat;
-int nr, nc;
-char name[10];
-{
-  int i, j;
-  printf("%s \n", name);
-  for (i=0; i<nr; i++) {
-    for (j=0; j<nc; j++) printf(" %g ", mat[i][j]);
-    printf("\n");
-  }
-  printf("\n \n");
-}
 
 /* Function to allocate memory for a double vector */
   static double * dVec_alloc(n, initFlag, initVal)
@@ -330,40 +291,7 @@ int N, M;
 
 } /* END: get_pxx */
 
-  /* Function to compute vec1*W*vec2 */
-  static double v1Wv2(p, N, M, vec1, vec2)
-double *p, *vec1, *vec2;  /* p is stored as a vector, out must be of length NM */
-  int N, M;
-{
-  int i, ii, jj, NM, MP1, row, NMP1;
-  double sum, prow, *p1, *pv2, *pv1, ret;
-
-  NM   = N*M;
-  MP1  = M + 1;
-  NMP1 = NM + 1;
-
-  ret = 0.0;
-  for (row=0, p1=p, pv2=vec2, pv1=vec1; row<NM; row++, p1++, pv2++, pv1++) {
-    prow = *p1;
-    sum  = (prow-prow*prow)* *pv2;
-    ii   = row + N;
-    jj   = row - N;
-    for (i=2; i<MP1; i++) {
-      if (ii < NMP1) {
-        sum += -prow*p[ii]*vec2[ii];
-        ii   = ii + N;
-      }
-      if (jj > -1) {
-        sum += -prow*p[jj]*vec2[jj];
-        jj   = jj - N;
-      }
-    }
-    ret += *pv1 * sum;
-  }
-
-  return(ret);
-
-} /* END: v1Wv2 */
+ 
 
 
 

@@ -14,18 +14,6 @@
 #define ERROR_SINGULAR_MATRIX 1
 #define CHECK_MEM(obj) if (obj == NULL) {Rprintf("ERROR: allocating memory \n"); error("1");}
 
-static void print_dVec(vec, n, name)
-double *vec;
-int n;
-char name[10];
-{
-  int i;
-  printf("%s \n", name);
-  for (i=0; i<n; i++) {
-    printf(" %g ", vec[i]);
-  }
-  printf("\n \n");
-}
 
 /*static void print_iVec(vec, n, name)
 int *vec;

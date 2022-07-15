@@ -26,19 +26,6 @@ char name[10];
   }
   printf("\n \n");
 }
-static void print_iVec(vec, n, name)
-  int *vec;
-int n;
-char name[10];
-{
-  int i;
-  printf("%s \n", name);
-  for (i=0; i<n; i++) {
-    printf(" %d ", vec[i]);
-  }
-  printf("\n \n");
-}
-
 
 static void print_dMat(mat, nr, nc, name)
   double **mat;
@@ -329,42 +316,7 @@ int col, Xnr, Xnc, M;
     
   } /* END: get_pxx */
     
-    /* Function to compute vec1*W*vec2 */
-    static double v1Wv2(p, N, M, vec1, vec2)
-    double *p, *vec1, *vec2;  /* p is stored as a vector, out must be of length NM */
-    int N, M;
-    {
-      int i, ii, jj, NM, MP1, row, NMP1;
-      double sum, prow, *p1, *pv2, *pv1, ret;
-      
-      NM   = N*M;
-      MP1  = M + 1;
-      NMP1 = NM + 1;
-      
-      ret = 0.0;
-      for (row=0, p1=p, pv2=vec2, pv1=vec1; row<NM; row++, p1++, pv2++, pv1++) {
-        prow = *p1;
-        sum  = (prow-prow*prow)* *pv2;
-        ii   = row + N;
-        jj   = row - N;
-        for (i=2; i<MP1; i++) {
-          if (ii < NMP1) {
-            sum += -prow*p[ii]*vec2[ii];
-            ii   = ii + N;
-          }
-          if (jj > -1) {
-            sum += -prow*p[jj]*vec2[jj];
-            jj   = jj - N;
-          }
-        }
-        ret += *pv1 * sum;
-      }
-      
-      return(ret);
-      
-    } /* END: v1Wv2 */
-    
-    
+   
     
     /* Function to compute W_y = yy-pxx+W%*%lxx */
     static void get_Wy(Y, lxx, Pxx, N, M,W, out)
@@ -859,88 +811,7 @@ int col, Xnr, Xnc, M;
     /*************************************************************************************/
     
     
-    /* Function Mvpoly */
-    static void Mvpoly(double *deltai,int Nparm,double* Y,
-                       double **X, double **Z,int Znr,int Znc,
-                       int N, int M, int Ncov, int Niter,double tolMStep,
-                       int DEBUG,int* ret_rc,double* ret_delta,double**Info,
-                       double *ret_p,double *lxx,double *W,double *beta,
-                       double* w_y,double **XmWXm,double **Inv,double **tXXZ,double *XX){
-      int i, iter, NM, rc, conv=0;
-      double  rerror,*delta0;
-      NM      = N*M;
-      /*printf("Ncat\tNcatp1\tNcov0\tNcov\tZnr\Znc\n");
-       printf("%i\t%i\t%i\t%i\t%i\t%i\n",Ncat,Ncatp1,Ncov0,Ncov,Znr,Znc);*/
-      
-      /* Allocate memory for matrix of covariates and Z map matrix */
-      delta0   = dVec_alloc(Nparm, 0, 0.0);
-      /* Copy initial estimates to delta0 */
-      for (i=0; i<Nparm; i++) delta0[i] = deltai[i];
-      /*print_dMat(tXXZ,(Ncov-1)*Ncatp1+M,M*N,tXXZ);*/
-      if (DEBUG) Rprintf("Begin Weighted Least Sqaure Maximization\n");
-      for (iter=1; iter<=Niter; iter++) {
-        if (DEBUG) Rprintf("Weighted Least Sqaure Iteration: %d\n", iter);
-        
-        if (DEBUG) Rprintf("Compute lxx\n");
-        get_lxx(Z, Znr, Znc, delta0, X, N, Ncov, M,lxx);
-        if (DEBUG) Rprintf("Compute pxx\n");
-        get_pxx(lxx, N, M, ret_p);
-        if (DEBUG) Rprintf("Compute weighted matrix\n");
-        Weighted_W(ret_p, W, N, M);
-        if (DEBUG) Rprintf("Compute XmWXm matrix\n");
-        get_XmWXm(XX,X,W, M,N, Ncov,XmWXm);
-        /*print_dMat(XmWXm,Znr,Znr,"XmWXm");*/
-        if (DEBUG) Rprintf("Compute information matrix\n");
-        
-        /*get_Info(X, N, Ncov, M, Z, Znr, Znc, pxx, Info);*/
-        
-        QuadXKX(Z,XmWXm, Znr,Znc, Info);
-        /* print_dMat(XmWXm,Znr,Znr,"Info");*/
-        
-        if (DEBUG) Rprintf("Compute covariance matrix\n");
-        rc = cov_inv(Info, Znc, Inv);
-        if (rc) {
-          Rprintf("ERROR computing inverse of information matrix\n");
-          error("ERROR");
-        }
-        if (DEBUG) Rprintf("Compute W_y\n");
-        get_Wy(Y, lxx, ret_p, N, M,W,w_y);
-        if (DEBUG) Rprintf("Compute delta\n");
-        
-        get_delta(Inv, Nparm, tXXZ, N, M, w_y, ret_delta);
-        
-        if (DEBUG) print_dVec(ret_delta, Nparm, "delta");
-        
-        /* Check for non-finite values */
-        if (!all_finite(ret_delta, Nparm)) {
-          Rprintf("ERROR: Weighted Least Square Algorithm not converging, parameters have non-finite values\n");
-          error("ERROR");
-        }
-        
-        if (DEBUG) Rprintf("Check Weighted Least Square stopping criteria\n");
-        rerror = checkStop(ret_delta, delta0, Nparm);
-        if (rerror <= tolMStep) {
-          conv = 1;
-          break;
-        }
-        
-        /* Update delta0 */
-        if (DEBUG) Rprintf("Update parameters\n");
-        for (i=0; i<Nparm; i++) delta0[i] = ret_delta[i];
-      }
-      
-      
-      free(delta0);
-      
-      if (!conv) {
-        Rprintf("ERROR: algorithm did not converge\n");
-        error("ERROR");
-      }
-      *ret_rc = 0;
-      
-      
-    } /* END: Mvpoly */
-        
+
         
         static void EstepFitting(double *missing_vec, double **missing_Mat,
                                  double *Y, double **X,double*beta,
