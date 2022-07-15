@@ -405,32 +405,7 @@ int col, Xnr, Xnc, M;
     } /* END: get_delta */
       
       
-      /* Function to check the stopping criteria */
-      static double checkStop(delta, delta0, n)
-      double *delta, *delta0;
-    int n;
-    {
-      int i;
-      double maxv=-9999.9, temp, rerror;
-      
-      /* Get max value */
-      for (i=0; i<n; i++) {
-        temp = fabs(delta0[i]);
-        if (temp > maxv) maxv = temp;
-      }
-      
-      if (maxv < 0.1) maxv = 0.1;
-      
-      rerror = -9999.9;
-      for (i=0; i<n; i++) {
-        temp = fabs(delta[i] - delta0[i])/maxv;
-        if (temp > rerror) rerror = temp;
-      }
-      
-      return(rerror);
-      
-    } /* END: checkStop */
-      
+    
       /* Function to fill in a matrix from a vector (by column) */
       static void fillMat(vec, nr, nc, addInt, out)
       double *vec, **out;
@@ -890,14 +865,13 @@ int col, Xnr, Xnc, M;
     int *pNparm, *pN, *pM, *pNcov, *pNiter, *ret_rc, *pDEBUG,*Zallnr,*Zallnc,*pmissing_number;
     
     {
-      int i, Niter, M, N, Ncov0, Ncov, iter, Znr, Znc, NM, rc, conv=0;
+      int i, Niter, M, N, Ncov0, Ncov, Znr, Znc, NM, rc, conv=0;
       int Nparm, DEBUG;
-      double tol, **X, **Z_design, *delta0, **Z, rerror, **XmWXm;
+      double tol, **X, *delta0, **Z, **XmWXm;
       double *w_y, **Inv, **Info,*lxx, **tXXZ;
       double *W,*beta;
       double **missing_Mat;
       int missing_number;
-      double tolMaxstep;
       double *XX;
       double **Info_obs;
       

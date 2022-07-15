@@ -909,7 +909,7 @@ double *deltai, *Y, *Xvec, *ptol, *ret_delta,*ret_info,*ret_p,*ZallVec,
 int *pNparm, *pN, *pM, *pNcov, *pNiter, *ret_rc, *pDEBUG,*Zallnr,*Zallnc;
 
 {
-  int i, Niter, M, N, Ncov0, Ncov, Znr, Znc, NM, conv=0;
+  int i, Niter, M, N, Ncov0, Ncov, Znr, Znc, NM;
   int Nparm, DEBUG;
   double tol, **X, *delta0, **Z, **XmWXm;
   double *w_y, **Inv, **Info,*lxx, **tXXZ;

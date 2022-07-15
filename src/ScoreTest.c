@@ -202,6 +202,7 @@ int nr, nc, addInt;
   /* Use the sysmetric property of XmWXm */
 
   static void get_XmWXm_vec(double *XX,double *W, int M,int N, double **ret){
+    
     int NM = N*M;
     double *Wtemp;
     Wtemp   = dVec_alloc(N,0, 0.0);
@@ -319,7 +320,7 @@ int nr, nc, addInt;
   /* XtYminusP is a vector with M length*/
   static void get_XtYminusP(double *x_intere,double *YminusP, double *XtYminusP,
                             int N, int M){
-    int NM = N*M;
+    
     for(int i=0;i< M;i++){
       XtYminusP[i] =0;
       for(int k=0;k<N;k++){
@@ -404,7 +405,7 @@ void ScoreTest( double *x_intere ,
                 double *Quad_tx_intere_WXZ_invinfo_vec)
 
 {
-  int zc_nr = *pzc_nr;
+  
   int zc_nc = *pzc_nc;
   int z_intere_nr = *pz_intere_nr;
   int z_intere_nc = *pz_intere_nc;

@@ -674,7 +674,6 @@ int col, Xnr, Xnc, M;
     /* Function for getting the observed weighted matrix  W_com-W_com|mis*/
     static void Get_ObservedW(double *W,double *W_obs,int N,int M, double *Y){
       double * W_mis  ;
-      double **Info_mis, **XmWmisXm;
       W_mis = dVec_alloc((M*M*N),0,0.0);
       Weighted_W(Y, W_mis, N, M);
       VectorMinus(W,W_mis,N*M*M,W_obs);
@@ -920,9 +919,9 @@ int col, Xnr, Xnc, M;
     int *pNparm, *pN, *pM, *pNcov, *pNiter, *ret_rc, *pDEBUG,*Zallnr,*Zallnc,*pmissing_number;
     
     {
-      int i, Niter, M, N, Ncov0, Ncov, iter, Znr, Znc, NM, rc, conv=0;
+      int i, Niter, M, N, Ncov0, Ncov, iter, Znr, Znc, NM, conv=0;
       int Nparm, DEBUG;
-      double tol, **X, **Z_design, *delta0, **Z, rerror, **XmWXm;
+      double tol, **X, *delta0, **Z, rerror, **XmWXm;
       double *w_y, **Inv, **Info,*lxx, **tXXZ;
       double *beta;
       double **missing_Mat;

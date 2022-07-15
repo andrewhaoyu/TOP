@@ -13,46 +13,6 @@
 #define ERROR_SINGULAR_MATRIX 1
 #define CHECK_MEM(obj) if (obj == NULL) {Rprintf("ERROR: allocating memory \n"); error("1");}
 
-static void print_dVec(vec, n, name)
-double *vec;
-int n;
-char name[10];
-{
-  int i;
-  printf("%s \n", name);
-  for (i=0; i<n; i++) {
-    printf(" %g ", vec[i]);
-  }
-  printf("\n \n");
-}
-static void print_iVec(vec, n, name)
-int *vec;
-int n;
-char name[10];
-{
-  int i;
-  printf("%s \n", name);
-  for (i=0; i<n; i++) {
-    printf(" %d ", vec[i]);
-  }
-  printf("\n \n");
-}
-
-
-static void print_dMat(mat, nr, nc, name)
-double **mat;
-int nr, nc;
-char name[10];
-{
-  int i, j;
-  printf("%s \n", name);
-  for (i=0; i<nr; i++) {
-    for (j=0; j<nc; j++) printf(" %g ", mat[i][j]);
-    printf("\n");
-  }
-  printf("\n \n");
-}
-
 /* Function to allocate memory for a double vector */
   static double * dVec_alloc(n, initFlag, initVal)
 int n, initFlag;
@@ -100,20 +60,7 @@ int n;
 
 } /* END: matrix_free */
 
-  /* Function to check for non-finite values */
-  static int all_finite(vec, n)
-double *vec;
-int n;
-{
-  int i;
-
-  for (i=0; i<n; i++) {
-    if (!R_FINITE(vec[i])) return(0);
-  }
-
-  return(1);
-
-} /* END: all_finite */
+ 
 
   /**transform a matrix **/
 
@@ -154,47 +101,8 @@ int m1_nr, m1_nc, m2_nc;
   }/* END: matrixminus */
 
 
-  /* two vector minus */
-  static void VectorMinus(double *vec1,double*vec2,int N,double *ret){
-    for(int i=0;i<N;i++){
-      ret[i] = vec1[i]-vec2[i];
-    }
-  }
 
-
-
-/* Function to compute Xy for matrix X and vector */
-  static void X_y(X, nr, nc, y, ret)
-double **X, *y, *ret;
-int nr, nc;
-{
-  int i, j;
-  double sum, *p, *pret, *px;
-
-  for (i=0, pret=ret; i<nr; i++, pret++) {
-    sum  = 0.0;
-    for (j=0, p=y, px=X[i]; j<nc; j++, p++, px++) {
-      sum += *px * *p;
-    }
-    *pret = sum;
-  }
-
-} /* END: X_y */
-
-  /* Function for dot product of two vectors */
-  static double dotProd(v1, v2, n)
-double *v1, *v2;
-int n;
-{
-  int i;
-  double sum=0.0;
-
-  for (i=0; i<n; i++) sum += v1[i]*v2[i];
-
-  return(sum);
-
-} /* END: dotProd */
-
+ 
   /* Function to compute Z */
   /*static void get_Z(Z_design, M, Ncatp1, Ncov, out)
 double **Z_design, **out;
@@ -240,192 +148,10 @@ int M, Ncatp1, Ncov;
 
 }  END: get_Z */
 
-  /* Function to get a column of XXZ matrix */
-  static void get_XXZ_col(col, X, Xnr, Xnc, M, Z, dtempvec, out)
-double **X, **Z, *out, *dtempvec; /* dtempvec length M*Xnc */
-  int col, Xnr, Xnc, M;
-{
-  int  i, j, k, zstart;
-  double sum, *pt, *prow, *pout;
+ 
 
-  /* Copy column of Z into dtempvec */
-    for (i=0, pt=dtempvec; i<Xnc*M; i++, pt++) *pt = Z[i][col];
+ 
 
-    pout = out;
-    for (i=0; i<M; i++) {
-      zstart = i*Xnc;
-      for (j=0; j<Xnr; j++) {
-        sum  = 0.0;
-        for (k=0, prow=X[j], pt=&dtempvec[zstart]; k<Xnc; k++, prow++, pt++) {
-          sum += *prow * *pt;
-        }
-        *pout++ = sum;
-      }
-    }
-
-} /* END: get_XXZ_col */
-
-  /* Function to compute t(XXZ) */
-  static void get_tXXZ(X, Xnr, Xnc, M, Znc, Z, out)
-double **X, **Z, **out;  /* out must have dim Zallnc x Xnr*M */
-  int Xnr, Xnc, M,Znc;
-{
-  int i;
-  double *temp;
-
-  temp = dVec_alloc(Xnc*M, 0, 0.0);
-
-  for (i=0; i< Znc; i++) {
-    get_XXZ_col(i, X, Xnr, Xnc, M, Z, temp, out[i]);
-  }
-
-  free(temp);
-
-} /* END: get_tXXZ */
-
-  /* Function to compute lxx = xx * beta = xx * z * delta */
-  static void get_lxx(Z, Znr, Znc, delta, X, Xnr, Xnc, M,out)
-double **Z, *delta, **X, *out;
-int Xnr, Xnc, Znr, Znc, M;
-{
-  double  sum, *beta;
-  int i, j, k, row, brow, bstart;
-
-  beta  = dVec_alloc(Znr, 0, 0.0);
-
-  /* Compute beta = Z*delta */
-  X_y(Z, Znr, Znc, delta, beta);
-
-
-  /* Compute out = XX*beta */
-    row = 0;
-    for (i=0; i<M; i++) {
-      bstart = i*Xnc;
-      for (j=0; j<Xnr; j++) {
-        sum  = 0.0;
-        brow = bstart;
-        for (k=0; k<Xnc; k++) {
-          sum += X[j][k]*beta[brow];
-          brow++;
-        }
-        out[row] = sum;
-        row++;
-      }
-    }
-
-
-
-} /* END: get_lxx */
-
-  /* Function to compute pxx */
-  static void get_pxx(lxx, N, M, out)
-double *lxx, *out;
-int N, M;
-{
-  int i, j, col, NM;
-  double sum;
-
-  NM = N*M;
-  for (i=0; i<NM; i++) out[i] = exp(lxx[i]);
-
-  /* Scale */
-      for (i=0; i<N; i++) {
-        sum = 0.0;
-        col = i;
-        for (j=0; j<M; j++) {
-          sum += out[col];
-          col += N;
-        }
-        col = i;
-        sum = sum + 1.0;
-        for (j=0; j<M; j++) {
-          out[col] = out[col]/sum;
-          col += N;
-        }
-      }
-
-} /* END: get_pxx */
-
-  /* Function to compute vec1*W*vec2 */
-  static double v1Wv2(p, N, M, vec1, vec2)
-double *p, *vec1, *vec2;  /* p is stored as a vector, out must be of length NM */
-  int N, M;
-{
-  int i, ii, jj, NM, MP1, row, NMP1;
-  double sum, prow, *p1, *pv2, *pv1, ret;
-
-  NM   = N*M;
-  MP1  = M + 1;
-  NMP1 = NM + 1;
-
-  ret = 0.0;
-  for (row=0, p1=p, pv2=vec2, pv1=vec1; row<NM; row++, p1++, pv2++, pv1++) {
-    prow = *p1;
-    sum  = (prow-prow*prow)* *pv2;
-    ii   = row + N;
-    jj   = row - N;
-    for (i=2; i<MP1; i++) {
-      if (ii < NMP1) {
-        sum += -prow*p[ii]*vec2[ii];
-        ii   = ii + N;
-      }
-      if (jj > -1) {
-        sum += -prow*p[jj]*vec2[jj];
-        jj   = jj - N;
-      }
-    }
-    ret += *pv1 * sum;
-  }
-
-  return(ret);
-
-} /* END: v1Wv2 */
-
-
-
-  /* Function to compute W_y = yy-pxx+W%*%lxx */
-  static void get_Wy(Y, lxx, Pxx, N, M,W, out)
-double *Y;  /* Nsub*M vector of outcomes */
-  int N, M;
-double *lxx, *out, *Pxx, *W;
-{
-  int  NM, k,i;
-  double sum;
-
-  NM   = N*M;
-
-  for(int t =0; t <NM; t++){
-    i = t/N; /*t/N round to the nearst smaller integer */
-      k = t%N;
-      sum =0.0;
-      for(int j=0;j<M;j++){
-        sum += lxx[N*j+k]*W[i*NM+j*N+k];
-      }
-      out[t] = Y[t]-Pxx[t]+sum;
-  }
-
-
-
-
-  /* for (row=0, p1=Pxx, p2=out, py=Y; row<NM; row++, p1++, p2++, py++) {
-    prow = *p1;
-    sum  = (prow-prow*prow)*lxx[row];
-    ii   = row + N;
-    jj   = row - N;
-    for (i=2; i<MP1; i++) {
-      if (ii < NMP1) {
-        sum += -prow*Pxx[ii]*lxx[ii];
-        ii   = ii + N;
-      }
-      if (jj > -1) {
-        sum += -prow*Pxx[jj]*lxx[jj];
-        jj   = jj - N;
-      }
-    }
-    *p2 = *py - prow + sum;
-  } */
-
-} /* END: get_Wy */
 
 
   /* fill the info matrix to the result*/
@@ -447,56 +173,9 @@ int Nr;
 
 /*end fill_SysMat_to_vec*/
 
-  /* Function to compute delta */
-  static void get_delta(INV, nc, tXXZ, N, M, W_y, out)
-double **INV, **tXXZ, *W_y, *out;
-int nc, N, M;
-{
-  /* delta <- solve(Infor_M,t(xxz)%*%W_y) */
-    int i, NM;
-  double *p1, **p2, *tXXZWy;
+  
 
-  NM     = N*M;
-  tXXZWy = dVec_alloc(nc, 0, 0.0);
-
-  /* Compute t(xxz)%*%w_y */
-    for (i=0, p1=tXXZWy; i<nc; i++, p1++) {
-      *p1 = dotProd(tXXZ[i], W_y, NM);
-    }
-
-  /* Compute delta */
-    for (i=0, p1=out, p2=INV; i<nc; i++, p1++, p2++) *p1 = dotProd(*p2, tXXZWy, nc);
-
-    free(tXXZWy);
-
-} /* END: get_delta */
-
-
-  /* Function to check the stopping criteria */
-  static double checkStop(delta, delta0, n)
-double *delta, *delta0;
-int n;
-{
-  int i;
-  double maxv=-9999.9, temp, rerror;
-
-  /* Get max value */
-    for (i=0; i<n; i++) {
-      temp = fabs(delta0[i]);
-      if (temp > maxv) maxv = temp;
-    }
-
-  if (maxv < 0.1) maxv = 0.1;
-
-  rerror = -9999.9;
-  for (i=0; i<n; i++) {
-    temp = fabs(delta[i] - delta0[i])/maxv;
-    if (temp > rerror) rerror = temp;
-  }
-
-  return(rerror);
-
-} /* END: checkStop */
+ 
 
   /* Function to fill in a matrix from a vector (by column) */
   static void fillMat(vec, nr, nc, addInt, out)
@@ -522,165 +201,11 @@ int nr, nc, addInt;
 
 } /* END: fillMat */
 
-  /***********************************************************************************/
-  /* For computing inverse */
-  /***********************************************************************************/
-
-  /* Factor a symmetric positive definite matrix */
-  static int symPosFactor(mat, n, ret, retdiag)
-double **mat, **ret, *retdiag;
-int n;
-{
-  int i, j, k;
-  double sum, save, *ptr;
-
-  /* Copy mat to ret */
-    for (i=0; i<n; i++) {
-      for (j=0; j<n; j++) ret[i][j] = mat[i][j];
-    }
-
-  for (i=0, ptr=retdiag; i<n; i++, ptr++) {
-    for (j=i; j<n; j++) {
-      sum = ret[i][j];
-      for (k=i-1; k>-1; k--) sum -= ret[i][k]*ret[j][k];
-      if (i == j) {
-        if (sum < NUM_ZERO) return(ERROR_SINGULAR_MATRIX);
-        save = sqrt(sum);
-        *ptr = save;
-      } else {
-        ret[j][i] = sum/save;
-      }
-    }
-  }
-
-  /* Zero out the diagonal and above */
-    for (i=0; i<n; i++) {
-      for (j=i; j<n; j++) ret[i][j] = 0.;
-    }
-
-  return(0);
-
-} /* END: symPosFactor */
-
-  /* Invert a factor */
-  static void symPosFacInv(L, diag, n, ret)
-double **L, *diag;
-int n;
-double **ret;
-{
-  int i, j, k;
-  double sum;
-
-  /* Copy L to ret */
-    for (i=0; i<n; i++) {
-      for (j=0; j<n; j++) ret[i][j] = L[i][j];
-    }
-
-  for (i=0; i<n; i++) {
-    ret[i][i] = 1./diag[i];
-    for (j=i+1; j<n; j++) {
-      sum = 0.;
-      for (k=i; k<=j-1; k++) sum -= ret[j][k]*ret[k][i];
-
-      ret[j][i] = sum/diag[j];
-    }
-  }
-
-} /* END: symPosFacInv */
-
-  /* Transpose of a square matrix */
-  static void matTranspose(mat, n, ret)
-double **mat;
-int n;
-double **ret;
-{
-  int i, j;
-
-  for (i=0; i<n; i++) {
-    for (j=0; j<n; j++) ret[j][i] = mat[i][j];
-  }
-
-} /* END: rmatTranspose */
-
-  /* Inverse of symmetric positive definite matrix */
-  static int symPosMatInv(mat, n, ret)
-double **mat;
-int n;
-double **ret;
-{
-  double **L, **Linv, *diag;
-  int i;
-
-  L = dMat_alloc(n, n, 1, 0.0);
-  diag = (double *) dVec_alloc(n, 1, 0.0);
-
-  /* Get cholesky lower triangle */
-    i = symPosFactor(mat, n, L, diag);
-    if (i) {
-      free(diag);
-      matrix_free((void **) L, n);
-      return(i);
-    }
-
-    /* Get the lower inverse */
-      Linv = dMat_alloc(n, n, 1, 0.0);
-      symPosFacInv(L, diag, n, Linv);
-      free(diag);
-
-      /* Get the transpose of Linv */
-        matTranspose(Linv, n, L);
-
-      /* Inverse is t(L^-1)(L^-1) */
-        matrixMult(L, n, n, Linv, n, ret);
-
-      matrix_free((void **) L, n);
-      matrix_free((void **) Linv, n);
-
-      return(0);
-
-} /* END: symPosMatInv */
+ 
 
 
 
-  /*calculate the weighted matrix for MLE*/
-  /* W is a long vector with length N*(M+1)*M/2*/
-  /* since W is sysmetric , we only need to record the lower triangle*/
-  /* j<==i */
-  /* use the sysmetric to fill in the other side */
-  static void Weighted_W(double *p, double *W,int N,int M){
-    int NM;
-    NM = M*N;
-    /*for(int i=0;i<M;i++){
-      for(int j=0;j<M;j++){
-        if(i==j){
-          for(int k=0;k<N;k++){
-            W[NM*i+N*j+k] = p[N*i+k]-p[N*i+k]*p[N*i+k];
-          }
-        }else{
-          for(int k=0;k<N;k++){
-            W[NM*i+N*j+k] = -p[N*i+k]*p[N*j+k];
-          }
-        }
-
-      }
-    }*/
-      for(int i=0;i<M;i++){
-        for(int j=0;j<(i);j++){
-          for(int k=0;k<N;k++){
-            W[NM*i+N*j+k] = -p[N*i+k]*p[N*j+k];
-            W[NM*j+N*i+k] = W[NM*i+N*j+k]; /* use the sysmetric of W */
-
-          }
-
-        }
-      }
-    for(int i=0;i<M;i++){
-      for(int k=0;k<N;k++){
-        W[NM*i+N*i+k] = p[N*i+k]-p[N*i+k]*p[N*i+k];
-      }
-    }
-
-  }
+  
 
 /* calculate the vector combination XX*/
   /* X is a vector */
@@ -780,21 +305,6 @@ double **ret;
 
 
 
-/* Function for getting the observed weighted matrix  W_com-W_com|mis*/
-  static void Get_ObservedW(double *W,double *W_obs,int N,int M, double *Y){
-    double * W_mis  ;
-    double **Info_mis, **XmWmisXm;
-    W_mis = dVec_alloc((M*M*N),0,0.0);
-    Weighted_W(Y, W_mis, N, M);
-    VectorMinus(W,W_mis,N*M*M,W_obs);
-    free(W_mis);
-  }
-
-
-
-
-
-
 
 
 
@@ -834,7 +344,6 @@ double **ret;
   /* XtYminusP is a vector with M length*/
   static void get_XtYminusP(double *x_intere,double *YminusP, double *XtYminusP,
                             int N, int M){
-    int NM = N*M;
     for(int i=0;i< M;i++){
       XtYminusP[i] =0;
       for(int k=0;k<N;k++){
@@ -862,28 +371,6 @@ double **ret;
     }
   }
 
-
-/*function to compute the t(x_intere_M)%*%WXZ */
-  /* x_intere_M is sparse */
-  /* the output would be a M*zc_nc matrix */
-  /* i represent the ith row */
-  /* j represent the jth column */
-  /* k represent kth element for a N length vector in WXZ */
-  static void get_tx_intereWXZ(double* x_intere,double **WXZ,int N,int M,int zc_nc,
-                               double ** tx_intereWXZ){
-    double sum =0.0;
-    for(int i=0;i<M;i++){
-      for(int j=0;j<zc_nc;j++){
-        sum = 0.0;
-        for(int k=0;k<N;k++){
-          sum += WXZ[i*N+k][j]*x_intere[k];
-        }
-        tx_intereWXZ[i][j] = sum;
-      }
-
-    }
-
-  }
 
 
 /*function to compute the t(x_intere_M)%*%W%*%X */
@@ -948,16 +435,6 @@ static void get_tz_intere_tx_intere_W_X_zc(double** tz_intere,
 }
 
 
-/* fill matrix into vector */
-  /* vec was ordered by column */
-  static void fill_vec(double **mat,int nr, int nc, double *ret){
-    for(int j=0;j<nc;j++){
-      for(int i=0;i<nr;i++){
-        ret[j*nr+i] = mat[i][j];
-      }
-    }
-  }
-
 
 void ScoreTestMixedModel( double *x_intere ,
                 double *z_intere_vec,
@@ -984,7 +461,6 @@ void ScoreTestMixedModel( double *x_intere ,
   int zc_nc = *pzc_nc;
   int z_intere_nr = *pz_intere_nr;
   int z_intere_nc = *pz_intere_nc;
-  int nparm_intere = *pnparm_intere;
   int M = *pM;
   int N = *pN;
   int DEBUG = *pDEBUG;
