@@ -947,9 +947,9 @@ double *deltai, *Y, *Xvec, *ptol, *ret_delta,*ret_info,*ret_p,*ZallVec,*missing_
 int *pNparm, *pN, *pM, *pNcov, *pNiter, *ret_rc, *pDEBUG,*Zallnr,*Zallnc,*pmissing_number;
 
 {
-  int i, Niter, M, N, Ncov0, Ncov, iter, Znr, Znc, NM, rc, conv=0;
+  int i, Niter, M, N, Ncov0, Ncov, iter, Znr, Znc, NM, conv=0;
   int Nparm, DEBUG;
-  double tol, **X, **Z_design, *delta0, **Z, rerror, **XmWXm;
+  double tol, **X, *delta0, **Z, rerror, **XmWXm;
   double *w_y, **Inv, **Info,*lxx, **tXXZ;
   double *W,*beta;
   double **missing_Mat;

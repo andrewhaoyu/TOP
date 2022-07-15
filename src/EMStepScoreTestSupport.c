@@ -834,7 +834,7 @@ return(0);
                      int DEBUG,int* ret_rc,double* ret_delta,double**Info,
                      double *ret_p,double *lxx,double *W,double *beta,
                      double* w_y,double **XmWXm,double **Inv,double **tXXZ,double *XX){
-    int i, iter, NM, conv=0;
+    int i, iter, rc, NM, conv=0;
     double  rerror,*delta0;
     NM      = N*M;
     /*printf("Ncat\tNcatp1\tNcov0\tNcov\tZnr\Znc\n");
@@ -989,7 +989,7 @@ double *deltai, *Y, *Xvec, *ptol, *ret_delta,*ret_info,*ret_p,*ZallVec,*missing_
 int *pNparm, *pN, *pM, *pNcov, *pNiter, *ret_rc, *pDEBUG,*Zallnr,*Zallnc,*pmissing_number;
 
 {
-  int i, Niter, M, N, Ncov0, Ncov, iter, Znr, Znc, NM, rc, conv=0;
+  int i, Niter, M, N, Ncov0, Ncov, iter, Znr, Znc, NM, conv=0;
   int Nparm, DEBUG;
   double tol, **X, *delta0, **Z, rerror, **XmWXm;
   double *w_y, **Inv, **Info,*lxx, **tXXZ;
