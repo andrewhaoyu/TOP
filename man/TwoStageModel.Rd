@@ -47,7 +47,7 @@ data[1:5,]
 
 #four different tumor characteristics were included, ER (positive vs negative), PR (positive vs negative), HER2 (positive vs negative), grade (ordinal 1, 2, 3)
 #the phenotype file
-y <- data[,1:5]
+y <- data[,1:4]
 
 #one SNP and one Principal components (PC1) are the covariates
 SNP <- data[,6,drop=F]

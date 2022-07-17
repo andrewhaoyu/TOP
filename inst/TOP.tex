@@ -81,15 +81,27 @@
 
 
 \title{Two-stage polytmous logistic regression tutorial  }
+ 
 
 
 
-\author{\Large Haoyu Zhang\vspace{0.05in} \newline\normalsize\emph{Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
-U.S.A.}   \and \Large Ni Zhao\vspace{0.05in} \newline\normalsize\emph{Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
-U.S.A.}   \and \Large Thomas U. Ahearn\vspace{0.05in} \newline\normalsize\emph{National Cancer Institute, Division of Cancer Epidemiology and Genetics,
-Rockville, MD, U.S.A.}   \and \Large William Wheeler\vspace{0.05in} \newline\normalsize\emph{Information Management Services, Inc., Rockville, MD, U.S.A}   \and \Large Montserrat García-Closas\vspace{0.05in} \newline\normalsize\emph{National Cancer Institute, Division of Cancer Epidemiology and Genetics,
-Rockville, MD, U.S.A.}   \and \Large Nilanjan Chatterjee\vspace{0.05in} \newline\normalsize\emph{Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
-USA}  }
+\author{\Large Haoyu
+Zhang\vspace{0.05in} \newline\normalsize\emph{Department of
+Biostatistics, Johns Hopkins University, Baltimore, MD,
+U.S.A.}   \and \Large Ni
+Zhao\vspace{0.05in} \newline\normalsize\emph{Department of
+Biostatistics, Johns Hopkins University, Baltimore, MD,
+U.S.A.}   \and \Large Thomas U.
+Ahearn\vspace{0.05in} \newline\normalsize\emph{National Cancer
+Institute, Division of Cancer Epidemiology and Genetics, Rockville, MD,
+U.S.A.}   \and \Large William
+Wheeler\vspace{0.05in} \newline\normalsize\emph{Information Management
+Services, Inc., Rockville, MD, U.S.A}   \and \Large Montserrat
+García-Closas\vspace{0.05in} \newline\normalsize\emph{National Cancer
+Institute, Division of Cancer Epidemiology and Genetics, Rockville, MD,
+U.S.A.}   \and \Large Nilanjan
+Chatterjee\vspace{0.05in} \newline\normalsize\emph{Department of
+Biostatistics, Johns Hopkins University, Baltimore, MD, USA}  }
 
 
 \date{}
@@ -131,14 +143,19 @@ USA}  }
 \makeatother
 \hypersetup{breaklinks=true,
             bookmarks=true,
-            pdfauthor={Haoyu Zhang (Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
-U.S.A.) and Ni Zhao (Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
-U.S.A.) and Thomas U. Ahearn (National Cancer Institute, Division of Cancer Epidemiology and Genetics,
-Rockville, MD, U.S.A.) and William Wheeler (Information Management Services, Inc., Rockville, MD, U.S.A) and Montserrat García-Closas (National Cancer Institute, Division of Cancer Epidemiology and Genetics,
-Rockville, MD, U.S.A.) and Nilanjan Chatterjee (Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
-USA)},
-             pdfkeywords = {Two-stage polytomous model; Susceptibility variants; Cancer subtypes; EM
-algorithm; Score tests; Etiologic heterogeneity.},  
+            pdfauthor={Haoyu Zhang (Department of Biostatistics, Johns
+Hopkins University, Baltimore, MD, U.S.A.) and Ni Zhao (Department of
+Biostatistics, Johns Hopkins University, Baltimore, MD,
+U.S.A.) and Thomas U. Ahearn (National Cancer Institute, Division of
+Cancer Epidemiology and Genetics, Rockville, MD, U.S.A.) and William
+Wheeler (Information Management Services, Inc., Rockville, MD,
+U.S.A) and Montserrat García-Closas (National Cancer Institute, Division
+of Cancer Epidemiology and Genetics, Rockville, MD, U.S.A.) and Nilanjan
+Chatterjee (Department of Biostatistics, Johns Hopkins University,
+Baltimore, MD, USA)},
+             pdfkeywords = {Two-stage polytomous model; Susceptibility
+variants; Cancer subtypes; EM algorithm; Score tests; Etiologic
+heterogeneity.},  
             pdftitle={Two-stage polytmous logistic regression tutorial},
             colorlinks=true,
             citecolor=blue,
@@ -161,7 +178,8 @@ algorithm; Score tests; Etiologic heterogeneity.},
 \begin{document}
 	
 % \pagenumbering{arabic}% resets `page` counter to 1 
-%
+%    
+
 % \maketitle
 
 {% \usefont{T1}{pnc}{m}{n}
@@ -174,12 +192,22 @@ algorithm; Score tests; Etiologic heterogeneity.},
 
 {
    \vskip 13.5pt\relax \normalsize\fontsize{11}{12} 
-\textbf{\authorfont Haoyu Zhang} \hskip 15pt \emph{\small Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
-U.S.A.}   \par \textbf{\authorfont Ni Zhao} \hskip 15pt \emph{\small Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
-U.S.A.}   \par \textbf{\authorfont Thomas U. Ahearn} \hskip 15pt \emph{\small National Cancer Institute, Division of Cancer Epidemiology and Genetics,
-Rockville, MD, U.S.A.}   \par \textbf{\authorfont William Wheeler} \hskip 15pt \emph{\small Information Management Services, Inc., Rockville, MD, U.S.A}   \par \textbf{\authorfont Montserrat García-Closas} \hskip 15pt \emph{\small National Cancer Institute, Division of Cancer Epidemiology and Genetics,
-Rockville, MD, U.S.A.}   \par \textbf{\authorfont Nilanjan Chatterjee} \hskip 15pt \emph{\small Department of Biostatistics, Johns Hopkins University, Baltimore, MD,
-USA}   
+\textbf{\authorfont Haoyu Zhang} \hskip 15pt \emph{\small Department of
+Biostatistics, Johns Hopkins University, Baltimore, MD,
+U.S.A.}   \par \textbf{\authorfont Ni
+Zhao} \hskip 15pt \emph{\small Department of Biostatistics, Johns
+Hopkins University, Baltimore, MD,
+U.S.A.}   \par \textbf{\authorfont Thomas U.
+Ahearn} \hskip 15pt \emph{\small National Cancer Institute, Division of
+Cancer Epidemiology and Genetics, Rockville, MD,
+U.S.A.}   \par \textbf{\authorfont William
+Wheeler} \hskip 15pt \emph{\small Information Management Services, Inc.,
+Rockville, MD, U.S.A}   \par \textbf{\authorfont Montserrat
+García-Closas} \hskip 15pt \emph{\small National Cancer Institute,
+Division of Cancer Epidemiology and Genetics, Rockville, MD,
+U.S.A.}   \par \textbf{\authorfont Nilanjan
+Chatterjee} \hskip 15pt \emph{\small Department of Biostatistics, Johns
+Hopkins University, Baltimore, MD, USA}   
 
 }
 
@@ -198,32 +226,33 @@ USA}
 
     \vskip 8.5pt % \small 
 
-\noindent Cancers are routinely classified into subtypes according to various
-features, including histo pathological characteristics and molecular
-markers. Genomic investigations have reported heterogeneous association
-between loci and cancer subtypes. However, it is not evident what is the
-optimal modeling strategy for handling correlated tumor features,
-missing data, and increased degrees-of-freedom in the underlying tests
-of associations. In this tutorial, we proposed a two-stage polytomous
-regression framework to handle cancer data with multivariate tumor
-characteristics. In the first stage, a standard polytomous model is used
-to specify for all subtypes defined by the cross-classification of
-different markers. In the second stage, the subtype-specific
-case-control odds ratios are specified using a more parsimonious model
-based on the case-control odds ratio for a baseline subtype, and the
-case-case parameters associated with tumor markers. Further, to reduce
-the degrees-of-freedom, we allow to specify case-case parameters for
-additional markers using a random-effect model. We use the EM algorithm
-to account for missing data on tumor markers. The score-test
-distribution theory is developed by borrowing analogous techniques from
-group-based association tests. Through simulations across a range of
-realistic scenarios, we show the proposed methods outperforms
-alternative methods for identifying heterogenous associations between
-risk loci and tumor subtypes.
+\noindent Cancers are routinely classified into subtypes according to
+various features, including histo pathological characteristics and
+molecular markers. Genomic investigations have reported heterogeneous
+association between loci and cancer subtypes. However, it is not evident
+what is the optimal modeling strategy for handling correlated tumor
+features, missing data, and increased degrees-of-freedom in the
+underlying tests of associations. In this tutorial, we proposed a
+two-stage polytomous regression framework to handle cancer data with
+multivariate tumor characteristics. In the first stage, a standard
+polytomous model is used to specify for all subtypes defined by the
+cross-classification of different markers. In the second stage, the
+subtype-specific case-control odds ratios are specified using a more
+parsimonious model based on the case-control odds ratio for a baseline
+subtype, and the case-case parameters associated with tumor markers.
+Further, to reduce the degrees-of-freedom, we allow to specify case-case
+parameters for additional markers using a random-effect model. We use
+the EM algorithm to account for missing data on tumor markers. The
+score-test distribution theory is developed by borrowing analogous
+techniques from group-based association tests. Through simulations
+across a range of realistic scenarios, we show the proposed methods
+outperforms alternative methods for identifying heterogenous
+associations between risk loci and tumor subtypes.
 
 
-\vskip 8.5pt \noindent \emph{Keywords}: Two-stage polytomous model; Susceptibility variants; Cancer subtypes; EM
-algorithm; Score tests; Etiologic heterogeneity. \par
+\vskip 8.5pt \noindent \emph{Keywords}: Two-stage polytomous model;
+Susceptibility variants; Cancer subtypes; EM algorithm; Score tests;
+Etiologic heterogeneity. \par
 
     \hbox{\vrule height .2pt width 39.14pc}
 
@@ -244,13 +273,13 @@ The package can be loaded with the following command:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# install.packages("devtools")}
-\KeywordTok{library}\NormalTok{(devtools)  }
+\CommentTok{\# install.packages("devtools")}
+\FunctionTok{library}\NormalTok{(devtools)  }
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## Warning: package 'devtools' was built under R version 4.0.1
+## Warning: package 'devtools' was built under R version 4.0.2
 \end{verbatim}
 
 \begin{verbatim}
@@ -258,23 +287,23 @@ The package can be loaded with the following command:
 \end{verbatim}
 
 \begin{verbatim}
-## Warning: package 'usethis' was built under R version 4.0.1
+## Warning: package 'usethis' was built under R version 4.0.2
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{install_github}\NormalTok{(}\StringTok{"andrewhaoyu/TOP"}\NormalTok{)}
+\FunctionTok{install\_github}\NormalTok{(}\StringTok{"andrewhaoyu/TOP"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## Skipping install of 'TOP' from a github remote, the SHA1 (a4f24b17) has not changed since last install.
+## Skipping install of 'TOP' from a github remote, the SHA1 (0c740cae) has not changed since last install.
 ##   Use `force = TRUE` to force installation
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(TOP)}
+\FunctionTok{library}\NormalTok{(TOP)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -297,7 +326,7 @@ interested. The second one is the first principal component (PC1). Let
 subject in the study. \(D_{i}=0\) represents a control, and \(D_{i}=m\)
 represent a subject with disease of subtype \(m\). Let \(G_i\) be the
 genotype for \(i\)th subject and \(X_i\) be the PC1 for the \(i\)th
-subject. In the first-stage model, we use the standard ``saturated''
+subject. In the first-stage model, we use the standard ``saturated'\,'
 polytomous logistic regression model
 \[ Pr(D_{i}=m|G_i,X_{i})=\frac{\exp(\beta_m G_i+\eta_m X_i)}{1+\sum_{m=1}^{8}\exp(\beta_m G_i+\eta_{m}X_{i})}\]
 where \(\beta_{m}\) and \(\eta_{m}\) are the regression coefficients for
@@ -342,36 +371,36 @@ are 0, then the second stage decomposition becomes,
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(TOP)}
-\CommentTok{#load in the breast cancer example}
-\KeywordTok{data}\NormalTok{(data, }\DataTypeTok{package=}\StringTok{"TOP"}\NormalTok{)}
-\CommentTok{#this is a simulated breast cancer example}
-\CommentTok{#there are around 5000 breast cancer cases and 5000 controls disease}
-\NormalTok{data[}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{,]}
-\CommentTok{#four different tumor characteristics were included, }
-\CommentTok{#ER (positive vs negative), }
-\CommentTok{#PR (positive vs negative),}
-\CommentTok{#HER2 (positive vs negative)}
-\CommentTok{#the phenotype file}
-\NormalTok{y <-}\StringTok{ }\NormalTok{data[,}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{]}
-\CommentTok{#one SNP}
-\CommentTok{#one Principal components (PC1) are the covariates}
-\NormalTok{SNP <-}\StringTok{ }\NormalTok{data[,}\DecValTok{6}\NormalTok{,drop=F]}
-\NormalTok{PC1 <-}\StringTok{ }\NormalTok{data[,}\DecValTok{7}\NormalTok{,drop=F]}
-\CommentTok{#fit the additive two-stage model}
-\NormalTok{model}\FloatTok{.1}\NormalTok{ <-}\StringTok{ }\KeywordTok{TwoStageModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}\DataTypeTok{additive=}\KeywordTok{cbind}\NormalTok{(SNP,PC1),}
-                         \DataTypeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(TOP)}
+\CommentTok{\#load in the breast cancer example}
+\FunctionTok{data}\NormalTok{(data, }\AttributeTok{package=}\StringTok{"TOP"}\NormalTok{)}
+\CommentTok{\#this is a simulated breast cancer example}
+\CommentTok{\#there are around 5000 breast cancer cases and 5000 controls disease}
+\NormalTok{data[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{,]}
+\CommentTok{\#four different tumor characteristics were included, }
+\CommentTok{\#ER (positive vs negative), }
+\CommentTok{\#PR (positive vs negative),}
+\CommentTok{\#HER2 (positive vs negative)}
+\CommentTok{\#the phenotype file}
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ data[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}
+\CommentTok{\#one SNP}
+\CommentTok{\#one Principal components (PC1) are the covariates}
+\NormalTok{SNP }\OtherTok{\textless{}{-}}\NormalTok{ data[,}\DecValTok{6}\NormalTok{,drop}\OtherTok{=}\NormalTok{F]}
+\NormalTok{PC1 }\OtherTok{\textless{}{-}}\NormalTok{ data[,}\DecValTok{7}\NormalTok{,drop}\OtherTok{=}\NormalTok{F]}
+\CommentTok{\#fit the additive two{-}stage model}
+\NormalTok{model}\FloatTok{.1} \OtherTok{\textless{}{-}} \FunctionTok{TwoStageModel}\NormalTok{(}\AttributeTok{y=}\NormalTok{y,}\AttributeTok{additive=}\FunctionTok{cbind}\NormalTok{(SNP,PC1),}
+                         \AttributeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#the model result is a list}
-\CommentTok{#model.1[[4]] are the second stage odds ratio (95% CI) }
-\CommentTok{#and p-value, the baseline effect is the case-control }
-\CommentTok{#odds ratio of the reference subtype (ER-,PR-,HER2-). }
-\CommentTok{#The main effect are the case-case odds ratio of the tumor characteristics.}
-\CommentTok{#the p-value is for individual tumor heterogeneity #test of each second stage parameter. }
+\CommentTok{\#the model result is a list}
+\CommentTok{\#model.1[[4]] are the second stage odds ratio (95\% CI) }
+\CommentTok{\#and p{-}value, the baseline effect is the case{-}control }
+\CommentTok{\#odds ratio of the reference subtype (ER{-},PR{-},HER2{-}). }
+\CommentTok{\#The main effect are the case{-}case odds ratio of the tumor characteristics.}
+\CommentTok{\#the p{-}value is for individual tumor heterogeneity \#test of each second stage parameter. }
 \NormalTok{model}\FloatTok{.1}\NormalTok{[[}\DecValTok{4}\NormalTok{]]}
 \end{Highlighting}
 \end{Shaded}
@@ -399,8 +428,8 @@ are 0, then the second stage decomposition becomes,
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#model.1[[5]] are the global association test and }
-\CommentTok{#global heterogeneity test result of the covariates.}
+\CommentTok{\#model.1[[5]] are the global association test and }
+\CommentTok{\#global heterogeneity test result of the covariates.}
 \NormalTok{model}\FloatTok{.1}\NormalTok{[[}\DecValTok{5}\NormalTok{]]}
 \end{Highlighting}
 \end{Shaded}
@@ -413,9 +442,9 @@ are 0, then the second stage decomposition becomes,
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#model.1[[7]] are the case-control odds ratios }
-\CommentTok{#for all of the subtypes.}
-\KeywordTok{head}\NormalTok{(model}\FloatTok{.1}\NormalTok{[[}\DecValTok{7}\NormalTok{]])}
+\CommentTok{\#model.1[[7]] are the case{-}control odds ratios }
+\CommentTok{\#for all of the subtypes.}
+\FunctionTok{head}\NormalTok{(model}\FloatTok{.1}\NormalTok{[[}\DecValTok{7}\NormalTok{]])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -438,13 +467,13 @@ are 0, then the second stage decomposition becomes,
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#instead of additive model, you can also try }
-\CommentTok{#different combinations. For example, for the PC1,}
-\CommentTok{#we use the additive model, but for SNP,}
-\CommentTok{#we use the baseline only model.}
-\NormalTok{model}\FloatTok{.2}\NormalTok{ <-}\StringTok{ }\KeywordTok{TwoStageModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}\DataTypeTok{baselineonly =}\NormalTok{ SNP,}
-                         \DataTypeTok{additive=}\NormalTok{PC1,}
-                         \DataTypeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
+\CommentTok{\#instead of additive model, you can also try }
+\CommentTok{\#different combinations. For example, for the PC1,}
+\CommentTok{\#we use the additive model, but for SNP,}
+\CommentTok{\#we use the baseline only model.}
+\NormalTok{model}\FloatTok{.2} \OtherTok{\textless{}{-}} \FunctionTok{TwoStageModel}\NormalTok{(}\AttributeTok{y=}\NormalTok{y,}\AttributeTok{baselineonly =}\NormalTok{ SNP,}
+                         \AttributeTok{additive=}\NormalTok{PC1,}
+                         \AttributeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -473,77 +502,77 @@ intrinsic subtypes.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(TOP)}
-\CommentTok{#load in the breast cancer example}
-\KeywordTok{data}\NormalTok{(data, }\DataTypeTok{package=}\StringTok{"TOP"}\NormalTok{)}
-\CommentTok{#this is a simulated breast cancer example}
-\CommentTok{#there are around 5000 breast cancer cases and 5000 controls disease}
-\NormalTok{data[}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{,]}
-\CommentTok{#four different tumor characteristics were included, }
-\CommentTok{#ER (positive vs negative), }
-\CommentTok{#PR (positive vs negative),}
-\CommentTok{#HER2 (positive vs negative)}
-\CommentTok{#grade (oridinal 1,2,3)}
-\CommentTok{#the phenotype file}
-\NormalTok{y <-}\StringTok{ }\NormalTok{data[,}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{]}
-\CommentTok{#generate the combinations of all the subtypes}
-\CommentTok{#by default, we remove all the subtypes with less than 10 cases}
-\NormalTok{z.standard <-}\StringTok{ }\KeywordTok{GenerateZstandard}\NormalTok{(y)}
-\NormalTok{M <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(z.standard) }\CommentTok{#M is the total number of first stage subtypes}
+\FunctionTok{library}\NormalTok{(TOP)}
+\CommentTok{\#load in the breast cancer example}
+\FunctionTok{data}\NormalTok{(data, }\AttributeTok{package=}\StringTok{"TOP"}\NormalTok{)}
+\CommentTok{\#this is a simulated breast cancer example}
+\CommentTok{\#there are around 5000 breast cancer cases and 5000 controls disease}
+\NormalTok{data[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{,]}
+\CommentTok{\#four different tumor characteristics were included, }
+\CommentTok{\#ER (positive vs negative), }
+\CommentTok{\#PR (positive vs negative),}
+\CommentTok{\#HER2 (positive vs negative)}
+\CommentTok{\#grade (oridinal 1,2,3)}
+\CommentTok{\#the phenotype file}
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ data[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}
+\CommentTok{\#generate the combinations of all the subtypes}
+\CommentTok{\#by default, we remove all the subtypes with less than 10 cases}
+\NormalTok{z.standard }\OtherTok{\textless{}{-}} \FunctionTok{GenerateZstandard}\NormalTok{(y)}
+\NormalTok{M }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(z.standard) }\CommentTok{\#M is the total number of first stage subtypes}
 
-\CommentTok{#initial a z.design matrix with M rows, and 5 columns}
-\CommentTok{#each row represent a first stage subtype}
-\CommentTok{#each column represent an aggregated subtype}
-\NormalTok{z.design <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{,M,}\DecValTok{5}\NormalTok{)}
-\CommentTok{#define names for the five intrinsic subtypes}
-\KeywordTok{colnames}\NormalTok{(z.design) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"HR+_HER2-_lowgrade"}\NormalTok{,}
-                        \StringTok{"HR+_HER2+"}\NormalTok{,}
-                        \StringTok{"HR+_HER2-_highgrade"}\NormalTok{,}
-                        \StringTok{"HR-_HER2+"}\NormalTok{, }
-                        \StringTok{"HR-_HER2-"}\NormalTok{)}
-\CommentTok{#To construct a self design second stage matrix,}
-\CommentTok{#we need to find the correpsonding first stage subtypes}
-\CommentTok{#belonging to specific aggregated subtypes}
-\CommentTok{#for first subtype HR+_HER2-_lowgrade}
-\NormalTok{idx}\FloatTok{.1}\NormalTok{ <-}\StringTok{ }\KeywordTok{which}\NormalTok{((z.standard[,}\DecValTok{1}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\OperatorTok{|}\NormalTok{z.standard[,}\DecValTok{2}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\NormalTok{)}
-               \OperatorTok{&}\NormalTok{z.standard[,}\DecValTok{3}\NormalTok{]}\OperatorTok{==}\DecValTok{0}
-               \OperatorTok{&}\NormalTok{(z.standard[,}\DecValTok{4}\NormalTok{]}\OperatorTok{==}\DecValTok{0}\OperatorTok{|}\NormalTok{z.standard[,}\DecValTok{4}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\NormalTok{))}
-\NormalTok{z.design[idx}\FloatTok{.1}\NormalTok{,}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\DecValTok{1}
-\CommentTok{#for second subtype HR+_HER2+}
-\NormalTok{idx}\FloatTok{.2}\NormalTok{ <-}\StringTok{ }\KeywordTok{which}\NormalTok{((z.standard[,}\DecValTok{1}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\OperatorTok{|}\NormalTok{z.standard[,}\DecValTok{2}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\NormalTok{)}
-               \OperatorTok{&}\NormalTok{z.standard[,}\DecValTok{3}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\NormalTok{)}
-\NormalTok{z.design[idx}\FloatTok{.2}\NormalTok{,}\DecValTok{2}\NormalTok{] <-}\StringTok{ }\DecValTok{1}
-\CommentTok{#for third subtype HR+_HER2-_highgrade}
-\NormalTok{idx}\FloatTok{.3}\NormalTok{ <-}\StringTok{ }\KeywordTok{which}\NormalTok{((z.standard[,}\DecValTok{1}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\OperatorTok{|}\NormalTok{z.standard[,}\DecValTok{2}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\NormalTok{)}
-               \OperatorTok{&}\NormalTok{z.standard[,}\DecValTok{3}\NormalTok{]}\OperatorTok{==}\DecValTok{0}
-               \OperatorTok{&}\NormalTok{z.standard[,}\DecValTok{4}\NormalTok{]}\OperatorTok{==}\DecValTok{2}\NormalTok{)}
-\NormalTok{z.design[idx}\FloatTok{.3}\NormalTok{,}\DecValTok{3}\NormalTok{] <-}\StringTok{ }\DecValTok{1}
-\CommentTok{#for third subtype HR-_HER2+}
-\NormalTok{idx}\FloatTok{.4}\NormalTok{ <-}\StringTok{ }\KeywordTok{which}\NormalTok{(z.standard[,}\DecValTok{1}\NormalTok{]}\OperatorTok{==}\DecValTok{0}\OperatorTok{&}\NormalTok{z.standard[,}\DecValTok{2}\NormalTok{]}\OperatorTok{==}\DecValTok{0}
-               \OperatorTok{&}\NormalTok{z.standard[,}\DecValTok{3}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\NormalTok{)}
-\NormalTok{z.design[idx}\FloatTok{.4}\NormalTok{,}\DecValTok{4}\NormalTok{] <-}\StringTok{ }\DecValTok{1}
-\CommentTok{#for third subtype HR-_HER2-}
-\NormalTok{idx}\FloatTok{.5}\NormalTok{ <-}\StringTok{ }\KeywordTok{which}\NormalTok{(z.standard[,}\DecValTok{1}\NormalTok{]}\OperatorTok{==}\DecValTok{0}\OperatorTok{&}\NormalTok{z.standard[,}\DecValTok{2}\NormalTok{]}\OperatorTok{==}\DecValTok{0}
-               \OperatorTok{&}\NormalTok{z.standard[,}\DecValTok{3}\NormalTok{]}\OperatorTok{==}\DecValTok{0}\NormalTok{)}
-\NormalTok{z.design[idx}\FloatTok{.5}\NormalTok{,}\DecValTok{5}\NormalTok{] <-}\StringTok{ }\DecValTok{1}
-\CommentTok{#one SNP and one Principal components (PC1) are the covariates}
-\NormalTok{SNP <-}\StringTok{ }\NormalTok{data[,}\DecValTok{6}\NormalTok{,drop=F]}
-\NormalTok{PC1 <-}\StringTok{ }\NormalTok{data[,}\DecValTok{7}\NormalTok{,drop=F]}
+\CommentTok{\#initial a z.design matrix with M rows, and 5 columns}
+\CommentTok{\#each row represent a first stage subtype}
+\CommentTok{\#each column represent an aggregated subtype}
+\NormalTok{z.design }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{,M,}\DecValTok{5}\NormalTok{)}
+\CommentTok{\#define names for the five intrinsic subtypes}
+\FunctionTok{colnames}\NormalTok{(z.design) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"HR+\_HER2{-}\_lowgrade"}\NormalTok{,}
+                        \StringTok{"HR+\_HER2+"}\NormalTok{,}
+                        \StringTok{"HR+\_HER2{-}\_highgrade"}\NormalTok{,}
+                        \StringTok{"HR{-}\_HER2+"}\NormalTok{, }
+                        \StringTok{"HR{-}\_HER2{-}"}\NormalTok{)}
+\CommentTok{\#To construct a self design second stage matrix,}
+\CommentTok{\#we need to find the correpsonding first stage subtypes}
+\CommentTok{\#belonging to specific aggregated subtypes}
+\CommentTok{\#for first subtype HR+\_HER2{-}\_lowgrade}
+\NormalTok{idx}\FloatTok{.1} \OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{((z.standard[,}\DecValTok{1}\NormalTok{]}\SpecialCharTok{==}\DecValTok{1}\SpecialCharTok{|}\NormalTok{z.standard[,}\DecValTok{2}\NormalTok{]}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)}
+               \SpecialCharTok{\&}\NormalTok{z.standard[,}\DecValTok{3}\NormalTok{]}\SpecialCharTok{==}\DecValTok{0}
+               \SpecialCharTok{\&}\NormalTok{(z.standard[,}\DecValTok{4}\NormalTok{]}\SpecialCharTok{==}\DecValTok{0}\SpecialCharTok{|}\NormalTok{z.standard[,}\DecValTok{4}\NormalTok{]}\SpecialCharTok{==}\DecValTok{1}\NormalTok{))}
+\NormalTok{z.design[idx}\FloatTok{.1}\NormalTok{,}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{1}
+\CommentTok{\#for second subtype HR+\_HER2+}
+\NormalTok{idx}\FloatTok{.2} \OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{((z.standard[,}\DecValTok{1}\NormalTok{]}\SpecialCharTok{==}\DecValTok{1}\SpecialCharTok{|}\NormalTok{z.standard[,}\DecValTok{2}\NormalTok{]}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)}
+               \SpecialCharTok{\&}\NormalTok{z.standard[,}\DecValTok{3}\NormalTok{]}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)}
+\NormalTok{z.design[idx}\FloatTok{.2}\NormalTok{,}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{1}
+\CommentTok{\#for third subtype HR+\_HER2{-}\_highgrade}
+\NormalTok{idx}\FloatTok{.3} \OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{((z.standard[,}\DecValTok{1}\NormalTok{]}\SpecialCharTok{==}\DecValTok{1}\SpecialCharTok{|}\NormalTok{z.standard[,}\DecValTok{2}\NormalTok{]}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)}
+               \SpecialCharTok{\&}\NormalTok{z.standard[,}\DecValTok{3}\NormalTok{]}\SpecialCharTok{==}\DecValTok{0}
+               \SpecialCharTok{\&}\NormalTok{z.standard[,}\DecValTok{4}\NormalTok{]}\SpecialCharTok{==}\DecValTok{2}\NormalTok{)}
+\NormalTok{z.design[idx}\FloatTok{.3}\NormalTok{,}\DecValTok{3}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{1}
+\CommentTok{\#for third subtype HR{-}\_HER2+}
+\NormalTok{idx}\FloatTok{.4} \OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(z.standard[,}\DecValTok{1}\NormalTok{]}\SpecialCharTok{==}\DecValTok{0}\SpecialCharTok{\&}\NormalTok{z.standard[,}\DecValTok{2}\NormalTok{]}\SpecialCharTok{==}\DecValTok{0}
+               \SpecialCharTok{\&}\NormalTok{z.standard[,}\DecValTok{3}\NormalTok{]}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)}
+\NormalTok{z.design[idx}\FloatTok{.4}\NormalTok{,}\DecValTok{4}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{1}
+\CommentTok{\#for third subtype HR{-}\_HER2{-}}
+\NormalTok{idx}\FloatTok{.5} \OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(z.standard[,}\DecValTok{1}\NormalTok{]}\SpecialCharTok{==}\DecValTok{0}\SpecialCharTok{\&}\NormalTok{z.standard[,}\DecValTok{2}\NormalTok{]}\SpecialCharTok{==}\DecValTok{0}
+               \SpecialCharTok{\&}\NormalTok{z.standard[,}\DecValTok{3}\NormalTok{]}\SpecialCharTok{==}\DecValTok{0}\NormalTok{)}
+\NormalTok{z.design[idx}\FloatTok{.5}\NormalTok{,}\DecValTok{5}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{1}
+\CommentTok{\#one SNP and one Principal components (PC1) are the covariates}
+\NormalTok{SNP }\OtherTok{\textless{}{-}}\NormalTok{ data[,}\DecValTok{6}\NormalTok{,drop}\OtherTok{=}\NormalTok{F]}
+\NormalTok{PC1 }\OtherTok{\textless{}{-}}\NormalTok{ data[,}\DecValTok{7}\NormalTok{,drop}\OtherTok{=}\NormalTok{F]}
 
-\NormalTok{model}\FloatTok{.3}\NormalTok{ <-}\StringTok{ }\KeywordTok{EMmvpolySelfDesign}\NormalTok{(y,}
-          \DataTypeTok{x.self.design =}\NormalTok{ SNP,}
-    \DataTypeTok{z.design =}\NormalTok{ z.design,}
-    \DataTypeTok{additive=}\NormalTok{PC1,}
-  \DataTypeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
+\NormalTok{model}\FloatTok{.3} \OtherTok{\textless{}{-}} \FunctionTok{EMmvpolySelfDesign}\NormalTok{(y,}
+          \AttributeTok{x.self.design =}\NormalTok{ SNP,}
+    \AttributeTok{z.design =}\NormalTok{ z.design,}
+    \AttributeTok{additive=}\NormalTok{PC1,}
+  \AttributeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#model.3[[4]] are the second stage odds ratio (95% CI) }
-\CommentTok{#and p-value of the intrinsic subtypes}
-\CommentTok{#the second stage odds ratios under this model are }
-\CommentTok{#the case-control odds ratios for the intrinsic subtypes.}
+\CommentTok{\#model.3[[4]] are the second stage odds ratio (95\% CI) }
+\CommentTok{\#and p{-}value of the intrinsic subtypes}
+\CommentTok{\#the second stage odds ratios under this model are }
+\CommentTok{\#the case{-}control odds ratios for the intrinsic subtypes.}
 \NormalTok{(model}\FloatTok{.3}\NormalTok{[[}\DecValTok{4}\NormalTok{]])}
 \end{Highlighting}
 \end{Shaded}
@@ -565,10 +594,10 @@ intrinsic subtypes.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#model.1[[5]] are the global association test and }
-\CommentTok{#global heterogeneity test result of the covariates.}
-\CommentTok{#Note global heterogeneity under self designed}
-\CommentTok{#second stage matrix don't have interpretation}
+\CommentTok{\#model.1[[5]] are the global association test and }
+\CommentTok{\#global heterogeneity test result of the covariates.}
+\CommentTok{\#Note global heterogeneity under self designed}
+\CommentTok{\#second stage matrix don\textquotesingle{}t have interpretation}
 \NormalTok{model}\FloatTok{.3}\NormalTok{[[}\DecValTok{5}\NormalTok{]]}
 \end{Highlighting}
 \end{Shaded}
@@ -580,9 +609,9 @@ intrinsic subtypes.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#model.1[[7]] are the case-control odds ratios }
-\CommentTok{#for all of the subtypes.}
-\KeywordTok{head}\NormalTok{(model}\FloatTok{.3}\NormalTok{[[}\DecValTok{7}\NormalTok{]])}
+\CommentTok{\#model.1[[7]] are the case{-}control odds ratios }
+\CommentTok{\#for all of the subtypes.}
+\FunctionTok{head}\NormalTok{(model}\FloatTok{.3}\NormalTok{[[}\DecValTok{7}\NormalTok{]])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -617,12 +646,12 @@ global association test.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#fit the two-stage model under the null hypothesis}
-\CommentTok{#that the second stage parameters of SNP is 0}
-\CommentTok{#the model only has one covariate PC1}
-\NormalTok{score.support.fixed <-}\StringTok{ }\KeywordTok{ScoreTestSupportMixedModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}
-                                                  \DataTypeTok{additive=}\NormalTok{PC1,}
-                                                  \DataTypeTok{missingTumorIndicator=}\DecValTok{888}\NormalTok{)}
+\CommentTok{\#fit the two{-}stage model under the null hypothesis}
+\CommentTok{\#that the second stage parameters of SNP is 0}
+\CommentTok{\#the model only has one covariate PC1}
+\NormalTok{score.support.fixed }\OtherTok{\textless{}{-}} \FunctionTok{ScoreTestSupportMixedModel}\NormalTok{(}\AttributeTok{y=}\NormalTok{y,}
+                                                  \AttributeTok{additive=}\NormalTok{PC1,}
+                                                  \AttributeTok{missingTumorIndicator=}\DecValTok{888}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -632,21 +661,21 @@ global association test.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#Generate the additive second stage design matrix}
-\NormalTok{z.additive <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{,z.standard)}
-\CommentTok{#compute the score and information matrix for SNP}
-\NormalTok{score.test.fixed <-}\StringTok{ }\KeywordTok{ScoreTestMixedModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}
-                                        \DataTypeTok{x=}\NormalTok{SNP,}
-                                        \DataTypeTok{z.design =}\NormalTok{ z.additive,}
-                                        \DataTypeTok{score.test.support=}\NormalTok{score.support.fixed,}
-                                        \DataTypeTok{missingTumorIndicator=}\DecValTok{888}\NormalTok{)}
-\CommentTok{#the first element is the score}
-\CommentTok{#the second element is the information matrix}
-\NormalTok{score.fixed <-}\StringTok{ }\NormalTok{score.test.fixed[[}\DecValTok{1}\NormalTok{]]}
-\NormalTok{infor.fixed <-}\StringTok{ }\NormalTok{score.test.fixed[[}\DecValTok{2}\NormalTok{]]}
-\CommentTok{#compute the global association test p value}
-\NormalTok{p.value.ftop <-}\StringTok{ }\KeywordTok{DisplayFixedScoreTestResult}\NormalTok{(score.fixed,infor.fixed) }
-\KeywordTok{print}\NormalTok{(p.value.ftop)}
+\CommentTok{\#Generate the additive second stage design matrix}
+\NormalTok{z.additive }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{,z.standard)}
+\CommentTok{\#compute the score and information matrix for SNP}
+\NormalTok{score.test.fixed }\OtherTok{\textless{}{-}} \FunctionTok{ScoreTestMixedModel}\NormalTok{(}\AttributeTok{y=}\NormalTok{y,}
+                                        \AttributeTok{x=}\NormalTok{SNP,}
+                                        \AttributeTok{z.design =}\NormalTok{ z.additive,}
+                                        \AttributeTok{score.test.support=}\NormalTok{score.support.fixed,}
+                                        \AttributeTok{missingTumorIndicator=}\DecValTok{888}\NormalTok{)}
+\CommentTok{\#the first element is the score}
+\CommentTok{\#the second element is the information matrix}
+\NormalTok{score.fixed }\OtherTok{\textless{}{-}}\NormalTok{ score.test.fixed[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{infor.fixed }\OtherTok{\textless{}{-}}\NormalTok{ score.test.fixed[[}\DecValTok{2}\NormalTok{]]}
+\CommentTok{\#compute the global association test p value}
+\NormalTok{p.value.ftop }\OtherTok{\textless{}{-}} \FunctionTok{DisplayFixedScoreTestResult}\NormalTok{(score.fixed,infor.fixed) }
+\FunctionTok{print}\NormalTok{(p.value.ftop)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -693,34 +722,34 @@ the mixed effect two-stage model.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#we are going to build a two-stage model with }
-\CommentTok{#baseline parameter and ER case-case parameter as fixed}
-\CommentTok{#We assume the PR, HER2, grade case-case parameter }
-\CommentTok{#to be random}
-\CommentTok{#fit the two-stage model under the null hypothesis}
-\CommentTok{#that the second stage parameters of SNP is 0}
-\CommentTok{#the model only has one covariate PC1}
-\CommentTok{#Generate the z design matrix for fixed effect}
-\NormalTok{z.design.fixed <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{,z.standard[,}\DecValTok{1}\NormalTok{])}
-\CommentTok{#compute the score and information matrix for fixed effect}
-\NormalTok{score.test.fixed <-}\StringTok{ }\KeywordTok{ScoreTestMixedModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}
-                    \DataTypeTok{x=}\NormalTok{SNP,}
-                    \DataTypeTok{z.design=}\NormalTok{z.design.fixed,}
-                    \DataTypeTok{score.test.support=}\NormalTok{score.support.fixed,}
-                    \DataTypeTok{missingTumorIndicator=}\DecValTok{888}\NormalTok{)}
-\CommentTok{#the first element is the score}
-\CommentTok{#the second element is the information matrix}
-\NormalTok{score.fixed <-}\StringTok{ }\NormalTok{score.test.fixed[[}\DecValTok{1}\NormalTok{]]}
-\NormalTok{infor.fixed <-}\StringTok{ }\NormalTok{score.test.fixed[[}\DecValTok{2}\NormalTok{]]}
-\CommentTok{#fit the two-stage model under the null hypothesis}
-\CommentTok{#that only the random effect is 0}
-\CommentTok{#the model will have two covariates, }
-\CommentTok{#PC1 and the fixed effect of SNP}
-\NormalTok{score.support.random <-}\StringTok{ }\KeywordTok{ScoreTestSupportMixedModelSelfDesign}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}
-                        \DataTypeTok{x.self.design  =}\NormalTok{ SNP,}
-                        \DataTypeTok{z.design =}\NormalTok{ z.design.fixed,}
-                        \DataTypeTok{additive =}\NormalTok{ PC1,}
-                        \DataTypeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
+\CommentTok{\#we are going to build a two{-}stage model with }
+\CommentTok{\#baseline parameter and ER case{-}case parameter as fixed}
+\CommentTok{\#We assume the PR, HER2, grade case{-}case parameter }
+\CommentTok{\#to be random}
+\CommentTok{\#fit the two{-}stage model under the null hypothesis}
+\CommentTok{\#that the second stage parameters of SNP is 0}
+\CommentTok{\#the model only has one covariate PC1}
+\CommentTok{\#Generate the z design matrix for fixed effect}
+\NormalTok{z.design.fixed }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{,z.standard[,}\DecValTok{1}\NormalTok{])}
+\CommentTok{\#compute the score and information matrix for fixed effect}
+\NormalTok{score.test.fixed }\OtherTok{\textless{}{-}} \FunctionTok{ScoreTestMixedModel}\NormalTok{(}\AttributeTok{y=}\NormalTok{y,}
+                    \AttributeTok{x=}\NormalTok{SNP,}
+                    \AttributeTok{z.design=}\NormalTok{z.design.fixed,}
+                    \AttributeTok{score.test.support=}\NormalTok{score.support.fixed,}
+                    \AttributeTok{missingTumorIndicator=}\DecValTok{888}\NormalTok{)}
+\CommentTok{\#the first element is the score}
+\CommentTok{\#the second element is the information matrix}
+\NormalTok{score.fixed }\OtherTok{\textless{}{-}}\NormalTok{ score.test.fixed[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{infor.fixed }\OtherTok{\textless{}{-}}\NormalTok{ score.test.fixed[[}\DecValTok{2}\NormalTok{]]}
+\CommentTok{\#fit the two{-}stage model under the null hypothesis}
+\CommentTok{\#that only the random effect is 0}
+\CommentTok{\#the model will have two covariates, }
+\CommentTok{\#PC1 and the fixed effect of SNP}
+\NormalTok{score.support.random }\OtherTok{\textless{}{-}} \FunctionTok{ScoreTestSupportMixedModelSelfDesign}\NormalTok{(}\AttributeTok{y=}\NormalTok{y,}
+                        \AttributeTok{x.self.design  =}\NormalTok{ SNP,}
+                        \AttributeTok{z.design =}\NormalTok{ z.design.fixed,}
+                        \AttributeTok{additive =}\NormalTok{ PC1,}
+                        \AttributeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -730,37 +759,37 @@ the mixed effect two-stage model.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#Generate the z design matrix for random effect}
-\CommentTok{#PR, HER2 and grade is random effect}
-\NormalTok{z.design.random <-}\StringTok{ }\NormalTok{z.standard[,}\DecValTok{2}\OperatorTok{:}\DecValTok{4}\NormalTok{]}
-\CommentTok{#compute the score and information matrix for random effect}
-\NormalTok{score.test.random <-}\StringTok{ }\KeywordTok{ScoreTestMixedModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}
-                                         \DataTypeTok{x=}\NormalTok{SNP,}
-                                         \DataTypeTok{z.design=}\NormalTok{z.design.random,}
-                                         \DataTypeTok{score.test.support=}\NormalTok{score.support.random,}
-                                         \DataTypeTok{missingTumorIndicator=}\DecValTok{888}\NormalTok{)}
-\CommentTok{#the first element is the score}
-\CommentTok{#the second element is the information matrix}
-\NormalTok{score.random <-}\StringTok{ }\NormalTok{score.test.random[[}\DecValTok{1}\NormalTok{]]}
-\NormalTok{infor.random <-}\StringTok{ }\NormalTok{score.test.random[[}\DecValTok{2}\NormalTok{]]}
-\CommentTok{#after we get the the fixed effect score, infor }
-\CommentTok{#and random effect score, infor, }
-\CommentTok{#we can combine them through the following function. }
-\CommentTok{#two p value will be generated.}
-\CommentTok{#the first p value for null hypothesis that}
-\CommentTok{#both the fixed effect and the variance of the random effects are 0}
-\CommentTok{#under this case, the first p-value is for the global association test.}
-\CommentTok{#the second p value is for the null hypothesis }
-\CommentTok{#that the variance of random effect is 0}
-\CommentTok{#Under this situation, the second p value is NOT }
-\CommentTok{#the global heterogeneity test p value since ER is fixed}
-\NormalTok{p.value.mtop <-}\StringTok{ }\KeywordTok{DisplayMixedScoreTestResult}\NormalTok{(}
+\CommentTok{\#Generate the z design matrix for random effect}
+\CommentTok{\#PR, HER2 and grade is random effect}
+\NormalTok{z.design.random }\OtherTok{\textless{}{-}}\NormalTok{ z.standard[,}\DecValTok{2}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}
+\CommentTok{\#compute the score and information matrix for random effect}
+\NormalTok{score.test.random }\OtherTok{\textless{}{-}} \FunctionTok{ScoreTestMixedModel}\NormalTok{(}\AttributeTok{y=}\NormalTok{y,}
+                                         \AttributeTok{x=}\NormalTok{SNP,}
+                                         \AttributeTok{z.design=}\NormalTok{z.design.random,}
+                                         \AttributeTok{score.test.support=}\NormalTok{score.support.random,}
+                                         \AttributeTok{missingTumorIndicator=}\DecValTok{888}\NormalTok{)}
+\CommentTok{\#the first element is the score}
+\CommentTok{\#the second element is the information matrix}
+\NormalTok{score.random }\OtherTok{\textless{}{-}}\NormalTok{ score.test.random[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{infor.random }\OtherTok{\textless{}{-}}\NormalTok{ score.test.random[[}\DecValTok{2}\NormalTok{]]}
+\CommentTok{\#after we get the the fixed effect score, infor }
+\CommentTok{\#and random effect score, infor, }
+\CommentTok{\#we can combine them through the following function. }
+\CommentTok{\#two p value will be generated.}
+\CommentTok{\#the first p value for null hypothesis that}
+\CommentTok{\#both the fixed effect and the variance of the random effects are 0}
+\CommentTok{\#under this case, the first p{-}value is for the global association test.}
+\CommentTok{\#the second p value is for the null hypothesis }
+\CommentTok{\#that the variance of random effect is 0}
+\CommentTok{\#Under this situation, the second p value is NOT }
+\CommentTok{\#the global heterogeneity test p value since ER is fixed}
+\NormalTok{p.value.mtop }\OtherTok{\textless{}{-}} \FunctionTok{DisplayMixedScoreTestResult}\NormalTok{(}
 \NormalTok{  score.fixed,}
 \NormalTok{  infor.fixed,}
 \NormalTok{  score.random,}
 \NormalTok{  infor.random}
 \NormalTok{)  }
-\KeywordTok{print}\NormalTok{(p.value.mtop)}
+\FunctionTok{print}\NormalTok{(p.value.mtop)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -785,23 +814,23 @@ two-stage model.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#we are going to build a two-stage model with }
-\CommentTok{#baseline parameter and ER case-case parameter as fixed}
-\CommentTok{#We assume the PR, HER2, grade case-case parameter }
-\CommentTok{#to be random.}
-\CommentTok{#fit the two-stage model under the null hypothesis}
-\CommentTok{#that the fixed effect (ER) and }
-\CommentTok{#variance of the random effects (PR, HER2, and grade) is 0.}
-\CommentTok{#the model will have two covariates, }
-\CommentTok{#PC1 and the fixed effect of SNP.}
-\CommentTok{#Generate the z design matrix for fixed effect}
-\NormalTok{z.design.fixed.baseline <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{1}\NormalTok{,}\KeywordTok{nrow}\NormalTok{(z.standard),}\DecValTok{1}\NormalTok{)}
-\CommentTok{#compute the score and information matrix for fixed effect}
-\NormalTok{score.support.fixed <-}\StringTok{ }\KeywordTok{ScoreTestSupportMixedModelSelfDesign}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}
-                        \DataTypeTok{x.self.design  =}\NormalTok{ SNP,}
-                        \DataTypeTok{z.design =}\NormalTok{ z.design.fixed.baseline,}
-                        \DataTypeTok{additive =}\NormalTok{ PC1,}
-                        \DataTypeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
+\CommentTok{\#we are going to build a two{-}stage model with }
+\CommentTok{\#baseline parameter and ER case{-}case parameter as fixed}
+\CommentTok{\#We assume the PR, HER2, grade case{-}case parameter }
+\CommentTok{\#to be random.}
+\CommentTok{\#fit the two{-}stage model under the null hypothesis}
+\CommentTok{\#that the fixed effect (ER) and }
+\CommentTok{\#variance of the random effects (PR, HER2, and grade) is 0.}
+\CommentTok{\#the model will have two covariates, }
+\CommentTok{\#PC1 and the fixed effect of SNP.}
+\CommentTok{\#Generate the z design matrix for fixed effect}
+\NormalTok{z.design.fixed.baseline }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\DecValTok{1}\NormalTok{,}\FunctionTok{nrow}\NormalTok{(z.standard),}\DecValTok{1}\NormalTok{)}
+\CommentTok{\#compute the score and information matrix for fixed effect}
+\NormalTok{score.support.fixed }\OtherTok{\textless{}{-}} \FunctionTok{ScoreTestSupportMixedModelSelfDesign}\NormalTok{(}\AttributeTok{y=}\NormalTok{y,}
+                        \AttributeTok{x.self.design  =}\NormalTok{ SNP,}
+                        \AttributeTok{z.design =}\NormalTok{ z.design.fixed.baseline,}
+                        \AttributeTok{additive =}\NormalTok{ PC1,}
+                        \AttributeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -811,27 +840,27 @@ two-stage model.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{z.design.ER <-}\StringTok{ }\NormalTok{z.standard[,}\DecValTok{1}\NormalTok{,drop=F]}
-\NormalTok{score.test.fixed <-}\StringTok{ }\KeywordTok{ScoreTestMixedModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}
-                    \DataTypeTok{x=}\NormalTok{SNP,}
-                    \DataTypeTok{z.design=}\NormalTok{z.design.ER,}
-                    \DataTypeTok{score.test.support=}\NormalTok{score.support.fixed,}
-                    \DataTypeTok{missingTumorIndicator=}\DecValTok{888}\NormalTok{)}
-\CommentTok{#the first element is the score}
-\CommentTok{#the second element is the information matrix}
-\NormalTok{score.fixed <-}\StringTok{ }\NormalTok{score.test.fixed[[}\DecValTok{1}\NormalTok{]]}
-\NormalTok{infor.fixed <-}\StringTok{ }\NormalTok{score.test.fixed[[}\DecValTok{2}\NormalTok{]]}
+\NormalTok{z.design.ER }\OtherTok{\textless{}{-}}\NormalTok{ z.standard[,}\DecValTok{1}\NormalTok{,drop}\OtherTok{=}\NormalTok{F]}
+\NormalTok{score.test.fixed }\OtherTok{\textless{}{-}} \FunctionTok{ScoreTestMixedModel}\NormalTok{(}\AttributeTok{y=}\NormalTok{y,}
+                    \AttributeTok{x=}\NormalTok{SNP,}
+                    \AttributeTok{z.design=}\NormalTok{z.design.ER,}
+                    \AttributeTok{score.test.support=}\NormalTok{score.support.fixed,}
+                    \AttributeTok{missingTumorIndicator=}\DecValTok{888}\NormalTok{)}
+\CommentTok{\#the first element is the score}
+\CommentTok{\#the second element is the information matrix}
+\NormalTok{score.fixed }\OtherTok{\textless{}{-}}\NormalTok{ score.test.fixed[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{infor.fixed }\OtherTok{\textless{}{-}}\NormalTok{ score.test.fixed[[}\DecValTok{2}\NormalTok{]]}
 
-\CommentTok{#fit the two-stage model under the null hypothesis}
-\CommentTok{#that only the random effect is 0}
-\CommentTok{#the model will have two covariates, }
-\CommentTok{#PC1 and the fixed effect of SNP}
-\NormalTok{z.design.fixed <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(z.design.fixed.baseline,z.design.ER)}
-\NormalTok{score.support.random <-}\StringTok{ }\KeywordTok{ScoreTestSupportMixedModelSelfDesign}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}
-                        \DataTypeTok{x.self.design  =}\NormalTok{ SNP,}
-                        \DataTypeTok{z.design =}\NormalTok{ z.design.fixed,}
-                        \DataTypeTok{additive =}\NormalTok{ PC1,}
-                        \DataTypeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
+\CommentTok{\#fit the two{-}stage model under the null hypothesis}
+\CommentTok{\#that only the random effect is 0}
+\CommentTok{\#the model will have two covariates, }
+\CommentTok{\#PC1 and the fixed effect of SNP}
+\NormalTok{z.design.fixed }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(z.design.fixed.baseline,z.design.ER)}
+\NormalTok{score.support.random }\OtherTok{\textless{}{-}} \FunctionTok{ScoreTestSupportMixedModelSelfDesign}\NormalTok{(}\AttributeTok{y=}\NormalTok{y,}
+                        \AttributeTok{x.self.design  =}\NormalTok{ SNP,}
+                        \AttributeTok{z.design =}\NormalTok{ z.design.fixed,}
+                        \AttributeTok{additive =}\NormalTok{ PC1,}
+                        \AttributeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -841,36 +870,36 @@ two-stage model.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#Generate the z design matrix for random effect}
-\CommentTok{#PR, HER2 and grade is random effect}
-\NormalTok{z.design.random <-}\StringTok{ }\NormalTok{z.standard[,}\DecValTok{2}\OperatorTok{:}\DecValTok{4}\NormalTok{]}
+\CommentTok{\#Generate the z design matrix for random effect}
+\CommentTok{\#PR, HER2 and grade is random effect}
+\NormalTok{z.design.random }\OtherTok{\textless{}{-}}\NormalTok{ z.standard[,}\DecValTok{2}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}
 
-\CommentTok{#compute the score and information matrix for random effect}
-\NormalTok{score.test.random <-}\StringTok{ }\KeywordTok{ScoreTestMixedModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}
-                                         \DataTypeTok{x=}\NormalTok{SNP,}
-                                         \DataTypeTok{z.design=}\NormalTok{z.design.random,}
-                                         \DataTypeTok{score.test.support=}\NormalTok{score.support.random,}
-                                         \DataTypeTok{missingTumorIndicator=}\DecValTok{888}\NormalTok{)}
-\CommentTok{#the first element is the score}
-\CommentTok{#the second element is the information matrix}
-\NormalTok{score.random <-}\StringTok{ }\NormalTok{score.test.random[[}\DecValTok{1}\NormalTok{]]}
-\NormalTok{infor.random <-}\StringTok{ }\NormalTok{score.test.random[[}\DecValTok{2}\NormalTok{]]}
+\CommentTok{\#compute the score and information matrix for random effect}
+\NormalTok{score.test.random }\OtherTok{\textless{}{-}} \FunctionTok{ScoreTestMixedModel}\NormalTok{(}\AttributeTok{y=}\NormalTok{y,}
+                                         \AttributeTok{x=}\NormalTok{SNP,}
+                                         \AttributeTok{z.design=}\NormalTok{z.design.random,}
+                                         \AttributeTok{score.test.support=}\NormalTok{score.support.random,}
+                                         \AttributeTok{missingTumorIndicator=}\DecValTok{888}\NormalTok{)}
+\CommentTok{\#the first element is the score}
+\CommentTok{\#the second element is the information matrix}
+\NormalTok{score.random }\OtherTok{\textless{}{-}}\NormalTok{ score.test.random[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{infor.random }\OtherTok{\textless{}{-}}\NormalTok{ score.test.random[[}\DecValTok{2}\NormalTok{]]}
 
-\CommentTok{#after we get the the fixed effect score, infor }
-\CommentTok{#and random effect score, infor, }
-\CommentTok{#we can combine them through the following function. }
-\CommentTok{#two p value will be generated.}
-\CommentTok{#the first p value for null hypothesis that}
-\CommentTok{#both the fixed effect and the variance of the random effects are 0}
-\CommentTok{#under this case, the first p-value is for the global heterogeneity test.}
-\CommentTok{#the second p.value don't have a good interpretation under this case}
-\NormalTok{p.value.mtop <-}\StringTok{ }\KeywordTok{DisplayMixedScoreTestResult}\NormalTok{(}
+\CommentTok{\#after we get the the fixed effect score, infor }
+\CommentTok{\#and random effect score, infor, }
+\CommentTok{\#we can combine them through the following function. }
+\CommentTok{\#two p value will be generated.}
+\CommentTok{\#the first p value for null hypothesis that}
+\CommentTok{\#both the fixed effect and the variance of the random effects are 0}
+\CommentTok{\#under this case, the first p{-}value is for the global heterogeneity test.}
+\CommentTok{\#the second p.value don\textquotesingle{}t have a good interpretation under this case}
+\NormalTok{p.value.mtop }\OtherTok{\textless{}{-}} \FunctionTok{DisplayMixedScoreTestResult}\NormalTok{(}
 \NormalTok{  score.fixed,}
 \NormalTok{  infor.fixed,}
 \NormalTok{  score.random,}
 \NormalTok{  infor.random}
 \NormalTok{)  }
-\KeywordTok{print}\NormalTok{(p.value.mtop)}
+\FunctionTok{print}\NormalTok{(p.value.mtop)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -889,25 +918,25 @@ need to put the missingTumorIndicator as NULL.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(TOP)}
-\CommentTok{#load in the breast cancer example}
-\NormalTok{y <-}\StringTok{ }\NormalTok{data[,}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{]}
-\CommentTok{#find out all the subjects with missing tumor characteristics}
-\NormalTok{missing.data.vec <-}\StringTok{ }\KeywordTok{GenerateMissingPosition}\NormalTok{(y,}\DataTypeTok{missingTumorIndicator=}\DecValTok{888}\NormalTok{)}
-\NormalTok{data.complete <-}\StringTok{ }\NormalTok{data[}\OperatorTok{-}\NormalTok{missing.data.vec,,drop=F]}
-\NormalTok{y.c <-}\StringTok{ }\NormalTok{data.complete[,}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{]}
-\NormalTok{SNP.c <-}\StringTok{ }\NormalTok{data.complete[,}\DecValTok{6}\NormalTok{,drop=F]}
-\NormalTok{PC1.c <-}\StringTok{ }\NormalTok{data.complete[,}\DecValTok{7}\NormalTok{,drop=F]}
+\FunctionTok{library}\NormalTok{(TOP)}
+\CommentTok{\#load in the breast cancer example}
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ data[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}
+\CommentTok{\#find out all the subjects with missing tumor characteristics}
+\NormalTok{missing.data.vec }\OtherTok{\textless{}{-}} \FunctionTok{GenerateMissingPosition}\NormalTok{(y,}\AttributeTok{missingTumorIndicator=}\DecValTok{888}\NormalTok{)}
+\NormalTok{data.complete }\OtherTok{\textless{}{-}}\NormalTok{ data[}\SpecialCharTok{{-}}\NormalTok{missing.data.vec,,drop}\OtherTok{=}\NormalTok{F]}
+\NormalTok{y.c }\OtherTok{\textless{}{-}}\NormalTok{ data.complete[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}
+\NormalTok{SNP.c }\OtherTok{\textless{}{-}}\NormalTok{ data.complete[,}\DecValTok{6}\NormalTok{,drop}\OtherTok{=}\NormalTok{F]}
+\NormalTok{PC1.c }\OtherTok{\textless{}{-}}\NormalTok{ data.complete[,}\DecValTok{7}\NormalTok{,drop}\OtherTok{=}\NormalTok{F]}
 
-\CommentTok{#fit the additive two-stage model for complete data}
-\NormalTok{model}\FloatTok{.4}\NormalTok{ <-}\StringTok{ }\KeywordTok{TwoStageModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y.c,}\DataTypeTok{additive=}\KeywordTok{cbind}\NormalTok{(SNP.c,PC1.c),}
-                         \DataTypeTok{missingTumorIndicator =} \OtherTok{NULL}\NormalTok{)}
+\CommentTok{\#fit the additive two{-}stage model for complete data}
+\NormalTok{model}\FloatTok{.4} \OtherTok{\textless{}{-}} \FunctionTok{TwoStageModel}\NormalTok{(}\AttributeTok{y=}\NormalTok{y.c,}\AttributeTok{additive=}\FunctionTok{cbind}\NormalTok{(SNP.c,PC1.c),}
+                         \AttributeTok{missingTumorIndicator =} \ConstantTok{NULL}\NormalTok{)}
 
 
-\CommentTok{#perform the score test for complete data}
-\NormalTok{score.support.fixed <-}\StringTok{ }\KeywordTok{ScoreTestSupportMixedModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y.c,}
-                                                  \DataTypeTok{additive=}\NormalTok{PC1.c,}
-                                                  \DataTypeTok{missingTumorIndicator=}\OtherTok{NULL}\NormalTok{)}
+\CommentTok{\#perform the score test for complete data}
+\NormalTok{score.support.fixed }\OtherTok{\textless{}{-}} \FunctionTok{ScoreTestSupportMixedModel}\NormalTok{(}\AttributeTok{y=}\NormalTok{y.c,}
+                                                  \AttributeTok{additive=}\NormalTok{PC1.c,}
+                                                  \AttributeTok{missingTumorIndicator=}\ConstantTok{NULL}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -917,29 +946,29 @@ need to put the missingTumorIndicator as NULL.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#Generate the additive second stage design matrix}
-\NormalTok{z.additive <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{,z.standard)}
-\CommentTok{#compute the score and information matrix for SNP}
-\NormalTok{z.design.fixed <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{,z.standard[,}\DecValTok{1}\NormalTok{])}
-\CommentTok{#compute the score and information matrix for fixed effect}
-\NormalTok{score.test.fixed <-}\StringTok{ }\KeywordTok{ScoreTestMixedModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y.c,}
-                    \DataTypeTok{x=}\NormalTok{SNP.c,}
-                    \DataTypeTok{z.design=}\NormalTok{z.design.fixed,}
-                    \DataTypeTok{score.test.support=}\NormalTok{score.support.fixed,}
-                    \DataTypeTok{missingTumorIndicator=}\OtherTok{NULL}\NormalTok{)}
-\CommentTok{#the first element is the score}
-\CommentTok{#the second element is the information matrix}
-\NormalTok{score.fixed <-}\StringTok{ }\NormalTok{score.test.fixed[[}\DecValTok{1}\NormalTok{]]}
-\NormalTok{infor.fixed <-}\StringTok{ }\NormalTok{score.test.fixed[[}\DecValTok{2}\NormalTok{]]}
-\CommentTok{#fit the two-stage model under the null hypothesis}
-\CommentTok{#that only the random effect is 0}
-\CommentTok{#the model will have two covariates, }
-\CommentTok{#PC1 and the fixed effect of SNP}
-\NormalTok{score.support.random <-}\StringTok{ }\KeywordTok{ScoreTestSupportMixedModelSelfDesign}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y.c,}
-                        \DataTypeTok{x.self.design  =}\NormalTok{ SNP.c,}
-                        \DataTypeTok{z.design =}\NormalTok{ z.design.fixed,}
-                        \DataTypeTok{additive =}\NormalTok{ PC1.c,}
-                        \DataTypeTok{missingTumorIndicator =} \OtherTok{NULL}\NormalTok{)}
+\CommentTok{\#Generate the additive second stage design matrix}
+\NormalTok{z.additive }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{,z.standard)}
+\CommentTok{\#compute the score and information matrix for SNP}
+\NormalTok{z.design.fixed }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{,z.standard[,}\DecValTok{1}\NormalTok{])}
+\CommentTok{\#compute the score and information matrix for fixed effect}
+\NormalTok{score.test.fixed }\OtherTok{\textless{}{-}} \FunctionTok{ScoreTestMixedModel}\NormalTok{(}\AttributeTok{y=}\NormalTok{y.c,}
+                    \AttributeTok{x=}\NormalTok{SNP.c,}
+                    \AttributeTok{z.design=}\NormalTok{z.design.fixed,}
+                    \AttributeTok{score.test.support=}\NormalTok{score.support.fixed,}
+                    \AttributeTok{missingTumorIndicator=}\ConstantTok{NULL}\NormalTok{)}
+\CommentTok{\#the first element is the score}
+\CommentTok{\#the second element is the information matrix}
+\NormalTok{score.fixed }\OtherTok{\textless{}{-}}\NormalTok{ score.test.fixed[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{infor.fixed }\OtherTok{\textless{}{-}}\NormalTok{ score.test.fixed[[}\DecValTok{2}\NormalTok{]]}
+\CommentTok{\#fit the two{-}stage model under the null hypothesis}
+\CommentTok{\#that only the random effect is 0}
+\CommentTok{\#the model will have two covariates, }
+\CommentTok{\#PC1 and the fixed effect of SNP}
+\NormalTok{score.support.random }\OtherTok{\textless{}{-}} \FunctionTok{ScoreTestSupportMixedModelSelfDesign}\NormalTok{(}\AttributeTok{y=}\NormalTok{y.c,}
+                        \AttributeTok{x.self.design  =}\NormalTok{ SNP.c,}
+                        \AttributeTok{z.design =}\NormalTok{ z.design.fixed,}
+                        \AttributeTok{additive =}\NormalTok{ PC1.c,}
+                        \AttributeTok{missingTumorIndicator =} \ConstantTok{NULL}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -949,37 +978,37 @@ need to put the missingTumorIndicator as NULL.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#Generate the z design matrix for random effect}
-\CommentTok{#PR, HER2 and grade is random effect}
-\NormalTok{z.design.random <-}\StringTok{ }\NormalTok{z.standard[,}\DecValTok{2}\OperatorTok{:}\DecValTok{4}\NormalTok{]}
-\CommentTok{#compute the score and information matrix for random effect}
-\NormalTok{score.test.random <-}\StringTok{ }\KeywordTok{ScoreTestMixedModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y.c,}
-                                         \DataTypeTok{x=}\NormalTok{SNP.c,}
-                                         \DataTypeTok{z.design=}\NormalTok{z.design.random,}
-                                         \DataTypeTok{score.test.support=}\NormalTok{score.support.random,}
-                                         \DataTypeTok{missingTumorIndicator=}\OtherTok{NULL}\NormalTok{)}
-\CommentTok{#the first element is the score}
-\CommentTok{#the second element is the information matrix}
-\NormalTok{score.random <-}\StringTok{ }\NormalTok{score.test.random[[}\DecValTok{1}\NormalTok{]]}
-\NormalTok{infor.random <-}\StringTok{ }\NormalTok{score.test.random[[}\DecValTok{2}\NormalTok{]]}
-\CommentTok{#after we get the the fixed effect score, infor }
-\CommentTok{#and random effect score, infor, }
-\CommentTok{#we can combine them through the following function. }
-\CommentTok{#two p value will be generated.}
-\CommentTok{#the first p value for null hypothesis that}
-\CommentTok{#both the fixed effect and the variance of the random effects are 0}
-\CommentTok{#under this case, the first p-value is for the global association test.}
-\CommentTok{#the second p value is for the null hypothesis }
-\CommentTok{#that the variance of random effect is 0}
-\CommentTok{#Under this situation, the second p value is NOT }
-\CommentTok{#the global heterogeneity test p value since ER is fixed}
-\NormalTok{p.value.mtop <-}\StringTok{ }\KeywordTok{DisplayMixedScoreTestResult}\NormalTok{(}
+\CommentTok{\#Generate the z design matrix for random effect}
+\CommentTok{\#PR, HER2 and grade is random effect}
+\NormalTok{z.design.random }\OtherTok{\textless{}{-}}\NormalTok{ z.standard[,}\DecValTok{2}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}
+\CommentTok{\#compute the score and information matrix for random effect}
+\NormalTok{score.test.random }\OtherTok{\textless{}{-}} \FunctionTok{ScoreTestMixedModel}\NormalTok{(}\AttributeTok{y=}\NormalTok{y.c,}
+                                         \AttributeTok{x=}\NormalTok{SNP.c,}
+                                         \AttributeTok{z.design=}\NormalTok{z.design.random,}
+                                         \AttributeTok{score.test.support=}\NormalTok{score.support.random,}
+                                         \AttributeTok{missingTumorIndicator=}\ConstantTok{NULL}\NormalTok{)}
+\CommentTok{\#the first element is the score}
+\CommentTok{\#the second element is the information matrix}
+\NormalTok{score.random }\OtherTok{\textless{}{-}}\NormalTok{ score.test.random[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{infor.random }\OtherTok{\textless{}{-}}\NormalTok{ score.test.random[[}\DecValTok{2}\NormalTok{]]}
+\CommentTok{\#after we get the the fixed effect score, infor }
+\CommentTok{\#and random effect score, infor, }
+\CommentTok{\#we can combine them through the following function. }
+\CommentTok{\#two p value will be generated.}
+\CommentTok{\#the first p value for null hypothesis that}
+\CommentTok{\#both the fixed effect and the variance of the random effects are 0}
+\CommentTok{\#under this case, the first p{-}value is for the global association test.}
+\CommentTok{\#the second p value is for the null hypothesis }
+\CommentTok{\#that the variance of random effect is 0}
+\CommentTok{\#Under this situation, the second p value is NOT }
+\CommentTok{\#the global heterogeneity test p value since ER is fixed}
+\NormalTok{p.value.mtop }\OtherTok{\textless{}{-}} \FunctionTok{DisplayMixedScoreTestResult}\NormalTok{(}
 \NormalTok{  score.fixed,}
 \NormalTok{  infor.fixed,}
 \NormalTok{  score.random,}
 \NormalTok{  infor.random}
 \NormalTok{)  }
-\KeywordTok{print}\NormalTok{(p.value.mtop)}
+\FunctionTok{print}\NormalTok{(p.value.mtop)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1003,9 +1032,9 @@ simulated data. Let's take a look at an example.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(TOP)}
-\CommentTok{#load in the breast cancer example}
-\KeywordTok{head}\NormalTok{(data)}
+\FunctionTok{library}\NormalTok{(TOP)}
+\CommentTok{\#load in the breast cancer example}
+\FunctionTok{head}\NormalTok{(data)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1021,35 +1050,35 @@ simulated data. Let's take a look at an example.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#only keep the cases}
-\NormalTok{idx <-}\StringTok{ }\KeywordTok{which}\NormalTok{(data[,}\DecValTok{1}\NormalTok{]}\OperatorTok{==}\DecValTok{1}\NormalTok{)}
-\CommentTok{#data.caseonly is a case only study}
-\NormalTok{data.caseonly <-}\StringTok{ }\NormalTok{data[idx,]}
-\NormalTok{n.case <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(data.caseonly)}
+\CommentTok{\#only keep the cases}
+\NormalTok{idx }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(data[,}\DecValTok{1}\NormalTok{]}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)}
+\CommentTok{\#data.caseonly is a case only study}
+\NormalTok{data.caseonly }\OtherTok{\textless{}{-}}\NormalTok{ data[idx,]}
+\NormalTok{n.case }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(data.caseonly)}
 
-\CommentTok{#generate control data}
-\CommentTok{#suppose we generate the control data with same sample size as cases}
-\CommentTok{#the sample size of the control will only affect the standard error}
-\CommentTok{#for baseline parameter}
-\CommentTok{#it will not affect the standard error for case-case parameter}
-\NormalTok{n.control <-}\StringTok{ }\NormalTok{n.case}
-\NormalTok{case.control <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,n.control)}
-\NormalTok{ER =}\StringTok{ }\NormalTok{PR =}\StringTok{ }\NormalTok{HER2=}\StringTok{ }\NormalTok{grade =}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\OtherTok{NA}\NormalTok{,n.control)}
-\CommentTok{#sample the SNP data from the cases to keep the same distribution}
-\CommentTok{#sample the PC1 data from the cases to keep the same distribution}
-\NormalTok{SNP =}\StringTok{ }\KeywordTok{sample}\NormalTok{(data.caseonly[,}\StringTok{"SNP"}\NormalTok{],n.control,}\DataTypeTok{replace=}\NormalTok{T)}
-\NormalTok{PC1 =}\StringTok{ }\KeywordTok{sample}\NormalTok{(data.caseonly[,}\StringTok{"PC1"}\NormalTok{],n.control,}\DataTypeTok{replace=}\NormalTok{T)}
-\NormalTok{data.control <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(case.control,ER,PR,HER2,grade,SNP,PC1)}
+\CommentTok{\#generate control data}
+\CommentTok{\#suppose we generate the control data with same sample size as cases}
+\CommentTok{\#the sample size of the control will only affect the standard error}
+\CommentTok{\#for baseline parameter}
+\CommentTok{\#it will not affect the standard error for case{-}case parameter}
+\NormalTok{n.control }\OtherTok{\textless{}{-}}\NormalTok{ n.case}
+\NormalTok{case.control }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,n.control)}
+\NormalTok{ER }\OtherTok{=}\NormalTok{ PR }\OtherTok{=}\NormalTok{ HER2}\OtherTok{=}\NormalTok{ grade }\OtherTok{=} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{,n.control)}
+\CommentTok{\#sample the SNP data from the cases to keep the same distribution}
+\CommentTok{\#sample the PC1 data from the cases to keep the same distribution}
+\NormalTok{SNP }\OtherTok{=} \FunctionTok{sample}\NormalTok{(data.caseonly[,}\StringTok{"SNP"}\NormalTok{],n.control,}\AttributeTok{replace=}\NormalTok{T)}
+\NormalTok{PC1 }\OtherTok{=} \FunctionTok{sample}\NormalTok{(data.caseonly[,}\StringTok{"PC1"}\NormalTok{],n.control,}\AttributeTok{replace=}\NormalTok{T)}
+\NormalTok{data.control }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(case.control,ER,PR,HER2,grade,SNP,PC1)}
 
-\NormalTok{new.data <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(data.caseonly,data.control)}
+\NormalTok{new.data }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data.caseonly,data.control)}
 
-\NormalTok{y <-}\StringTok{ }\NormalTok{new.data[,}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{]}
-\NormalTok{SNP <-}\StringTok{ }\NormalTok{new.data[,}\DecValTok{6}\NormalTok{,drop=F]}
-\NormalTok{PC1 <-}\StringTok{ }\NormalTok{new.data[,}\DecValTok{7}\NormalTok{,drop=F]}
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ new.data[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}
+\NormalTok{SNP }\OtherTok{\textless{}{-}}\NormalTok{ new.data[,}\DecValTok{6}\NormalTok{,drop}\OtherTok{=}\NormalTok{F]}
+\NormalTok{PC1 }\OtherTok{\textless{}{-}}\NormalTok{ new.data[,}\DecValTok{7}\NormalTok{,drop}\OtherTok{=}\NormalTok{F]}
 
-\CommentTok{#fit the additive two-stage model for case only data}
-\NormalTok{model}\FloatTok{.5}\NormalTok{ <-}\StringTok{ }\KeywordTok{TwoStageModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}\DataTypeTok{additive=}\KeywordTok{cbind}\NormalTok{(SNP,PC1),}
-                         \DataTypeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
+\CommentTok{\#fit the additive two{-}stage model for case only data}
+\NormalTok{model}\FloatTok{.5} \OtherTok{\textless{}{-}} \FunctionTok{TwoStageModel}\NormalTok{(}\AttributeTok{y=}\NormalTok{y,}\AttributeTok{additive=}\FunctionTok{cbind}\NormalTok{(SNP,PC1),}
+                         \AttributeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1070,57 +1099,57 @@ simulated data. Let's take a look at an example.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#model.5[[4]] contain the second stage parameter estimates}
-\CommentTok{#the baseline estimate can't be interpreted under this case}
-\CommentTok{#but the case-case parameter is valid}
+\CommentTok{\#model.5[[4]] contain the second stage parameter estimates}
+\CommentTok{\#the baseline estimate can\textquotesingle{}t be interpreted under this case}
+\CommentTok{\#but the case{-}case parameter is valid}
 \NormalTok{model}\FloatTok{.5}\NormalTok{[[}\DecValTok{4}\NormalTok{]]}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ##   Covariate SecondStageEffect OddsRatio OddsRatio(95%CI low)
-## 1       SNP   baseline effect      0.92                 0.80
+## 1       SNP   baseline effect      0.90                 0.77
 ## 2       SNP    ER main effect      0.98                 0.87
 ## 3       SNP    PR main effect      1.06                 0.93
 ## 4       SNP  HER2 main effect      1.15                 0.99
-## 5       PC1   baseline effect      1.07                 0.98
+## 5       PC1   baseline effect      1.04                 0.95
 ## 6       PC1    ER main effect      1.01                 0.93
 ## 7       PC1    PR main effect      0.95                 0.88
 ## 8       PC1  HER2 main effect      0.94                 0.86
 ##   OddsRatio(95%CI high) Pvalue
-## 1                  1.07 0.2950
-## 2                  1.11 0.7740
-## 3                  1.20 0.3850
-## 4                  1.33 0.0688
-## 5                  1.17 0.1450
-## 6                  1.08 0.8880
-## 7                  1.03 0.2310
-## 8                  1.03 0.1990
+## 1                  1.04 0.1490
+## 2                  1.11 0.7670
+## 3                  1.20 0.3720
+## 4                  1.33 0.0642
+## 5                  1.14 0.3500
+## 6                  1.08 0.8810
+## 7                  1.03 0.2250
+## 8                  1.03 0.1870
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#if we compare this results with model.1[[4]], we will see that the baeline estimate is not the same, but the case-case parameter is close since case-case parameter is only based on case information (the little difference can be due to numerical reason. But the two estimates are asympotocally the same)}
+\CommentTok{\#if we compare this results with model.1[[4]], we will see that the baeline estimate is not the same, but the case{-}case parameter is close since case{-}case parameter is only based on case information (the little difference can be due to numerical reason. But the two estimates are asympotocally the same)}
 
-\CommentTok{#suppose we increase the controls size to 10 times of the cases size}
-\NormalTok{n.control <-}\StringTok{ }\DecValTok{10}\OperatorTok{*}\NormalTok{n.case}
-\NormalTok{case.control <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,n.control)}
-\NormalTok{ER =}\StringTok{ }\NormalTok{PR =}\StringTok{ }\NormalTok{HER2=}\StringTok{ }\NormalTok{grade =}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\OtherTok{NA}\NormalTok{,n.control)}
-\CommentTok{#sample the SNP data from the cases to keep the same distribution}
-\CommentTok{#sample the PC1 data from the cases to keep the same distribution}
-\NormalTok{SNP =}\StringTok{ }\KeywordTok{sample}\NormalTok{(data.caseonly[,}\StringTok{"SNP"}\NormalTok{],n.control,}\DataTypeTok{replace=}\NormalTok{T)}
-\NormalTok{PC1 =}\StringTok{ }\KeywordTok{sample}\NormalTok{(data.caseonly[,}\StringTok{"PC1"}\NormalTok{],n.control,}\DataTypeTok{replace=}\NormalTok{T)}
-\NormalTok{data.control <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(case.control,ER,PR,HER2,grade,SNP,PC1)}
+\CommentTok{\#suppose we increase the controls size to 10 times of the cases size}
+\NormalTok{n.control }\OtherTok{\textless{}{-}} \DecValTok{10}\SpecialCharTok{*}\NormalTok{n.case}
+\NormalTok{case.control }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,n.control)}
+\NormalTok{ER }\OtherTok{=}\NormalTok{ PR }\OtherTok{=}\NormalTok{ HER2}\OtherTok{=}\NormalTok{ grade }\OtherTok{=} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{,n.control)}
+\CommentTok{\#sample the SNP data from the cases to keep the same distribution}
+\CommentTok{\#sample the PC1 data from the cases to keep the same distribution}
+\NormalTok{SNP }\OtherTok{=} \FunctionTok{sample}\NormalTok{(data.caseonly[,}\StringTok{"SNP"}\NormalTok{],n.control,}\AttributeTok{replace=}\NormalTok{T)}
+\NormalTok{PC1 }\OtherTok{=} \FunctionTok{sample}\NormalTok{(data.caseonly[,}\StringTok{"PC1"}\NormalTok{],n.control,}\AttributeTok{replace=}\NormalTok{T)}
+\NormalTok{data.control }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(case.control,ER,PR,HER2,grade,SNP,PC1)}
 
-\NormalTok{new.data <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(data.caseonly,data.control)}
+\NormalTok{new.data }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data.caseonly,data.control)}
 
-\NormalTok{y <-}\StringTok{ }\NormalTok{new.data[,}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{]}
-\NormalTok{SNP <-}\StringTok{ }\NormalTok{new.data[,}\DecValTok{6}\NormalTok{,drop=F]}
-\NormalTok{PC1 <-}\StringTok{ }\NormalTok{new.data[,}\DecValTok{7}\NormalTok{,drop=F]}
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ new.data[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}
+\NormalTok{SNP }\OtherTok{\textless{}{-}}\NormalTok{ new.data[,}\DecValTok{6}\NormalTok{,drop}\OtherTok{=}\NormalTok{F]}
+\NormalTok{PC1 }\OtherTok{\textless{}{-}}\NormalTok{ new.data[,}\DecValTok{7}\NormalTok{,drop}\OtherTok{=}\NormalTok{F]}
 
-\CommentTok{#fit the additive two-stage model for case only data}
-\NormalTok{model}\FloatTok{.6}\NormalTok{ <-}\StringTok{ }\KeywordTok{TwoStageModel}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}\DataTypeTok{additive=}\KeywordTok{cbind}\NormalTok{(SNP,PC1),}
-                         \DataTypeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
+\CommentTok{\#fit the additive two{-}stage model for case only data}
+\NormalTok{model}\FloatTok{.6} \OtherTok{\textless{}{-}} \FunctionTok{TwoStageModel}\NormalTok{(}\AttributeTok{y=}\NormalTok{y,}\AttributeTok{additive=}\FunctionTok{cbind}\NormalTok{(SNP,PC1),}
+                         \AttributeTok{missingTumorIndicator =} \DecValTok{888}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1140,7 +1169,7 @@ simulated data. Let's take a look at an example.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#we can see the case-case parameters stays similar as model.1[[4]]}
+\CommentTok{\#we can see the case{-}case parameters stays similar as model.1[[4]]}
 \NormalTok{model}\FloatTok{.6}\NormalTok{[[}\DecValTok{4}\NormalTok{]]}
 \end{Highlighting}
 \end{Shaded}
@@ -1151,19 +1180,19 @@ simulated data. Let's take a look at an example.
 ## 2       SNP    ER main effect      0.98                 0.87
 ## 3       SNP    PR main effect      1.06                 0.93
 ## 4       SNP  HER2 main effect      1.15                 0.99
-## 5       PC1   baseline effect      1.05                 0.97
+## 5       PC1   baseline effect      1.05                 0.96
 ## 6       PC1    ER main effect      1.01                 0.93
 ## 7       PC1    PR main effect      0.95                 0.88
 ## 8       PC1  HER2 main effect      0.94                 0.86
 ##   OddsRatio(95%CI high) Pvalue
-## 1                  1.04 0.1700
-## 2                  1.11 0.7770
-## 3                  1.20 0.3890
-## 4                  1.33 0.0703
-## 5                  1.15 0.2430
-## 6                  1.08 0.8870
-## 7                  1.03 0.2280
-## 8                  1.03 0.1970
+## 1                  1.04  0.172
+## 2                  1.11  0.772
+## 3                  1.20  0.384
+## 4                  1.33  0.068
+## 5                  1.14  0.275
+## 6                  1.08  0.890
+## 7                  1.03  0.232
+## 8                  1.03  0.200
 \end{verbatim}
 
 \hypertarget{references}{%

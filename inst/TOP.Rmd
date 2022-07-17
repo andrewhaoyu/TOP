@@ -20,20 +20,20 @@ author:
   name: Nilanjan Chatterjee
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
-  html_document:
-    df_print: paged
   pdf_document:
     citation_package: natbib
     fig_caption: yes
     keep_tex: yes
     latex_engine: pdflatex
     template: /Users/zhangh24/GoogleDrive/TOP_develop/inst/svm.tex
+  html_document:
+    df_print: paged
 fontsize: 11pt
 geometry: margin=1in
 keywords: Two-stage polytomous model; Susceptibility variants; Cancer subtypes; EM
   algorithm; Score tests; Etiologic heterogeneity.
 fontfamily: mathpazo
-abstract: "\tCancers are routinely classified into subtypes according to various features,
+abstract: "Cancers are routinely classified into subtypes according to various features,
   including histo pathological characteristics and molecular markers. Genomic investigations
   have reported heterogeneous association between loci and cancer subtypes. However,
   it is not evident what is the optimal modeling strategy for handling correlated
