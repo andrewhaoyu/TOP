@@ -79,11 +79,11 @@ EMScoreTestSupport <- function(y,
   #score_test_mis <- score_test_mis(y_em,baselineonly,score_support_result)
   #return(list(score_c=score_test_mis$score_c,infor_c = score_test_mis$infor_c))
   result <- Score.Support
-  result[[6]] <- z.design.baselineonly
-  result[[7]] <- z.design.additive
-  result[[8]] <- z.design.pairwise.interaction
-  result[[9]] <- z.design.saturated
-  result[[10]] <- z.standard
+  result[[7]] <- z.design.baselineonly
+  result[[8]] <- z.design.additive
+  result[[9]] <- z.design.pairwise.interaction
+  result[[10]] <- z.design.saturated
+  result[[11]] <- z.standard
   return(result)
 
 }

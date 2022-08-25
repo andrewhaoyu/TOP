@@ -20,8 +20,13 @@ ScoreTest <- function(y,x,second.stage.structure = "additive",score.test.support
   }else{
     interested.variable.number = ncol(x)
   }
-
-
+  
+  
+  idx.drop <- score.test.support[[6]]
+  if(is.null(idx.drop)==F){
+    x = x[-idx.drop,,drop=F]
+  }
+  
 
 
   tumor.number <- ncol(y)-1
@@ -46,20 +51,20 @@ ScoreTest <- function(y,x,second.stage.structure = "additive",score.test.support
 
 
   if(second.stage.structure == "baselineonly"){
-    z.intere <- score.test.support[[6]]
-  }else if(second.stage.structure == "additive"){
     z.intere <- score.test.support[[7]]
+  }else if(second.stage.structure == "additive"){
+    z.intere <- score.test.support[[8]]
     #z.intere <- z.design.additive[,-1]
   }else if(second.stage.structure=="pairwise.interaction"){
-    z.intere <- score.test.support[[8]]
-  }else if(second.stage.structure=="saturated"){
     z.intere <- score.test.support[[9]]
+  }else if(second.stage.structure=="saturated"){
+    z.intere <- score.test.support[[10]]
   }
 
 
 
 
-  z.standard <- score.test.support[[10]]
+  z.standard <- score.test.support[[11]]
   debug     <- as.integer(1)
   inv_info_vec=as.numeric(score.test.support$inv_info_vec)
   YminusP=as.numeric(score.test.support$YminusP)

@@ -98,7 +98,7 @@ EMStepScoreTestSupport <- function(delta0,y,x.all,z.standard,z.all,missingTumorI
   WX_vec <- temp$WX_vec
 
 
-  return(list(inv_info_vec=inv_info_vec,YminusP=YminusP,W_obs=W_obs,WXZ_vec = WXZ_vec,zc=z.all))
+  return(list(inv_info_vec=inv_info_vec,YminusP=YminusP,W_obs=W_obs,WXZ_vec = WXZ_vec,zc=z.all,idx.drop = idx.drop))
   #  return(temp)
 }
 
