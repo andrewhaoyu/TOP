@@ -30,7 +30,7 @@ GenerateSelfXAll <- function(y,x.self.design,baselineonly,additive,pairwise.inte
   if(is.null(saturated)==0){
     x.all = cbind(x.all,saturated)
   }
-  x.all <- x.all[,-1,drop=F]
+  x.all <- x.all[,-1,drop=FALSE]
   return(as.matrix(x.all))
 }
 

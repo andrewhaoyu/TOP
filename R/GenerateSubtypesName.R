@@ -11,7 +11,7 @@
 GenerateSubtypesName <- function(z.design.additive,
                                  M,
                                  tumor.names) {
-  z.design.standard <- z.design.additive[,2:ncol(z.design.additive),drop=F]
+  z.design.standard <- z.design.additive[,2:ncol(z.design.additive),drop=FALSE]
   M <- nrow(z.design.standard)
   subtypes.names <- rep("",M)
   for(i in 1:M){

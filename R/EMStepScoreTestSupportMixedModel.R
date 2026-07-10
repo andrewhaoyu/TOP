@@ -30,8 +30,8 @@ EMStepScoreTestSupportMixedModel <- function(delta0,y,x.all,z.standard,z.all,mis
   idx.drop = prob.fit.result[[4]]
   #remove all the subtypes below the cutoff threshold
   if(length(idx.drop)!=0){
-    x.all <- x.all[-idx.drop,,drop=F]
-    y_em <- y_em[-idx.drop,,drop=F]
+    x.all <- x.all[-idx.drop,,drop=FALSE]
+    y_em <- y_em[-idx.drop,,drop=FALSE]
   }
   for(k in 1:length(missing.vec)){
     missing.vec[k] <- missing.vec[k]-sum(missing.vec[k]>=idx.drop)

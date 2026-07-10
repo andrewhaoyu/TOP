@@ -33,7 +33,7 @@ SecondStageTest <- function(logodds,sigma,M,second.stage.mat){
   second.stage.effect.names <- NULL
   for(i in 1:ncol(second.stage.mat)){
     for(j in 1:nrow(second.stage.mat)){
-      if(is.na(second.stage.mat[j,i])==F){
+      if(is.na(second.stage.mat[j,i])==FALSE){
         covar.names = c(covar.names,all.covar.names[i])
         second.stage.effect.names =
           c(second.stage.effect.names,all.second.stage.names[j])

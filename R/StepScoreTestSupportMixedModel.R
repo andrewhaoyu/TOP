@@ -17,8 +17,8 @@ StepScoreTestSupportMixedModel <- function(delta0,y,x.all,z.standard,z.all){
     y.fit <- prob.fit.result[[1]]
     idx.drop = prob.fit.result[[4]]
     if(length(idx.drop)!=0){
-      x.all <- x.all[-idx.drop,,drop=F]
-      y_em <- y_em[-idx.drop,,drop=F]
+      x.all <- x.all[-idx.drop,,drop=FALSE]
+      y_em <- y_em[-idx.drop,,drop=FALSE]
     }
     # sof <- "try5.so"
     # dyn.load(sof)

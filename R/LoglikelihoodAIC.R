@@ -45,7 +45,7 @@ ComputeLogLikelihood <- function(y_em,p){
   for(i in 1:n){
     p.temp <- p[i+n*(0:(M-1))]
     y.temp <- y_em_ind[i,]
-    if(any(y.temp==1)==T){
+    if(any(y.temp==1)==TRUE){
       p.o[i] <- crossprod(y.temp,(p.temp))
     }else{
       p.o[i] <- (1-sum(p.temp))

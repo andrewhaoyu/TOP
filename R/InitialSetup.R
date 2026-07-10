@@ -22,11 +22,11 @@ InitialSetup <- function(y.pheno.complete,
                          z.design = NULL,
                          cutoff
                          ){
-  if(is.null(x.self.design)==T){
+  if(is.null(x.self.design)==TRUE){
     y <- y.pheno.complete
     tumor.number <- ncol(y)-1
     y.case.control <- y[,1]
-    y.tumor <- y[,2:(tumor.number+1),drop=F]
+    y.tumor <- y[,2:(tumor.number+1),drop=FALSE]
     freq.subtypes <- GenerateFreqTable(y.pheno.complete)
     if(CheckControlTumor(y.case.control,y.tumor)==1){
       stop("tumor characteristics for controls must be NA", call. = FALSE)
@@ -78,15 +78,15 @@ InitialSetup <- function(y.pheno.complete,
                            z.design.additive,
                            z.design.pairwise.interaction,
                            z.design.saturated)
-    z.standard <- z.design.additive[,-1,drop=F]
+    z.standard <- z.design.additive[,-1,drop=FALSE]
     delta0 <-StartValueFunction(freq.subtypes,y.case.control,z.all)
     return(list(delta0 = delta0,z.all=z.all,z.standard= z.standard,z.deisign.baselineonly = z.design.baselineonly,z.design.additive=z.design.additive,z.design.pairwise.interaction=z.design.pairwise.interaction,z.design.saturated=z.design.saturated,covar.names = covar.names,tumor.names=tumor.names
     ))
   }else{
     y <- y.pheno.complete
     tumor.number <- ncol(y)-1
-    y.case.control <- y[,1,drop=F]
-    y.tumor <- y[,2:(tumor.number+1),drop=F]
+    y.case.control <- y[,1,drop=FALSE]
+    y.tumor <- y[,2:(tumor.number+1),drop=FALSE]
     freq.subtypes <- GenerateFreqTable(y.pheno.complete)
     if(CheckControlTumor(y.case.control,y.tumor)==1){
       stop("tumor characteristics for controls must be NA", call. = FALSE)
@@ -137,7 +137,7 @@ InitialSetup <- function(y.pheno.complete,
                                z.design.pairwise.interaction,
                                z.design.saturated)
     delta0 <-StartValueFunction(freq.subtypes,y.case.control,z.all)
-    z.standard <- z.design.additive[,-1,drop=F]
+    z.standard <- z.design.additive[,-1,drop=FALSE]
     delta0 <-StartValueFunction(freq.subtypes,y.case.control,z.all)
     return(list(delta0 = delta0,z.all=z.all,z.standard= z.standard,z.deisign.baselineonly = z.design.baselineonly,z.design.additive=z.design.additive,z.design.pairwise.interaction=z.design.pairwise.interaction,z.design.saturated=z.design.saturated,covar.names = covar.names,tumor.names=tumor.names
     ))

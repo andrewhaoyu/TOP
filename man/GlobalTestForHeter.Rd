@@ -4,7 +4,7 @@
 \alias{GlobalTestForHeter}
 \title{Title}
 \usage{
-GlobalTestForHeter(logodds, sigma, self.design = F)
+GlobalTestForHeter(logodds, sigma, self.design = FALSE)
 }
 \arguments{
 \item{logodds}{Input for `logodds`.}

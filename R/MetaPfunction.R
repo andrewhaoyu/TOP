@@ -181,7 +181,7 @@ MetaFixedPfunction_temp <- function(icog_onco_score_infor_one,second.num){
 
 
 
-  p.value <- DisplaySecondStageTestResult(logodds.meta.fixed,sigma.meta.fixed,self.design=T,
+  p.value <- DisplaySecondStageTestResult(logodds.meta.fixed,sigma.meta.fixed,self.design=TRUE,
                                           places= 5)
 
   return(list(logodds.meta.fixed,sigma.meta.fixed,

@@ -24,8 +24,8 @@ Mvpoly <- function(y,
   
   
   freq.subtypes <- GenerateFreqTable(y.pheno.complete)
-  y.case.control <- y[,1,drop=F]
-  y.tumor <- y[,2:ncol(y),drop=F]
+  y.case.control <- y[,1,drop=FALSE]
+  y.tumor <- y[,2:ncol(y),drop=FALSE]
   if(CheckControlTumor(y.case.control,y.tumor)==1){
     stop("tumor characteristics for controls must be NA", call. = FALSE)
   }
@@ -83,7 +83,7 @@ Mvpoly <- function(y,
   #x.all has no intercept yet
   #we will add the intercept in C code
   x.all <- GenerateXAll(y,baselineonly,additive,pairwise.interaction,saturated)
-  z.standard <- z.design.additive[,-1,drop=F]
+  z.standard <- z.design.additive[,-1,drop=FALSE]
   
   
   fit.result <- ProbFitting(delta0,y,x.all,z.standard,z.all,missingTumorIndicator=NULL)
@@ -91,15 +91,15 @@ Mvpoly <- function(y,
   idx.drop = fit.result[[4]]
   
   if(length(idx.drop)!=0){
-    x.all <- x.all[-idx.drop,,drop=F]
-    y.fit <- y.fit[-idx.drop,,drop=F]
+    x.all <- x.all[-idx.drop,,drop=FALSE]
+    y.fit <- y.fit[-idx.drop,,drop=FALSE]
   }
   
   
 
 
 x.all <- as.matrix(x.all)
-z.standard <- z.design.additive[,-1,drop=F]
+z.standard <- z.design.additive[,-1,drop=FALSE]
 M <- as.integer(nrow(z.standard))
 
 tol <- as.numeric(1e-04)

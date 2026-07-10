@@ -23,7 +23,7 @@ ScoreTestMixedModel <- function(y,x,z.design = z.design,score.test.support=NULL,
 
 
   idx.drop <- score.test.support[[6]]
-  if(is.null(idx.drop)==F){
+  if(is.null(idx.drop)==FALSE){
     x = x[-idx.drop]  
   }
   
@@ -92,7 +92,7 @@ ScoreTestMixedModel <- function(y,x,z.design = z.design,score.test.support=NULL,
 
     index <- index + nparm.intere
 
-if(is.null(missingTumorIndicator)==T){
+if(is.null(missingTumorIndicator)==TRUE){
   return(list(score.result=score.result,info.complete=info.complete)
   )
 }else{

@@ -18,7 +18,7 @@ GenerateGlobalTest <- function(delta,sigma,M,second.stage.mat){
   global.test.for.heter <- rep(0,p)
   for(i in 1:p){
     for(j in 1:nrow(second.stage.mat)){
-      if(is.na(second.stage.mat[j,i])==F){
+      if(is.na(second.stage.mat[j,i])==FALSE){
         ind.end <- ind.end+1
       }
     }

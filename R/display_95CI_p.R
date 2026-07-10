@@ -12,7 +12,7 @@
 #'
 #' @export
 #'
-DisplaySecondStageTestResult = function(logodds,sigma,self.design=F,
+DisplaySecondStageTestResult = function(logodds,sigma,self.design=FALSE,
                                         places= 5){
   var.logodds <- diag(sigma)
   logodds.low <- logodds-1.96*sqrt(var.logodds)

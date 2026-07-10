@@ -19,7 +19,7 @@
 #' @export
 #'
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #'#load in the breast cancer example
 #' data(data, package="TOP") #load in the breast cancer example
 #'#this is a simulated breast cancer example
@@ -70,8 +70,8 @@
 #'               &z.standard[,3]==0)
 #'z.design[idx.5,5] <- 1
 #'#one SNP and one Principal components (PC1) are the covariates
-#'SNP <- data[,6,drop=F]
-#'PC1 <- data[,7,drop=F]
+#'SNP <- data[,6,drop=FALSE]
+#'PC1 <- data[,7,drop=FALSE]
 
 #'model.3 <- EMmvpolySelfDesign(y,
 #'                              x.self.design = SNP,
@@ -92,7 +92,7 @@ EMmvpolySelfDesign <- function(y,
                                cutoff=10){
   if(is.null(z.all)){
     missing.data.vec <- GenerateMissingPosition(y,missingTumorIndicator)
-    y.pheno.complete <- y[-missing.data.vec,,drop=F]
+    y.pheno.complete <- y[-missing.data.vec,,drop=FALSE]
     initial.set <- InitialSetup(y.pheno.complete,
                                 baselineonly,
                                 additive,

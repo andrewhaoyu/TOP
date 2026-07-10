@@ -31,8 +31,8 @@ MvpolySelfDesign <- function(y,
   
   freq.subtypes <- GenerateFreqTable(y.pheno.complete)
   tumor.number <- ncol(y)-1
-  y.case.control <- y[,1,drop=F]
-  y.tumor <- y[,2:(tumor.number+1),drop=F]
+  y.case.control <- y[,1,drop=FALSE]
+  y.tumor <- y[,2:(tumor.number+1),drop=FALSE]
   freq.subtypes <- GenerateFreqTable(y.pheno.complete)
   if(CheckControlTumor(y.case.control,y.tumor)==1){
     stop("tumor characteristics for controls must be NA", call. = FALSE)
@@ -83,7 +83,7 @@ MvpolySelfDesign <- function(y,
                              z.design.pairwise.interaction,
                              z.design.saturated)
   delta0 <-StartValueFunction(freq.subtypes,y.case.control,z.all)
-  z.standard <- z.design.additive[,-1,drop=F]
+  z.standard <- z.design.additive[,-1,drop=FALSE]
   if(is.null(delta0)){
     delta0 <-StartValueFunction(freq.subtypes,y.case.control,z.all)
   }
@@ -91,7 +91,7 @@ MvpolySelfDesign <- function(y,
   #x.all has no intercept yet
   #we will add the intercept in C code
   x.all <- GenerateSelfXAll(y,x.self.design,baselineonly,additive,pairwise.interaction,saturated)
-  z.standard <- z.design.additive[,-1,drop=F]
+  z.standard <- z.design.additive[,-1,drop=FALSE]
   
   
   fit.result <- ProbFitting(delta0,y,x.all,z.standard,z.all,missingTumorIndicator=888)
@@ -99,8 +99,8 @@ MvpolySelfDesign <- function(y,
   idx.drop = fit.result[[4]]
   
   if(length(idx.drop)!=0){
-    x.all <- x.all[-idx.drop,,drop=F]
-    y.fit <- y.fit[-idx.drop,,drop=F]
+    x.all <- x.all[-idx.drop,,drop=FALSE]
+    y.fit <- y.fit[-idx.drop,,drop=FALSE]
   }
   
   

@@ -4,7 +4,7 @@
 \alias{DisplaySecondStageTestResult}
 \title{DisplaySecondStageTestResult}
 \usage{
-DisplaySecondStageTestResult(logodds, sigma, self.design = F, places = 5)
+DisplaySecondStageTestResult(logodds, sigma, self.design = FALSE, places = 5)
 }
 \arguments{
 \item{logodds}{the log odds ratio vector}

@@ -29,8 +29,8 @@ ScoreTest <- function(y,x,second.stage.structure = "additive",score.test.support
   
   
   idx.drop <- score.test.support$idx.drop
-  if(is.null(idx.drop)==F){
-    x = x[-idx.drop,,drop=F]
+  if(is.null(idx.drop)==FALSE){
+    x = x[-idx.drop,,drop=FALSE]
   }
   
 

@@ -25,9 +25,9 @@ ScoreTestSupportMixedModelSelfDesign <- function(y,
 
   y <- as.matrix(y)
   tumor.number <- ncol(y)-1
-  y.case.control <- y[,1,drop=F]
-  y.tumor <- y[,2:(tumor.number+1),drop=F]
-  if(is.null(missingTumorIndicator)==T){
+  y.case.control <- y[,1,drop=FALSE]
+  y.tumor <- y[,2:(tumor.number+1),drop=FALSE]
+  if(is.null(missingTumorIndicator)==TRUE){
     y.pheno.complete = y  
   }else{
     y.pheno.complete <- GenerateCompleteYPheno(y,missingTumorIndicator)
@@ -75,7 +75,7 @@ ScoreTestSupportMixedModelSelfDesign <- function(y,
                              z.design.additive,
                              z.design.pairwise.interaction,
                              z.design.saturated)
-  if(is.null(delta0)==T){
+  if(is.null(delta0)==TRUE){
     delta0 <-StartValueFunction(freq.subtypes,y.case.control,z.all)
   }else{
     delta0 =delta0
@@ -87,9 +87,9 @@ ScoreTestSupportMixedModelSelfDesign <- function(y,
   ###z standard matrix means the additive model z design matrix without baseline effect
   ###z standard matrix is used to match the missing tumor characteristics to the complete subtypes
 
-  z.standard <- z.design.additive[,-1,drop=F]
+  z.standard <- z.design.additive[,-1,drop=FALSE]
 
-  if(is.null(missingTumorIndicator)==T){
+  if(is.null(missingTumorIndicator)==TRUE){
     Score.Support <- StepScoreTestSupportMixedModel(delta0,y,x.all,z.standard,z.all)
   }else{
     Score.Support = EMStepScoreTestSupportMixedModel(delta0,y,x.all,z.standard,z.all,missingTumorIndicator)

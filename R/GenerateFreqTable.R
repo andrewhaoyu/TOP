@@ -16,10 +16,10 @@ GenerateFreqTable <- function(y.pheno.complete){
       eval_text = paste0(eval_text,paste0("y.pheno.complete[,",i,"],"))
     }
   }
-  eval_text = paste0("as.data.frame(table(",eval_text,"),stringsAsFactors = F)")
+  eval_text = paste0("as.data.frame(table(",eval_text,"),stringsAsFactors = FALSE)")
   result = eval(parse(text=eval_text))
   result <- apply(result,2,as.numeric)
   # idx <- which(result[,ncol(result)]==0)
-  # result <- result[-idx,,drop=F]
+  # result <- result[-idx,,drop=FALSE]
   return(result)
 }

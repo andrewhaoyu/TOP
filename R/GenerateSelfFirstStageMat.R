@@ -19,10 +19,10 @@ GenerateSelfFirstStageMat <- function(beta,
   self.design.number <- CountCovarNumber(x.self.design)
   covar.names <- c("Intercept",covar.names)
   covar.number <- length(covar.names)
-  first.mat <- matrix(beta,ncol = covar.number,byrow=T)
+  first.mat <- matrix(beta,ncol = covar.number,byrow=TRUE)
   colnames(first.mat) <- covar.names
   rownames(first.mat) <- subtypes.names
-  first.mat <- first.mat[,c(2:(1+self.design.number)),drop=F]
+  first.mat <- first.mat[,c(2:(1+self.design.number)),drop=FALSE]
 
   return(first.mat)
 

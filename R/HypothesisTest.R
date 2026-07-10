@@ -11,7 +11,7 @@ GlobalTestForAssoc <- function(logodds,sigma){
   sigma <- as.matrix(sigma)
   df <- length(logodds)
   GTA.stat <- t(logodds)%*%solve(sigma)%*%logodds
-  p.value.GTA <- pchisq(as.numeric(GTA.stat),df=df,lower.tail = F)
+  p.value.GTA <- pchisq(as.numeric(GTA.stat),df=df,lower.tail = FALSE)
   places = 3
   power.number <- floor(-log10(p.value.GTA))+places
   ###format the output with three digits in total
@@ -34,9 +34,9 @@ GlobalTestForAssoc <- function(logodds,sigma){
 #' @return A result from this computation.
 #' @export
 #'
-GlobalTestForHeter <- function(logodds,sigma,self.design=F){
+GlobalTestForHeter <- function(logodds,sigma,self.design=FALSE){
 
-  if(self.design==F){
+  if(self.design==FALSE){
     if(length(logodds)==1){
       return(NA)
     }else{
@@ -45,7 +45,7 @@ GlobalTestForHeter <- function(logodds,sigma,self.design=F){
       sigma.casecase <- sigma[2:df,2:df]
       logodds.casecase <- logodds[2:df]
       GTH.stat <- t(logodds.casecase)%*%solve(sigma.casecase)%*%logodds.casecase
-      p.value.GTH <- pchisq(as.numeric(GTH.stat),df=(df-1),lower.tail = F)
+      p.value.GTH <- pchisq(as.numeric(GTH.stat),df=(df-1),lower.tail = FALSE)
       places <- 3
       power.number <- floor(-log10(p.value.GTH))+places
       p.value.GTH <- round(p.value.GTH*10^power.number)/(10^power.number)
@@ -67,7 +67,7 @@ GlobalTestForHeter <- function(logodds,sigma,self.design=F){
         logodds.casecase <- z.design%*%logodds
         sigma.casecase <- z.design%*%sigma%*%t(z.design)
         GTH.stat <- t(logodds.casecase)%*%solve(sigma.casecase)%*%logodds.casecase
-        p.value.GTH <- pchisq(as.numeric(GTH.stat),df=(df-1),lower.tail = F)
+        p.value.GTH <- pchisq(as.numeric(GTH.stat),df=(df-1),lower.tail = FALSE)
         places <- 3
         power.number <- floor(-log10(p.value.GTH))+places
         p.value.GTH <- round(p.value.GTH*10^power.number)/(10^power.number)
@@ -114,7 +114,7 @@ ScoreGlobalTestForAssoc <- function(score,infor){
   infor <- as.matrix(infor)
   df <- length(score)
   GTA.stat <- score%*%solve(infor)%*%t(score)
-  p.value.GTA <- pchisq(as.numeric(GTA.stat),df=df,lower.tail = F)
+  p.value.GTA <- pchisq(as.numeric(GTA.stat),df=df,lower.tail = FALSE)
   places = 3
   power.number <- floor(-log10(p.value.GTA))+places
   ###format the output with three digits in total
@@ -137,7 +137,7 @@ ScoreGlobalMixedTestForAssoc <- function(score,infor){
   infor <- as.matrix(infor)
   df <- length(score)
   GTA.stat <- score%*%solve(infor)%*%t(score)
-  p.value.GTA <- pchisq(as.numeric(GTA.stat),df=df,lower.tail = F)
+  p.value.GTA <- pchisq(as.numeric(GTA.stat),df=df,lower.tail = FALSE)
   places = 3
   power.number <- floor(-log10(p.value.GTA))+places
   ###format the output with three digits in total
@@ -216,11 +216,11 @@ ScoreMixedGlobalTestForAssoc <- function(p.value.score.heter,
   infor.baseline <- as.matrix(infor.baseline)
   df <- length(score.baseline)
   GTA.stat <- score.baseline%*%solve(infor.baseline)%*%t(score.baseline)
-  p.value.baseline <- pchisq(as.numeric(GTA.stat),df=df,lower.tail = F)
+  p.value.baseline <- pchisq(as.numeric(GTA.stat),df=df,lower.tail = FALSE)
 
   mix.stat <- -2*log(p.value.baseline)-2*log(p.value.score.heter)
 
-  p.value.mixed <- pchisq(as.numeric(mix.stat),df=4,lower.tail = F)
+  p.value.mixed <- pchisq(as.numeric(mix.stat),df=4,lower.tail = FALSE)
 
   return(p.value.mixed)
 

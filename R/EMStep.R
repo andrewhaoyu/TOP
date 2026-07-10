@@ -1,5 +1,5 @@
 #x.all contains all the potential covariates including the interested variables and other covariates
-#x.all DON'T have intercept yet
+#x.all DON'TRUE have intercept yet
 #z.standard contains the potential tumor characteristic to subtypes combination
 
 #' Title
@@ -34,8 +34,8 @@ EMStep <- function(delta0,y,x.all,z.standard,z.all,missingTumorIndicator){
   idx.drop = prob.fit.result[[4]]
   #remove all the subtypes below the cutoff threshold
   if(length(idx.drop)!=0){
-    x.all <- x.all[-idx.drop,,drop=F]
-    y_em <- y_em[-idx.drop,,drop=F]
+    x.all <- x.all[-idx.drop,,drop=FALSE]
+    y_em <- y_em[-idx.drop,,drop=FALSE]
   }
   for(k in 1:length(missing.vec)){
     missing.vec[k] <- missing.vec[k]-sum(missing.vec[k]>=idx.drop)

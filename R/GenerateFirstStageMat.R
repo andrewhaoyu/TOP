@@ -15,7 +15,7 @@ GenerateFirstStageMat <- function(beta,
 
   covar.names <- c("Intercept",covar.names)
   covar.number <- length(covar.names)
-  first.mat <- matrix(beta,ncol = covar.number,byrow=T)
+  first.mat <- matrix(beta,ncol = covar.number,byrow=TRUE)
   colnames(first.mat) <- covar.names
   rownames(first.mat) <- subtypes.names
 

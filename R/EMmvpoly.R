@@ -26,8 +26,8 @@ GenerateZstandard <- function(y,
   if(is.null(missingTumorIndicator)){
   y.pheno.complete <- y
   tumor.number <- ncol(y)-1
-  y.case.control <- y[,1,drop=F]
-  y.tumor <- y[,2:(tumor.number+1),drop=F]
+  y.case.control <- y[,1,drop=FALSE]
+  y.tumor <- y[,2:(tumor.number+1),drop=FALSE]
   freq.subtypes <- GenerateFreqTable(y.pheno.complete)
   if(CheckControlTumor(y.case.control,y.tumor)==1){
     stop("tumor characteristics for controls must be NA", call. = FALSE)
@@ -47,7 +47,7 @@ GenerateZstandard <- function(y,
                                                tumor.names,
                                                freq.subtypes,
                                                cutoff)
-  z.standard <- z.design.additive[,-1,drop=F]
+  z.standard <- z.design.additive[,-1,drop=FALSE]
   return(as.matrix(z.standard))
 
   }else{
@@ -55,8 +55,8 @@ GenerateZstandard <- function(y,
     y.pheno.complete <- y[-missing.data.vec,]
     y <- y.pheno.complete
     tumor.number <- ncol(y)-1
-    y.case.control <- y[,1,drop=F]
-    y.tumor <- y[,2:(tumor.number+1),drop=F]
+    y.case.control <- y[,1,drop=FALSE]
+    y.tumor <- y[,2:(tumor.number+1),drop=FALSE]
     freq.subtypes <- GenerateFreqTable(y.pheno.complete)
     if(CheckControlTumor(y.case.control,y.tumor)==1){
       stop("tumor characteristics for controls must be NA", call. = FALSE)
@@ -76,7 +76,7 @@ GenerateZstandard <- function(y,
                                                  tumor.names,
                                                  freq.subtypes,
                                                  cutoff)
-    z.standard <- z.design.additive[,-1,drop=F]
+    z.standard <- z.design.additive[,-1,drop=FALSE]
     return(as.matrix(z.standard))
 
   }
@@ -105,7 +105,7 @@ EMmvpoly <- function(y,
                      cutoff = 10){
 
   missing.data.vec <- GenerateMissingPosition(y,missingTumorIndicator)
-  y.pheno.complete <- y[-missing.data.vec,,drop=F]
+  y.pheno.complete <- y[-missing.data.vec,,drop=FALSE]
   initial.set <- InitialSetup(y.pheno.complete,
                            baselineonly,
                            additive,
@@ -115,7 +115,7 @@ EMmvpoly <- function(y,
   )
   ###z standard matrix means the additive model z design matrix without baseline effect
   ###z standard matrix is used to match the missing tumor characteristics to the complete subtypes
-  if(is.null(delta0)==T){
+  if(is.null(delta0)==TRUE){
     delta0 = initial.set$delta0
   }else{
     delta0 = delta0

@@ -48,7 +48,7 @@ the result is a list containing 9 elements. 1. the second stage parameters 2. th
 Two stage model with self design second stage matrix
 }
 \examples{
-\donttest{
+\dontrun{
 #load in the breast cancer example
 data(data, package="TOP") #load in the breast cancer example
 #this is a simulated breast cancer example
@@ -98,8 +98,8 @@ idx.5 <- which(z.standard[,1]==0&z.standard[,2]==0
               &z.standard[,3]==0)
 z.design[idx.5,5] <- 1
 #one SNP and one Principal components (PC1) are the covariates
-SNP <- data[,6,drop=F]
-PC1 <- data[,7,drop=F]
+SNP <- data[,6,drop=FALSE]
+PC1 <- data[,7,drop=FALSE]
 model.3 <- EMmvpolySelfDesign(y,
                              x.self.design = SNP,
                              z.design = z.design,
