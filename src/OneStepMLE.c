@@ -14,7 +14,7 @@
 #define ERROR_SINGULAR_MATRIX 1
 #define CHECK_MEM(obj) if (obj == NULL) {Rprintf("ERROR: allocating memory \n"); error("1");}
 
-static void print_dVec(double *vec, int n, char name[10])
+static void print_dVec(double *vec, int n, const char *name)
 {
   int i;
   Rprintf("%s \n", name);
@@ -24,7 +24,7 @@ static void print_dVec(double *vec, int n, char name[10])
   Rprintf("\n \n");
 }
 
-static void print_dMat(double **mat, int nr, int nc, char name[10])
+static void print_dMat(double **mat, int nr, int nc, const char *name)
 {
   int i, j;
   Rprintf("%s \n", name);
@@ -962,4 +962,3 @@ static void get_XXZ_col(int col, double **X, int Xnr, int Xnc, int M, double **Z
         
         return;
     } /* END: Mvpoly */
-

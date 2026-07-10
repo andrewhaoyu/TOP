@@ -14,7 +14,7 @@
 #define CHECK_MEM(obj) if (obj == NULL) {Rprintf("ERROR: allocating memory \n"); error("1");}
 
 
-static void print_dVec(double *vec, int n, char name[10])
+static void print_dVec(double *vec, int n, const char *name)
 {
   int i;
   Rprintf("%s \n", name);
