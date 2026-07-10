@@ -1,13 +1,12 @@
 #' Title
 #'
-#' @param freq.subtypes
-#' @param y.case.control
-#' @param z.all
+#' @param freq.subtypes Input for `freq.subtypes`.
+#' @param y.case.control Input for `y.case.control`.
+#' @param z.all Input for `z.all`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 StartValueFunction = function(freq.subtypes,y.case.control,z.all){
   ###cutoff for take one subject
   cutoff=10

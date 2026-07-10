@@ -1,5 +1,5 @@
 #x.all contains all the potential covariates including the interested variables and other covariates
-#x.all DON'T have intercept yet
+#x.all DON'TRUE have intercept yet
 #z.standard contains the potential tumor characteristic to subtypes combination
 
 #' Title
@@ -11,10 +11,9 @@
 #' @param z.all z.all
 #' @param missingTumorIndicator missingtumorIndicator
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 EMStep <- function(delta0,y,x.all,z.standard,z.all,missingTumorIndicator){
 
   tol <- as.numeric(1e-04)
@@ -23,8 +22,8 @@ EMStep <- function(delta0,y,x.all,z.standard,z.all,missingTumorIndicator){
   delta_old <- delta0
   ##EM algorithm
   ##first E step
-  print(paste0("Begin EM algorithm"))
-  print(paste0("EM round: 1"))
+  .top_message("Begin EM algorithm")
+  .top_message("EM round: 1")
   prob.fit.result <- ProbFitting(delta_old,y,x.all,
                                  z.standard,z.all,missingTumorIndicator)
   y_em <- prob.fit.result[[1]]
@@ -35,8 +34,8 @@ EMStep <- function(delta0,y,x.all,z.standard,z.all,missingTumorIndicator){
   idx.drop = prob.fit.result[[4]]
   #remove all the subtypes below the cutoff threshold
   if(length(idx.drop)!=0){
-    x.all <- x.all[-idx.drop,,drop=F]
-    y_em <- y_em[-idx.drop,,drop=F]
+    x.all <- x.all[-idx.drop,,drop=FALSE]
+    y_em <- y_em[-idx.drop,,drop=FALSE]
   }
   for(k in 1:length(missing.vec)){
     missing.vec[k] <- missing.vec[k]-sum(missing.vec[k]>=idx.drop)
@@ -63,7 +62,7 @@ EMStep <- function(delta0,y,x.all,z.standard,z.all,missingTumorIndicator){
   ZallVec = as.numeric(as.vector(z.all))
   Znr = as.integer(nrow(z.all))
   Znc = as.integer(ncol(z.all))
-  debug     <- as.integer(1)
+  debug     <- as.integer(0)
   ret_rc    <- as.integer(1)
   ret_delta <- as.numeric(rep(-9999, nparm))
   ret_info <- as.numeric(rep(-9999,nparm^2))
@@ -74,8 +73,8 @@ EMStep <- function(delta0,y,x.all,z.standard,z.all,missingTumorIndicator){
 
   temp <- .C("EMStep",deltai, nparm, Y=Y, X, ZallVec,Znr,Znc, N, M, NCOV, NITER, tol,tolMaxstep,
              debug, ret_rc=ret_rc, ret_delta=ret_delta,ret_info=ret_info,ret_p=ret_p,missing.vec,
-             missing.mat.vec,missing.number,loglikelihood = loglikelihood)
-  print(paste0("EM Algorithm Converged"))
+             missing.mat.vec,missing.number,loglikelihood = loglikelihood, PACKAGE = "TOP")
+  .top_message("EM algorithm converged")
   info <- matrix(unlist(temp$ret_info),nparm,nparm)
   result <- list(temp$ret_delta,info,
                  temp$ret_p)
@@ -102,4 +101,3 @@ EMStep <- function(delta0,y,x.all,z.standard,z.all,missingTumorIndicator){
               AIC = AIC
   ))
 }
-

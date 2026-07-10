@@ -7,7 +7,12 @@
 ScoreMixedGlobalTestForHeter(score.casecase, infor.casecase)
 }
 \arguments{
-\item{infor.casecase}{}
+\item{score.casecase}{Input for `score.casecase`.}
+
+\item{infor.casecase}{Input for `infor.casecase`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

@@ -7,7 +7,14 @@
 GenerateSubtypesName(z.design.additive, M, tumor.names)
 }
 \arguments{
-\item{tumor.names}{}
+\item{z.design.additive}{Input for `z.design.additive`.}
+
+\item{M}{Input for `M`.}
+
+\item{tumor.names}{Input for `tumor.names`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

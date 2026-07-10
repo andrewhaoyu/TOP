@@ -7,7 +7,16 @@
 LogoddsMetaAnalysis(logodds1, sigma1, logodds2, sigma2)
 }
 \arguments{
-\item{sigma2}{}
+\item{logodds1}{Input for `logodds1`.}
+
+\item{sigma1}{Input for `sigma1`.}
+
+\item{logodds2}{Input for `logodds2`.}
+
+\item{sigma2}{Input for `sigma2`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

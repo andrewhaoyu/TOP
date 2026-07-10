@@ -7,7 +7,16 @@
 GenerateGlobalTest(delta, sigma, M, second.stage.mat)
 }
 \arguments{
-\item{second.stage.mat}{}
+\item{delta}{Input for `delta`.}
+
+\item{sigma}{Input for `sigma`.}
+
+\item{M}{Input for `M`.}
+
+\item{second.stage.mat}{Input for `second.stage.mat`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

@@ -1,30 +1,32 @@
 
 #' Title
 #'
-#' @param y
-#' @param baselineonly
-#' @param additive
-#' @param pairwise.interaction
-#' @param saturated
-#' @param missingTumorIndicator
+#' @param y Input for `y`.
+#' @param baselineonly Input for `baselineonly`.
+#' @param additive Input for `additive`.
+#' @param pairwise.interaction Input for `pairwise.interaction`.
+#' @param saturated Input for `saturated`.
+#' @param missingTumorIndicator Input for `missingTumorIndicator`.
+#' @param cutoff subtypes with counts at or below this value are removed
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 OneStepMLE <- function(y,
                      baselineonly,
                      additive,
                      pairwise.interaction,
                      saturated,
-                     missingTumorIndicator){
+                     missingTumorIndicator,
+                     cutoff = 10){
   missing.data.vec <- GenerateMissingPosition(y,missingTumorIndicator)
   y.pheno.complete <- y[-missing.data.vec,]
   initial.set <- InitialSetup(y.pheno.complete,
                               baselineonly,
                               additive,
                               pairwise.interaction,
-                              saturated
+                              saturated,
+                              cutoff = cutoff
   )
   ###z standard matrix means the additive model z design matrix without baseline effect
   ###z standard matrix is used to match the missing tumor characteristics to the complete subtypes
@@ -37,11 +39,14 @@ OneStepMLE <- function(y,
   z.design.pairwise.interaction = initial.set$z.design.pairwise.interaction
   z.design.saturated = initial.set$z.design.saturated
   x.all <- as.matrix(GenerateXAll(y,baselineonly,additive,pairwise.interaction,saturated))
+  x.all.complete <- GenerateCompleteXCovariates(y, x.all, missingTumorIndicator)
   covar.names <- initial.set$covar.names
+  tumor.names <- initial.set$tumor.names
+  full.second.stage.names <- colnames(z.design.saturated)
 
 
   prob.fit.result <- ProbFitting(delta0,y.pheno.complete,x.all.complete,z.standard,z.all)
-  y.fit <- prob.fit.result[[1]]
+  y.fit.complete <- prob.fit.result$y_em
   M <- as.integer(nrow(z.standard))
   p.main <- ncol(z.standard)+1
 
@@ -65,7 +70,7 @@ OneStepMLE <- function(y,
   ZallVec = as.numeric(as.vector(z.all))
   Znr = as.integer(nrow(z.all))
   Znc = as.integer(ncol(z.all))
-  debug     <- as.integer(1)
+  debug     <- as.integer(0)
   ret_rc    <- as.integer(1)
   ret_delta <- as.numeric(rep(-9999, nparm))
   ret_info <- as.numeric(rep(-9999,nparm^2))
@@ -76,7 +81,8 @@ OneStepMLE <- function(y,
 
 
   temp <- .C("Mvpoly_complete",deltai, nparm, Y=Y, X, ZallVec,Znr,Znc, N, M, NCOV, NITER, tol,
-             debug, ret_rc=ret_rc, ret_delta=ret_delta,ret_info=ret_info,ret_p=ret_p,loglikelihood = loglikelihood)
+             debug, ret_rc=ret_rc, ret_delta=ret_delta,ret_info=ret_info,ret_p=ret_p,loglikelihood = loglikelihood,
+             PACKAGE = "TOP")
 
 
   delta0 <- temp$ret_delta
@@ -114,7 +120,7 @@ OneStepMLE <- function(y,
 
   temp <- .C("OneStepMLE",deltai, nparm, Y=Y, X, ZallVec,Znr,Znc, N, M, NCOV, NITER, tol,
              debug, ret_rc=ret_rc, ret_delta=ret_delta,ret_info=ret_info,ret_p=ret_p,missing.vec,
-             missing.mat.vec,missing.number,loglikelihood = loglikelihood)
+             missing.mat.vec,missing.number,loglikelihood = loglikelihood, PACKAGE = "TOP")
 
 
   info <- matrix(unlist(temp$ret_info),nparm,nparm)
@@ -191,7 +197,9 @@ OneStepMLE <- function(y,
 
 
 
-  return(list(delta=delta,covariance.delta=covariance.delta,second.stage.mat = second.stage.mat,second.stage.test,global.test,first.stage.mat,first.stage.test,loglikelihood = loglikelihood,
+  return(list(delta=delta,covariance.delta=covariance.delta,second.stage.mat = second.stage.mat,
+              second.stage.test=second.stage.test,global.test=global.test,
+              first.stage.mat=first.stage.mat,first.stage.test=first.stage.test,loglikelihood = loglikelihood,
               AIC = AIC,beta=beta,covariance.beta=covariance.beta,
               z.standard=z.standard))
 

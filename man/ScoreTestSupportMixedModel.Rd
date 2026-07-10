@@ -29,7 +29,7 @@ ScoreTestSupportMixedModel(
 
 \item{missingTumorIndicator}{The indicators to show the tumor characteristics are missing. In the example, we put missing tumor characteristics as 888. Note, for all the controls subjects, they don't have tumor characteristics. So their tumor characteristics are put as NA instead of 888 to differentiate with cases missing tumor characteristics.}
 
-\item{delta0}{}
+\item{delta0}{Input for `delta0`.}
 
 \item{cutoff}{by default, the model will remove the subtypes with less than 10 cases, the user can specify other values by changing the cutoff. But we don't recommend to set the cutoff too low, since the asymptotic convergence requires enough sample size}
 }
@@ -41,6 +41,7 @@ Generate the support list for score test
 To construct a score test, we need to first fit the model under the null hypothesis. This function fitts the model under the null hypothesis, then saved all the necessary results into a list to pass to the score test function.
 }
 \examples{
+\dontrun{
 data(data, package="TOP") #load in the breast cancer example
 #this is a simulated breast cancer example
 #there are around 5000 breast cancer cases and 5000 controls, i.e. people without disease
@@ -51,11 +52,12 @@ data[1:5,]
 y <- data[,1:5]
 
 #one SNP and one Principal components (PC1) are the covariates
-SNP <- data[,6,drop=F]
-PC1 <- data[,7,drop=F]
+SNP <- data[,6,drop=FALSE]
+PC1 <- data[,7,drop=FALSE]
 
 #fit the additive two-stage model under the null hypothesis that the second stage parameters of SNP is 0
 score.support <- ScoreTestSupportMixedModel(y=y,
                additive=PC1,
-               missingTumorIndicato#'r=888)
+               missingTumorIndicator=888)
+}
 }

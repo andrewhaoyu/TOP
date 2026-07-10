@@ -1,18 +1,17 @@
 #' Title
 #'
-#' @param baselineonly
-#' @param additive
-#' @param pairwise.interaction
-#' @param saturated
-#' @param z.design.baselineonly
-#' @param z.design.additive
-#' @param z.design.pairwise.interaction
-#' @param z.design.saturated
+#' @param baselineonly Input for `baselineonly`.
+#' @param additive Input for `additive`.
+#' @param pairwise.interaction Input for `pairwise.interaction`.
+#' @param saturated Input for `saturated`.
+#' @param z.design.baselineonly Input for `z.design.baselineonly`.
+#' @param z.design.additive Input for `z.design.additive`.
+#' @param z.design.pairwise.interaction Input for `z.design.pairwise.interaction`.
+#' @param z.design.saturated Input for `z.design.saturated`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 ZDesigntoZall <- function(baselineonly,
                           additive,
                           pairwise.interaction,

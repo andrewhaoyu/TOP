@@ -7,7 +7,20 @@
 ProbFitting(delta0, y, x.all, z.standard, z.all, missingTumorIndicator = NULL)
 }
 \arguments{
-\item{missingTumorIndicator}{}
+\item{delta0}{Input for `delta0`.}
+
+\item{y}{Input for `y`.}
+
+\item{x.all}{Input for `x.all`.}
+
+\item{z.standard}{Input for `z.standard`.}
+
+\item{z.all}{Input for `z.all`.}
+
+\item{missingTumorIndicator}{Input for `missingTumorIndicator`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

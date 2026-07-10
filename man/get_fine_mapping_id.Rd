@@ -7,7 +7,12 @@
 get_fine_mapping_id(all, fine_mapping)
 }
 \arguments{
-\item{fine_mapping}{}
+\item{all}{Input for `all`.}
+
+\item{fine_mapping}{Input for `fine_mapping`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

@@ -4,12 +4,14 @@
 \alias{GenerateZstandard}
 \title{Generate the combinations of all the tumor characteristics.}
 \usage{
-GenerateZstandard(y, missingTumorIndicator = 888)
+GenerateZstandard(y, missingTumorIndicator = 888, cutoff = 10)
 }
 \arguments{
 \item{y}{the phenotype file. The first column is the case control disease status. The other columns are the tumor characteristics status}
 
 \item{missingTumorIndicator}{The indicators to show the tumor characteristics are missing. In the example, we put missing tumor characteristics as 888. Note, for all the controls subjects, they don't have tumor characteristics. So their tumor characteristics are put as NA instead of 888 to differentiate with cases missing tumor characteristics.}
+
+\item{cutoff}{subtypes with counts at or below this value are removed}
 }
 \value{
 a matrix with all the combinations of tumor characteristics. All the subtypes with less than 10 are removed by default.

@@ -7,7 +7,14 @@
 GenerateFirstStageMat(beta, covar.names, subtypes.names)
 }
 \arguments{
-\item{subtypes.names}{}
+\item{beta}{Input for `beta`.}
+
+\item{covar.names}{Input for `covar.names`.}
+
+\item{subtypes.names}{Input for `subtypes.names`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

@@ -1,15 +1,14 @@
 ### Generate the potential tumor characteristic category(binary or categorical)
 #' Title
 #'
-#' @param y.pheno.complete
+#' @param y.pheno.complete Input for `y.pheno.complete`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateTumorCharacterCat <- function(y.pheno.complete){
   tumor.number = ncol(y.pheno.complete)-1
-  y.tumor.complete = y.pheno.complete[,2:(tumor.number+1),drop=F]
+  y.tumor.complete = y.pheno.complete[,2:(tumor.number+1),drop=FALSE]
   tumor.character.cat = list()
   for(i in 1:tumor.number){
     unique.tumor.cat = unique(y.tumor.complete[!is.na(y.tumor.complete[,i]),i])

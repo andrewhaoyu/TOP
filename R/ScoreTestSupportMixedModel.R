@@ -8,7 +8,7 @@
 #' @param pairwise.interaction the covariates to be adjusted used the pairwise interaction two-stage model
 #' @param saturated the covariates to be adjusted used the saturated two-stage model. This model assumes every subtype has their specific odds ratio. It's equivalent to the polytmous model. 
 #' @param missingTumorIndicator The indicators to show the tumor characteristics are missing. In the example, we put missing tumor characteristics as 888. Note, for all the controls subjects, they don't have tumor characteristics. So their tumor characteristics are put as NA instead of 888 to differentiate with cases missing tumor characteristics.
-#' @param delta0 
+#' @param delta0 Input for `delta0`.
 #' @param cutoff by default, the model will remove the subtypes with less than 10 cases, the user can specify other values by changing the cutoff. But we don't recommend to set the cutoff too low, since the asymptotic convergence requires enough sample size
 
 
@@ -17,6 +17,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' data(data, package="TOP") #load in the breast cancer example
 #'#this is a simulated breast cancer example
 #'#there are around 5000 breast cancer cases and 5000 controls, i.e. people without disease
@@ -27,13 +28,14 @@
 #' y <- data[,1:5]
 #' 
 #'#one SNP and one Principal components (PC1) are the covariates
-#' SNP <- data[,6,drop=F]
-#' PC1 <- data[,7,drop=F]
+#' SNP <- data[,6,drop=FALSE]
+#' PC1 <- data[,7,drop=FALSE]
 #' 
 #'#fit the additive two-stage model under the null hypothesis that the second stage parameters of SNP is 0
 #'score.support <- ScoreTestSupportMixedModel(y=y,
 #'                additive=PC1,
-#'                missingTumorIndicato#'r=888)
+#'                missingTumorIndicator=888)
+#' }
 
 ScoreTestSupportMixedModel <- function(y,
                              baselineonly=NULL,
@@ -46,9 +48,9 @@ ScoreTestSupportMixedModel <- function(y,
   
     y <- as.matrix(y)
     tumor.number <- ncol(y)-1
-    y.case.control <- y[,1,drop=F]
-    y.tumor <- y[,2:(tumor.number+1),drop=F]
-    if(is.null(missingTumorIndicator)==T){
+    y.case.control <- y[,1,drop=FALSE]
+    y.tumor <- y[,2:(tumor.number+1),drop=FALSE]
+    if(is.null(missingTumorIndicator)==TRUE){
       y.pheno.complete = y  
     }else{
     y.pheno.complete <- GenerateCompleteYPheno(y,missingTumorIndicator)
@@ -56,7 +58,7 @@ ScoreTestSupportMixedModel <- function(y,
 
   freq.subtypes <- GenerateFreqTable(y.pheno.complete)
   if(CheckControlTumor(y.case.control,y.tumor)==1){
-    return(print("ERROR:The tumor characteristics for control subtypes should put as NA"))
+    stop("tumor characteristics for controls must be NA", call. = FALSE)
   }
   tumor.names <- colnames(y.tumor)
   if(is.null(tumor.names)){
@@ -100,7 +102,7 @@ ScoreTestSupportMixedModel <- function(y,
                          z.design.pairwise.interaction,
                          z.design.saturated)
 
-  if(is.null(delta0)==T){
+  if(is.null(delta0)==TRUE){
     delta0 <-StartValueFunction(freq.subtypes,y.case.control,z.all)
   }else{
     delta0 =delta0
@@ -112,8 +114,8 @@ ScoreTestSupportMixedModel <- function(y,
   ###z standard matrix means the additive model z design matrix without baseline effect
   ###z standard matrix is used to match the missing tumor characteristics to the complete subtypes
 
-  z.standard <- z.design.additive[,-1,drop=F]
- if(is.null(missingTumorIndicator)==T){
+  z.standard <- z.design.additive[,-1,drop=FALSE]
+ if(is.null(missingTumorIndicator)==TRUE){
    Score.Support <- StepScoreTestSupportMixedModel(delta0,y,x.all,z.standard,z.all)
   }else{
     Score.Support = EMStepScoreTestSupportMixedModel(delta0,y,x.all,z.standard,z.all,missingTumorIndicator)
@@ -129,8 +131,6 @@ ScoreTestSupportMixedModel <- function(y,
 
   
 }
-
-
 
 
 

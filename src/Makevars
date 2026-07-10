@@ -1,7 +1,5 @@
 all: $(SHLIB)
 
-PKG_CFLAGS=-Wno-unused-function
-
 EMStep.o: EMStep.c
 EMStepScoreSupport.o: EMStepScoreSupport.c
 ScoreTest.o: ScoreTest.c
@@ -11,4 +9,3 @@ ScoreTestMixedModel.o: ScoreTestMixedModel.c
 Mvpoly.o: Mvpoly.c
 OneStepMLE.o: OneStepMLE.c
 CompleteCasesScoreTestSupport.o:CompleteCasesScoreTestSupport.c
-

@@ -1,0 +1,18 @@
+bibentry(
+  bibtype = "Article",
+  title = "A mixed-model approach for powerful testing of genetic associations with cancer risk incorporating tumor characteristics",
+  author = c(
+    person("Haoyu", "Zhang"),
+    person("Ni", "Zhao"),
+    person("Thomas U.", "Ahearn"),
+    person("William", "Wheeler"),
+    person("Montserrat", "García-Closas"),
+    person("Nilanjan", "Chatterjee")
+  ),
+  journal = "Biostatistics",
+  year = "2021",
+  volume = "22",
+  number = "4",
+  pages = "772--788",
+  doi = "10.1093/biostatistics/kxz065"
+)

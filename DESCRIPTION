@@ -1,20 +1,30 @@
 Package: TOP
 Type: Package
-Title: Two-stage Polytomous Logistic regression
-Version: 1.0.8
-Author: Haoyu Zhang [aut,cre], William Wheeler [aut]
-Maintainer: Haoyu Zhang <andrew.haoyu@gmail.com>
-Description: This package implement the two-stage polytomous model to handle data with multivariate disease characteristics.
+Title: Two-Stage Polytomous Logistic Regression
+Version: 1.1.0
+Authors@R: c(
+    person("Haoyu", "Zhang", email = "andrew.haoyu@gmail.com",
+           role = c("aut", "cre")),
+    person("William", "Wheeler", role = "aut")
+  )
+Description: Fits two-stage polytomous logistic regression models for disease
+  outcomes characterized by multiple tumor markers. Provides fixed- and
+  mixed-effect association tests and score-statistic meta-analysis tools.
 License: GPL-3
 Depends:
-  R (>= 3.1.0)
+  R (>= 3.6.0)
 Imports:
- CompQuadForm,
- Rcpp
-LinkingTo:
-    CompQuadForm,
-    Rcpp
+  CompQuadForm
 Encoding: UTF-8
+Language: en-US
 LazyData: true
-RoxygenNote: 7.2.0
-Suggests: testthat
+LazyDataCompression: xz
+RoxygenNote: 7.3.3
+Suggests:
+  knitr (>= 1.30),
+  rmarkdown,
+  testthat (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr
+URL: https://andrewhaoyu.github.io/TOP/, https://github.com/andrewhaoyu/TOP
+BugReports: https://github.com/andrewhaoyu/TOP/issues

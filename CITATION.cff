@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use TOP, please cite the software and the methodological paper."
+title: "TOP: Two-Stage Polytomous Logistic Regression"
+type: software
+version: 1.1.0
+authors:
+  - family-names: Zhang
+    given-names: Haoyu
+    email: andrew.haoyu@gmail.com
+  - family-names: Wheeler
+    given-names: William
+repository-code: https://github.com/andrewhaoyu/TOP
+url: https://andrewhaoyu.github.io/TOP/
+license: GPL-3.0-only
+preferred-citation:
+  type: article
+  title: "A mixed-model approach for powerful testing of genetic associations with cancer risk incorporating tumor characteristics"
+  authors:
+    - family-names: Zhang
+      given-names: Haoyu
+    - family-names: Zhao
+      given-names: Ni
+    - family-names: Ahearn
+      given-names: Thomas U.
+    - family-names: Wheeler
+      given-names: William
+    - family-names: García-Closas
+      given-names: Montserrat
+    - family-names: Chatterjee
+      given-names: Nilanjan
+  journal: Biostatistics
+  year: 2021
+  volume: 22
+  issue: 4
+  start: 772
+  end: 788
+  doi: 10.1093/biostatistics/kxz065

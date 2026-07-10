@@ -3,17 +3,23 @@
 
 #' ScoreTest
 #'
-#' @param y
-#' @param x
-#' @param second.stage.structure
-#' @param score.test.support
-#' @param missingTumorIndicator
+#' @param y Input for `y`.
+#' @param x Input for `x`.
+#' @param second.stage.structure Input for `second.stage.structure`.
+#' @param score.test.support Input for `score.test.support`.
+#' @param missingTumorIndicator Input for `missingTumorIndicator`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 ScoreTest <- function(y,x,second.stage.structure = "additive",score.test.support=NULL,missingTumorIndicator=NULL){
+  if (is.null(score.test.support)) {
+    stop("`score.test.support` is required; use `top_score_support()` for new analyses", call. = FALSE)
+  }
+  second.stage.structure <- match.arg(
+    second.stage.structure,
+    c("baselineonly", "additive", "pairwise.interaction", "saturated")
+  )
   if(is.vector(x)==1){
     x = matrix(x,ncol=1)
     interested.variable.number = 1
@@ -22,9 +28,9 @@ ScoreTest <- function(y,x,second.stage.structure = "additive",score.test.support
   }
   
   
-  idx.drop <- score.test.support[[6]]
-  if(is.null(idx.drop)==F){
-    x = x[-idx.drop,,drop=F]
+  idx.drop <- score.test.support$idx.drop
+  if(is.null(idx.drop)==FALSE){
+    x = x[-idx.drop,,drop=FALSE]
   }
   
 
@@ -40,7 +46,7 @@ ScoreTest <- function(y,x,second.stage.structure = "additive",score.test.support
 
   freq.subtypes <- GenerateFreqTable(y.pheno.complete)
   if(CheckControlTumor(y.case.control,y.tumor)==1){
-    return(print("ERROR:The tumor characteristics for control subtypes should put as NA"))
+    stop("tumor characteristics for controls must be NA", call. = FALSE)
   }
   tumor.names <- colnames(y.tumor)
   if(is.null(tumor.names)){
@@ -50,22 +56,19 @@ ScoreTest <- function(y,x,second.stage.structure = "additive",score.test.support
 
 
 
-  if(second.stage.structure == "baselineonly"){
-    z.intere <- score.test.support[[7]]
-  }else if(second.stage.structure == "additive"){
-    z.intere <- score.test.support[[8]]
-    #z.intere <- z.design.additive[,-1]
-  }else if(second.stage.structure=="pairwise.interaction"){
-    z.intere <- score.test.support[[9]]
-  }else if(second.stage.structure=="saturated"){
-    z.intere <- score.test.support[[10]]
-  }
+  z.intere <- switch(
+    second.stage.structure,
+    baselineonly = score.test.support$z.design.baselineonly,
+    additive = score.test.support$z.design.additive,
+    pairwise.interaction = score.test.support$z.design.pairwise.interaction,
+    saturated = score.test.support$z.design.saturated
+  )
 
 
 
 
-  z.standard <- score.test.support[[11]]
-  debug     <- as.integer(1)
+  z.standard <- score.test.support$z.standard
+  debug     <- as.integer(0)
   inv_info_vec=as.numeric(score.test.support$inv_info_vec)
   YminusP=as.numeric(score.test.support$YminusP)
   W_obs=as.numeric(score.test.support$W_obs)
@@ -112,7 +115,8 @@ ScoreTest <- function(y,x,second.stage.structure = "additive",score.test.support
                info.complete.vec = info.complete.vec,
                info.lost.vec=info.lost.vec,
                tx_intereWXZ_vec= tx_intereWXZ_vec,
-               Quad_tx_intere_WXZ_invinfo_vec= Quad_tx_intere_WXZ_invinfo_vec
+               Quad_tx_intere_WXZ_invinfo_vec= Quad_tx_intere_WXZ_invinfo_vec,
+               PACKAGE = "TOP"
     )
     score.result[i,] <- temp$score
     efficient.info <- matrix(temp$efficient.info.vec,nparm.intere,nparm.intere)
@@ -136,8 +140,6 @@ ScoreTest <- function(y,x,second.stage.structure = "additive",score.test.support
   #return(list(score_c=score_test_mis$score_c,infor_c = score_test_mis$infor_c))
   return(list(score.result=score.result,efficient.info.result=efficient.info.result, info.complete=info.complete,info.lost = info.lost))
 }
-
-
 
 
 

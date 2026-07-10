@@ -3,16 +3,15 @@
 
 #' Title
 #'
-#' @param tumor.character.cat
-#' @param tumor.number
-#' @param tumor.names
-#' @param freq.subtypes
-#' @param cutoff 
+#' @param tumor.character.cat Input for `tumor.character.cat`.
+#' @param tumor.number Input for `tumor.number`.
+#' @param tumor.names Input for `tumor.names`.
+#' @param freq.subtypes Input for `freq.subtypes`.
+#' @param cutoff Input for `cutoff`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateZDesignBaselineonly <- function(tumor.character.cat,tumor.number,tumor.names,freq.subtypes,cutoff=10){
   M = 1
   for(i in 1:tumor.number){
@@ -24,7 +23,7 @@ GenerateZDesignBaselineonly <- function(tumor.character.cat,tumor.number,tumor.n
   freq = freq.subtypes[,ncol(freq.subtypes)]
   idx <- which(freq<=cutoff)
   if(length(idx!=0)){
-    return(z.design.baselineonly[-idx,,drop=F])
+    return(z.design.baselineonly[-idx,,drop=FALSE])
   }else{
     return(z.design.baselineonly)
   }
@@ -35,16 +34,15 @@ GenerateZDesignBaselineonly <- function(tumor.character.cat,tumor.number,tumor.n
 
 #' Title
 #'
-#' @param tumor.character.cat
-#' @param tumor.number
-#' @param tumor.names
-#' @param freq.subtypes
-#' @param cutoff 
+#' @param tumor.character.cat Input for `tumor.character.cat`.
+#' @param tumor.number Input for `tumor.number`.
+#' @param tumor.names Input for `tumor.names`.
+#' @param freq.subtypes Input for `freq.subtypes`.
+#' @param cutoff Input for `cutoff`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateZDesignAdditive <- function(tumor.character.cat,tumor.number,tumor.names,freq.subtypes,cutoff=10){
   z.design.additive.text <- NULL
   for(i in 1:tumor.number){
@@ -75,12 +73,11 @@ GenerateZDesignAdditive <- function(tumor.character.cat,tumor.number,tumor.names
 
 #' Title
 #'
-#' @param tumor.names
+#' @param tumor.names Input for `tumor.names`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateZDesignNamesAdditive <- function(tumor.names){
 
   z.design.names.additive <- "baseline effect"
@@ -96,16 +93,15 @@ GenerateZDesignNamesAdditive <- function(tumor.names){
 
 #' Title
 #'
-#' @param tumor.character.cat
-#' @param tumor.number
-#' @param tumor.names
-#' @param freq.subtypes
-#' @param cutoff 
+#' @param tumor.character.cat Input for `tumor.character.cat`.
+#' @param tumor.number Input for `tumor.number`.
+#' @param tumor.names Input for `tumor.names`.
+#' @param freq.subtypes Input for `freq.subtypes`.
+#' @param cutoff Input for `cutoff`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateZDesignPairwiseInteraction <- function(tumor.character.cat,tumor.number,tumor.names,freq.subtypes,cutoff=10){
   z.design.pairwise.interaction <-
     GenerateZDesignAdditive(tumor.character.cat,
@@ -143,16 +139,15 @@ GenerateZDesignPairwiseInteraction <- function(tumor.character.cat,tumor.number,
 
 #' Title
 #'
-#' @param tumor.character.cat
-#' @param tumor.number
-#' @param tumor.names
-#' @param freq.subtypes
-#' @param cutoff 
+#' @param tumor.character.cat Input for `tumor.character.cat`.
+#' @param tumor.number Input for `tumor.number`.
+#' @param tumor.names Input for `tumor.names`.
+#' @param freq.subtypes Input for `freq.subtypes`.
+#' @param cutoff Input for `cutoff`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateZDesignSaturated <- function(tumor.character.cat,tumor.number,tumor.names,freq.subtypes,cutoff=10) {
   z.design.saturated <- GenerateZDesignAdditive(tumor.character.cat,
                                                   tumor.number,

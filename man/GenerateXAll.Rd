@@ -7,7 +7,18 @@
 GenerateXAll(y, baselineonly, additive, pairwise.interaction, saturated)
 }
 \arguments{
-\item{saturated}{}
+\item{y}{Input for `y`.}
+
+\item{baselineonly}{Input for `baselineonly`.}
+
+\item{additive}{Input for `additive`.}
+
+\item{pairwise.interaction}{Input for `pairwise.interaction`.}
+
+\item{saturated}{Input for `saturated`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

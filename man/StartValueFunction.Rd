@@ -7,7 +7,14 @@
 StartValueFunction(freq.subtypes, y.case.control, z.all)
 }
 \arguments{
-\item{z.all}{}
+\item{freq.subtypes}{Input for `freq.subtypes`.}
+
+\item{y.case.control}{Input for `y.case.control`.}
+
+\item{z.all}{Input for `z.all`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

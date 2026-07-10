@@ -1,17 +1,18 @@
 #' Generate the three Z design matrix given the tumor characteristics
 #'
 #' @param y the phenotype file. The first column is the case control disease status. The other columns are the tumor characteristics status
+#' @param missingTumorIndicator Numeric code for missing case tumor markers.
+#' @param cutoff Subtypes with counts at or below this value are removed.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateZDesignCombination <- function(y,
                                        missingTumorIndicator = 888,
                                        cutoff = 10){
   
   missing.data.vec <- GenerateMissingPosition(y,missingTumorIndicator)
-  y.pheno.complete <- y[-missing.data.vec,,drop=F]
+  y.pheno.complete <- y[-missing.data.vec,,drop=FALSE]
   initial.set <- InitialSetup(y.pheno.complete,
                               baselineonly=NULL,
                               additive=NULL,

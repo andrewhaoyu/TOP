@@ -1,17 +1,16 @@
 
 #' Title
 #'
-#' @param y
-#' @param x.self.design
-#' @param baselineonly
-#' @param additive
-#' @param pairwise.interaction
-#' @param saturated
+#' @param y Input for `y`.
+#' @param x.self.design Input for `x.self.design`.
+#' @param baselineonly Input for `baselineonly`.
+#' @param additive Input for `additive`.
+#' @param pairwise.interaction Input for `pairwise.interaction`.
+#' @param saturated Input for `saturated`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateSelfXAll <- function(y,x.self.design,baselineonly,additive,pairwise.interaction,saturated){
   n = nrow(y)
   ###initial x.all to use cbind
@@ -31,7 +30,7 @@ GenerateSelfXAll <- function(y,x.self.design,baselineonly,additive,pairwise.inte
   if(is.null(saturated)==0){
     x.all = cbind(x.all,saturated)
   }
-  x.all <- x.all[,-1,drop=F]
+  x.all <- x.all[,-1,drop=FALSE]
   return(as.matrix(x.all))
 }
 

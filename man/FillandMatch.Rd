@@ -7,7 +7,12 @@
 FillandMatch(reference, all)
 }
 \arguments{
-\item{all}{}
+\item{reference}{Input for `reference`.}
+
+\item{all}{Input for `all`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

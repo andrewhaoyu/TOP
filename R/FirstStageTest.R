@@ -1,14 +1,13 @@
 #' Title
 #'
-#' @param beta
-#' @param sigma
-#' @param M
-#' @param first.stage.mat
+#' @param beta Input for `beta`.
+#' @param sigma Input for `sigma`.
+#' @param M Input for `M`.
+#' @param first.stage.mat Input for `first.stage.mat`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 FirstStageTest <- function(beta,sigma,M,first.stage.mat){
   logodds <- beta
   ###take out intercept
@@ -39,7 +38,7 @@ FirstStageTest <- function(beta,sigma,M,first.stage.mat){
   for(j in 1:nrow(first.stage.mat)){
   for(i in 1:ncol(first.stage.mat)){
 
-      if(is.na(first.stage.mat[j,i])==F){
+      if(is.na(first.stage.mat[j,i])==FALSE){
         covar.names = c(covar.names,all.covar.names[i])
         subtypes.names =
           c(subtypes.names,all.subtypes.names[j])

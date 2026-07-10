@@ -1,13 +1,12 @@
 
 #' Title
 #'
-#' @param reference
-#' @param all
+#' @param reference Input for `reference`.
+#' @param all Input for `all`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 
 FillandMatch <- function(reference,all){
   idx.fil <- which(all%in%reference)

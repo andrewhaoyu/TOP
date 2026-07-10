@@ -2,30 +2,32 @@
 
 #' Title
 #'
-#' @param y
-#' @param baselineonly
-#' @param additive
-#' @param pairwise.interaction
-#' @param saturated
-#' @param missingTumorIndicator
+#' @param y Input for `y`.
+#' @param baselineonly Input for `baselineonly`.
+#' @param additive Input for `additive`.
+#' @param pairwise.interaction Input for `pairwise.interaction`.
+#' @param saturated Input for `saturated`.
+#' @param missingTumorIndicator Input for `missingTumorIndicator`.
+#' @param cutoff Subtypes with counts at or below this value are removed.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 ScoreTestSupport <- function(y,
                                baselineonly=NULL,
                                additive=NULL,
                                pairwise.interaction=NULL,
                                saturated=NULL,
-                               missingTumorIndicator = NULL
+                               missingTumorIndicator = NULL,
+                               cutoff = 10
                              ){
  if(is.null(missingTumorIndicator)==1){
   return(CompleteCasesScoreTestSupport(y,
                                                    baselineonly,
                                                    additive,
                                                    pairwise.interaction,
-                                                   saturated))
+                                                   saturated,
+                                                   cutoff = cutoff))
  }else{
    #if(missingDataAlgorithm=="EM"){
     return(EMScoreTestSupport(y,
@@ -33,7 +35,8 @@ ScoreTestSupport <- function(y,
                                           additive,
                                           pairwise.interaction,
                                           saturated,
-                                          missingTumorIndicator))
+                                          missingTumorIndicator,
+                                          cutoff = cutoff))
   # }else if(missingDataAlgorithm=="OneStepMLE"){
 
    #}

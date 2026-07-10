@@ -8,6 +8,13 @@ GenerateZDesignCombination(y, missingTumorIndicator = 888, cutoff = 10)
 }
 \arguments{
 \item{y}{the phenotype file. The first column is the case control disease status. The other columns are the tumor characteristics status}
+
+\item{missingTumorIndicator}{Numeric code for missing case tumor markers.}
+
+\item{cutoff}{Subtypes with counts at or below this value are removed.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Generate the three Z design matrix given the tumor characteristics

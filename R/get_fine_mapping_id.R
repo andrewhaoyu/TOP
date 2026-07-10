@@ -1,12 +1,11 @@
 #' Title
 #'
-#' @param all
-#' @param fine_mapping
+#' @param all Input for `all`.
+#' @param fine_mapping Input for `fine_mapping`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 get_fine_mapping_id<- function(all,fine_mapping){
 CHR.all <- all$CHR
 position.all <- all$position
@@ -36,7 +35,7 @@ for(i in 1:nrow(fine_mapping)){
   total <- temp+total
 }
 idx_cut <- idx_cut[1:total]
-idx_cut_du <- which(duplicated(idx_cut)==F)
+idx_cut_du <- which(duplicated(idx_cut)==FALSE)
 idx_cut <- idx_cut[idx_cut_du]
 known.flag <- known.flag[1:total]
 known.flag <- known.flag[idx_cut_du]

@@ -11,7 +11,14 @@ ScoreMixedGlobalTestForAssoc(
 )
 }
 \arguments{
-\item{infor.baseline}{}
+\item{p.value.score.heter}{Input for `p.value.score.heter`.}
+
+\item{score.baseline}{Input for `score.baseline`.}
+
+\item{infor.baseline}{Input for `infor.baseline`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

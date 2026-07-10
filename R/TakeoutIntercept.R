@@ -1,16 +1,15 @@
 #' Title
 #'
-#' @param delta
-#' @param covariance.delta
-#' @param M
-#' @param tumor.names
-#' @param z.all
-#' @param covar.names
+#' @param delta Input for `delta`.
+#' @param covariance.delta Input for `covariance.delta`.
+#' @param M Input for `M`.
+#' @param tumor.names Input for `tumor.names`.
+#' @param z.all Input for `z.all`.
+#' @param covar.names Input for `covar.names`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 TakeoutIntercept <- function(delta,covariance.delta,
                              M,
                              tumor.names,

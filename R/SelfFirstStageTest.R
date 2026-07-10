@@ -1,15 +1,15 @@
 
 #' Title
 #'
-#' @param beta
-#' @param sigma
-#' @param M
-#' @param first.stage.mat
+#' @param beta Input for `beta`.
+#' @param sigma Input for `sigma`.
+#' @param M Input for `M`.
+#' @param first.stage.mat Input for `first.stage.mat`.
+#' @param covar.names Input for `covar.names`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 SelfFirstStageTest <- function(beta,sigma,M,first.stage.mat,covar.names){
   M <- nrow(first.stage.mat)
   self.design.number <- ncol(first.stage.mat)
@@ -43,7 +43,7 @@ SelfFirstStageTest <- function(beta,sigma,M,first.stage.mat,covar.names){
   subtypes.names <- NULL
   for(i in 1:ncol(first.stage.mat)){
     for(j in 1:nrow(first.stage.mat)){
-      if(is.na(first.stage.mat[j,i])==F){
+      if(is.na(first.stage.mat[j,i])==FALSE){
         covar.names = c(covar.names,all.covar.names[i])
         subtypes.names =
           c(subtypes.names,all.subtypes.names[j])
@@ -73,4 +73,3 @@ SelfFirstStageTest <- function(beta,sigma,M,first.stage.mat,covar.names){
   return(result)
 
 }
-

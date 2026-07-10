@@ -1,11 +1,10 @@
 #' Title
 #'
-#' @param z
+#' @param z Input for `z`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 PvalueFunction <- function(z){
   result <- NULL
   for(i in 1:length(z)){

@@ -19,27 +19,30 @@ MvpolySelfDesign(
 )
 }
 \arguments{
-\item{y}{}
+\item{y}{Input for `y`.}
 
-\item{x.self.design}{}
+\item{x.self.design}{Input for `x.self.design`.}
 
-\item{z.design}{}
+\item{z.design}{Input for `z.design`.}
 
-\item{baselineonly}{}
+\item{baselineonly}{Input for `baselineonly`.}
 
-\item{additive}{}
+\item{additive}{Input for `additive`.}
 
-\item{pairwise.interaction}{}
+\item{pairwise.interaction}{Input for `pairwise.interaction`.}
 
-\item{saturated}{}
+\item{saturated}{Input for `saturated`.}
 
-\item{missingTumorIndicator}{}
+\item{missingTumorIndicator}{Input for `missingTumorIndicator`.}
 
-\item{z.all}{}
+\item{z.all}{Input for `z.all`.}
 
-\item{delta0}{}
+\item{delta0}{Input for `delta0`.}
 
-\item{cutoff}{}
+\item{cutoff}{Input for `cutoff`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

@@ -4,17 +4,16 @@
 ####output: y_em the initial results for E step matrix
 #' Title
 #'
-#' @param delta0
-#' @param y
-#' @param x.all
-#' @param z.standard
-#' @param z.all
-#' @param missingTumorIndicator
+#' @param delta0 Input for `delta0`.
+#' @param y Input for `y`.
+#' @param x.all Input for `x.all`.
+#' @param z.standard Input for `z.standard`.
+#' @param z.all Input for `z.all`.
+#' @param missingTumorIndicator Input for `missingTumorIndicator`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 ProbFitting <- function(delta0,y,x.all,z.standard,z.all,missingTumorIndicator=NULL){
   idx.drop = NULL
   if(is.null(missingTumorIndicator)==1){
@@ -36,7 +35,7 @@ ProbFitting <- function(delta0,y,x.all,z.standard,z.all,missingTumorIndicator=NU
         if(sum(jdx)==0){
           idx.drop = c(idx.drop,i)
         }else{
-          jdx <- which(jdx==T)
+          jdx <- which(jdx==TRUE)
           ####get the conditional probability
           y_em[i,jdx] <- 1  
         }
@@ -68,7 +67,7 @@ ProbFitting <- function(delta0,y,x.all,z.standard,z.all,missingTumorIndicator=NU
           missing.vec[index] <- i
           missing.mat[index,] <- jdx
           index <- index + 1
-          jdx <- which(jdx==T)
+          jdx <- which(jdx==TRUE)
           ####get the conditional probability
           temp <- exp(x.all.inter[i,]%*%beta[,jdx])
           y_em[i,jdx] <- temp/sum(temp)

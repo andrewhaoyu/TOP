@@ -38,12 +38,12 @@ delta0= NULL){
   subtype.result <- NULL
   for(i in 1:nrow(freq.table.mis)){
     record <- 0
-    temp <- freq.table.mis[i,1:(n.col-1),drop=F]
+    temp <- freq.table.mis[i,1:(n.col-1),drop=FALSE]
     idx <- which(temp==missingTumorIndicator)
 
     if(length(idx)!=0){
-      temp <- temp[-idx,drop=F]
-      freq.table.ref <- freq.table.com[,-idx,drop=F]
+      temp <- temp[-idx,drop=FALSE]
+      freq.table.ref <- freq.table.com[,-idx,drop=FALSE]
       for(j in 1:nrow(freq.table.ref)){
         if(all.equal(as.vector(temp),as.vector(freq.table.ref[j,]))==1){
           record <- 1

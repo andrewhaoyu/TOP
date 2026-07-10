@@ -23,7 +23,38 @@ SummaryResult(
 )
 }
 \arguments{
-\item{z.design}{}
+\item{model.result}{Input for `model.result`.}
+
+\item{baselineonly}{Input for `baselineonly`.}
+
+\item{additive}{Input for `additive`.}
+
+\item{pairwise.interaction}{Input for `pairwise.interaction`.}
+
+\item{saturated}{Input for `saturated`.}
+
+\item{z.standard}{Input for `z.standard`.}
+
+\item{covar.names}{Input for `covar.names`.}
+
+\item{delta}{Input for `delta`.}
+
+\item{z.design.additive}{Input for `z.design.additive`.}
+
+\item{z.design.pairwise.interaction}{Input for `z.design.pairwise.interaction`.}
+
+\item{z.design.saturated}{Input for `z.design.saturated`.}
+
+\item{tumor.names}{Input for `tumor.names`.}
+
+\item{z.all}{Input for `z.all`.}
+
+\item{x.self.design}{Input for `x.self.design`.}
+
+\item{z.design}{Input for `z.design`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

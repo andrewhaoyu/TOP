@@ -1,0 +1,22 @@
+name: Feature request
+description: Suggest an API, model, documentation, or performance improvement
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Scientific or user need
+      description: Describe the analysis workflow this would improve.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Include a short example of the interface if possible.
+      render: r
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

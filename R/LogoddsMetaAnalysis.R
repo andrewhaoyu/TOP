@@ -1,15 +1,14 @@
 
 #' Title
 #'
-#' @param logodds1
-#' @param sigma1
-#' @param logodds2
-#' @param sigma2
+#' @param logodds1 Input for `logodds1`.
+#' @param sigma1 Input for `sigma1`.
+#' @param logodds2 Input for `logodds2`.
+#' @param sigma2 Input for `sigma2`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 LogoddsMetaAnalysis <- function(logodds1,sigma1,logodds2,sigma2){
   sigma1.inv <- solve(sigma1)
   sigma2.inv <- solve(sigma2)
@@ -24,20 +23,21 @@ LogoddsMetaAnalysis <- function(logodds1,sigma1,logodds2,sigma2){
 
 #' Title
 #'
-#' @param score1
-#' @param infor1
-#' @param score2
-#' @param infor2
+#' @param score1 Input for `score1`.
+#' @param infor1 Input for `infor1`.
+#' @param score2 Input for `score2`.
+#' @param infor2 Input for `infor2`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 ScoreMetaAnalysis <- function(score1,infor1,score2,infor2){
-  infor.meta <- infor1+infor2
-  score.meta <- score1+score2
+  meta <- top_meta(list(
+    list(score = score1, information = infor1),
+    list(score = score2, information = infor2)
+  ))
 
-  return(list(score.meta = score.meta,
-              infor.meta = infor.meta))
+  return(list(score.meta = meta$score,
+              infor.meta = meta$information))
 
 }

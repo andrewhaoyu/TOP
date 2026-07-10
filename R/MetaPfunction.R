@@ -1,12 +1,11 @@
 #' Title
 #'
-#' @param icog_onco_score_infor_one
-#' @param second.num
+#' @param icog_onco_score_infor_one Input for `icog_onco_score_infor_one`.
+#' @param second.num Input for `second.num`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 MetaPfunction <- function(icog_onco_score_infor_one,second.num){
   score.icog <- as.numeric(icog_onco_score_infor_one[1:(second.num)])
   infor.icog <- matrix(as.numeric(icog_onco_score_infor_one[(second.num+1):
@@ -30,15 +29,14 @@ MetaPfunction <- function(icog_onco_score_infor_one,second.num){
 
 #' Title
 #'
-#' @param icog_onco_score_infor_one
-#' @param icog_onco_score_infor_casecase_one
-#' @param fixed.second.num
-#' @param random.second.num
+#' @param icog_onco_score_infor_one Input for `icog_onco_score_infor_one`.
+#' @param icog_onco_score_infor_casecase_one Input for `icog_onco_score_infor_casecase_one`.
+#' @param fixed.second.num Input for `fixed.second.num`.
+#' @param random.second.num Input for `random.second.num`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 MetaMixedPfunction <- function(icog_onco_score_infor_one,icog_onco_score_infor_casecase_one,fixed.second.num,random.second.num){
   score.icog <- as.numeric(icog_onco_score_infor_one[1:(fixed.second.num)])
   infor.icog <- matrix(as.numeric(icog_onco_score_infor_one[(fixed.second.num+1):
@@ -98,15 +96,14 @@ MetaMixedPfunction <- function(icog_onco_score_infor_one,icog_onco_score_infor_c
 
 #' Title
 #'
-#' @param icog_onco_score_infor_one
-#' @param icog_onco_score_infor_casecase_one
-#' @param fixed.second.num
-#' @param random.second.num
+#' @param icog_onco_score_infor_one Input for `icog_onco_score_infor_one`.
+#' @param icog_onco_score_infor_casecase_one Input for `icog_onco_score_infor_casecase_one`.
+#' @param fixed.second.num Input for `fixed.second.num`.
+#' @param random.second.num Input for `random.second.num`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 MetaMixedPfunction_temp <- function(icog_onco_score_infor_one,icog_onco_score_infor_casecase_one,fixed.second.num,random.second.num){
   score.icog <- as.numeric(icog_onco_score_infor_one[1:(fixed.second.num)])
   infor.icog <- matrix(as.numeric(icog_onco_score_infor_one[(fixed.second.num+1):
@@ -157,13 +154,12 @@ return(result[1])
 
 #' Title
 #'
-#' @param icog_onco_score_infor_one
-#' @param second.num
+#' @param icog_onco_score_infor_one Input for `icog_onco_score_infor_one`.
+#' @param second.num Input for `second.num`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 MetaFixedPfunction_temp <- function(icog_onco_score_infor_one,second.num){
   log.icog <- as.numeric(icog_onco_score_infor_one[1:(second.num)])
   sigma.icog <- matrix(as.numeric(icog_onco_score_infor_one[(second.num+1):
@@ -185,7 +181,7 @@ MetaFixedPfunction_temp <- function(icog_onco_score_infor_one,second.num){
 
 
 
-  p.value <- DisplaySecondStageTestResult(logodds.meta.fixed,sigma.meta.fixed,self.design=T,
+  p.value <- DisplaySecondStageTestResult(logodds.meta.fixed,sigma.meta.fixed,self.design=TRUE,
                                           places= 5)
 
   return(list(logodds.meta.fixed,sigma.meta.fixed,

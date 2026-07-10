@@ -1,17 +1,15 @@
 
 #' Title
 #'
-#' @param z.design
-#' @param x
-#' @param M
-#' @param full.second.stage.names
-#' @param covar.names
-#' @param delta
+#' @param x.self.design Input for `x.self.design`.
+#' @param z.design Input for `z.design`.
+#' @param M Input for `M`.
+#' @param full.second.stage.names Input for `full.second.stage.names`.
+#' @param delta Input for `delta`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateSelfSecondStageMat <- function(x.self.design,
                                        z.design,
                                       M,

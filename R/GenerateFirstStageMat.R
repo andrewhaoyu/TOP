@@ -1,14 +1,13 @@
 
 #' Title
 #'
-#' @param beta
-#' @param covar.names
-#' @param subtypes.names
+#' @param beta Input for `beta`.
+#' @param covar.names Input for `covar.names`.
+#' @param subtypes.names Input for `subtypes.names`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateFirstStageMat <- function(beta,
                                   covar.names,
                                   subtypes.names
@@ -16,7 +15,7 @@ GenerateFirstStageMat <- function(beta,
 
   covar.names <- c("Intercept",covar.names)
   covar.number <- length(covar.names)
-  first.mat <- matrix(beta,ncol = covar.number,byrow=T)
+  first.mat <- matrix(beta,ncol = covar.number,byrow=TRUE)
   colnames(first.mat) <- covar.names
   rownames(first.mat) <- subtypes.names
 

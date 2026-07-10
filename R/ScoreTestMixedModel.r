@@ -1,16 +1,15 @@
 
 #' Title
 #'
-#' @param y
-#' @param x
-#' @param z.design
-#' @param score.test.support
-#' @param missingTumorIndicator
+#' @param y Input for `y`.
+#' @param x Input for `x`.
+#' @param z.design Input for `z.design`.
+#' @param score.test.support Input for `score.test.support`.
+#' @param missingTumorIndicator Input for `missingTumorIndicator`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 ScoreTestMixedModel <- function(y,x,z.design = z.design,score.test.support=NULL,missingTumorIndicator=NULL){
   # if(is.vector(x)==1){
   #   x = matrix(x,ncol=1)
@@ -24,12 +23,12 @@ ScoreTestMixedModel <- function(y,x,z.design = z.design,score.test.support=NULL,
 
 
   idx.drop <- score.test.support[[6]]
-  if(is.null(idx.drop)==F){
+  if(is.null(idx.drop)==FALSE){
     x = x[-idx.drop]  
   }
   
   z.standard <- score.test.support[[7]]
-  debug     <- as.integer(1)
+  debug     <- as.integer(0)
   inv_info_vec=as.numeric(score.test.support$inv_info_vec)
   YminusP=as.numeric(score.test.support$YminusP)
   W_obs=as.numeric(score.test.support$W_obs)
@@ -78,8 +77,9 @@ ScoreTestMixedModel <- function(y,x,z.design = z.design,score.test.support=NULL,
                debug,
                info.complete.vec = info.complete.vec,
                info.lost.vec=info.lost.vec,
-    x.all.vec,
-               zc.vec
+               x.all.vec,
+               zc.vec,
+               PACKAGE = "TOP"
     )
     score.result[i,] <- temp$score
     efficient.info <- matrix(temp$efficient.info.vec,nparm.intere,nparm.intere)
@@ -92,7 +92,7 @@ ScoreTestMixedModel <- function(y,x,z.design = z.design,score.test.support=NULL,
 
     index <- index + nparm.intere
 
-if(is.null(missingTumorIndicator)==T){
+if(is.null(missingTumorIndicator)==TRUE){
   return(list(score.result=score.result,info.complete=info.complete)
   )
 }else{
@@ -102,7 +102,6 @@ if(is.null(missingTumorIndicator)==T){
 
   
 }
-
 
 
 

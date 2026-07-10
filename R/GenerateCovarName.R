@@ -2,16 +2,15 @@
 
 #' Title
 #'
-#' @param baselineonly
-#' @param additive
-#' @param pairwise.interaction
-#' @param saturated
-#' @param x.self.design
+#' @param baselineonly Input for `baselineonly`.
+#' @param additive Input for `additive`.
+#' @param pairwise.interaction Input for `pairwise.interaction`.
+#' @param saturated Input for `saturated`.
+#' @param x.self.design Input for `x.self.design`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateCovarName <- function(baselineonly,
                               additive,
                               pairwise.interaction,

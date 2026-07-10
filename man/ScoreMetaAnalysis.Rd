@@ -7,7 +7,16 @@
 ScoreMetaAnalysis(score1, infor1, score2, infor2)
 }
 \arguments{
-\item{infor2}{}
+\item{score1}{Input for `score1`.}
+
+\item{infor1}{Input for `infor1`.}
+
+\item{score2}{Input for `score2`.}
+
+\item{infor2}{Input for `infor2`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

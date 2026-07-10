@@ -1,20 +1,17 @@
 
 #' Title
 #'
-#' @param y.pheno.complete
-#' @param baselineonly
-#' @param additive
-#' @param pairwise.interaction
-#' @param saturated
-#' @param x.self.design
-#' @param z.design
-#' @param cutoff 
+#' @param y.pheno.complete Input for `y.pheno.complete`.
+#' @param baselineonly Input for `baselineonly`.
+#' @param additive Input for `additive`.
+#' @param pairwise.interaction Input for `pairwise.interaction`.
+#' @param saturated Input for `saturated`.
+#' @param x.self.design Input for `x.self.design`.
+#' @param z.design Input for `z.design`.
+#' @param cutoff Input for `cutoff`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
-#'
-#' @examples
-#'
 #'
 InitialSetup <- function(y.pheno.complete,
                          baselineonly,
@@ -25,14 +22,14 @@ InitialSetup <- function(y.pheno.complete,
                          z.design = NULL,
                          cutoff
                          ){
-  if(is.null(x.self.design)==T){
+  if(is.null(x.self.design)==TRUE){
     y <- y.pheno.complete
     tumor.number <- ncol(y)-1
     y.case.control <- y[,1]
-    y.tumor <- y[,2:(tumor.number+1),drop=F]
+    y.tumor <- y[,2:(tumor.number+1),drop=FALSE]
     freq.subtypes <- GenerateFreqTable(y.pheno.complete)
     if(CheckControlTumor(y.case.control,y.tumor)==1){
-      return(print("ERROR:The tumor characteristics for control subtypes should put as NA"))
+      stop("tumor characteristics for controls must be NA", call. = FALSE)
     }
     tumor.names <- colnames(y.tumor)
     if(is.null(tumor.names)){
@@ -81,18 +78,18 @@ InitialSetup <- function(y.pheno.complete,
                            z.design.additive,
                            z.design.pairwise.interaction,
                            z.design.saturated)
-    z.standard <- z.design.additive[,-1,drop=F]
+    z.standard <- z.design.additive[,-1,drop=FALSE]
     delta0 <-StartValueFunction(freq.subtypes,y.case.control,z.all)
     return(list(delta0 = delta0,z.all=z.all,z.standard= z.standard,z.deisign.baselineonly = z.design.baselineonly,z.design.additive=z.design.additive,z.design.pairwise.interaction=z.design.pairwise.interaction,z.design.saturated=z.design.saturated,covar.names = covar.names,tumor.names=tumor.names
     ))
   }else{
     y <- y.pheno.complete
     tumor.number <- ncol(y)-1
-    y.case.control <- y[,1,drop=F]
-    y.tumor <- y[,2:(tumor.number+1),drop=F]
+    y.case.control <- y[,1,drop=FALSE]
+    y.tumor <- y[,2:(tumor.number+1),drop=FALSE]
     freq.subtypes <- GenerateFreqTable(y.pheno.complete)
     if(CheckControlTumor(y.case.control,y.tumor)==1){
-      return(print("ERROR:The tumor characteristics for control subtypes should put as NA"))
+      stop("tumor characteristics for controls must be NA", call. = FALSE)
     }
     tumor.names <- colnames(y.tumor)
     if(is.null(tumor.names)){
@@ -140,7 +137,7 @@ InitialSetup <- function(y.pheno.complete,
                                z.design.pairwise.interaction,
                                z.design.saturated)
     delta0 <-StartValueFunction(freq.subtypes,y.case.control,z.all)
-    z.standard <- z.design.additive[,-1,drop=F]
+    z.standard <- z.design.additive[,-1,drop=FALSE]
     delta0 <-StartValueFunction(freq.subtypes,y.case.control,z.all)
     return(list(delta0 = delta0,z.all=z.all,z.standard= z.standard,z.deisign.baselineonly = z.design.baselineonly,z.design.additive=z.design.additive,z.design.pairwise.interaction=z.design.pairwise.interaction,z.design.saturated=z.design.saturated,covar.names = covar.names,tumor.names=tumor.names
     ))
@@ -156,26 +153,25 @@ InitialSetup <- function(y.pheno.complete,
 
 #' Title
 #'
-#' @param model.result
-#' @param baselineonly
-#' @param additive
-#' @param pairwise.interaction
-#' @param saturated
-#' @param z.standard
-#' @param covar.names
-#' @param delta
-#' @param z.design.additive
-#' @param z.design.pairwise.interaction
-#' @param z.design.saturated
-#' @param tumor.names
-#' @param z.all
-#' @param x.self.design
-#' @param z.design
+#' @param model.result Input for `model.result`.
+#' @param baselineonly Input for `baselineonly`.
+#' @param additive Input for `additive`.
+#' @param pairwise.interaction Input for `pairwise.interaction`.
+#' @param saturated Input for `saturated`.
+#' @param z.standard Input for `z.standard`.
+#' @param covar.names Input for `covar.names`.
+#' @param delta Input for `delta`.
+#' @param z.design.additive Input for `z.design.additive`.
+#' @param z.design.pairwise.interaction Input for `z.design.pairwise.interaction`.
+#' @param z.design.saturated Input for `z.design.saturated`.
+#' @param tumor.names Input for `tumor.names`.
+#' @param z.all Input for `z.all`.
+#' @param x.self.design Input for `x.self.design`.
+#' @param z.design Input for `z.design`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 SummaryResult <- function(model.result,
                           baselineonly,
                           additive,
@@ -246,7 +242,9 @@ if(is.null(x.self.design)){
                                      covariance.beta.no.inter,
                                      M,
                                      first.stage.mat)
-  return(list(delta=delta,covariance.delta=covariance.delta,second.stage.mat = second.stage.mat,second.stage.test,global.test,first.stage.mat,first.stage.test,loglikelihood = loglikelihood,
+  return(list(delta=delta,covariance.delta=covariance.delta,second.stage.mat = second.stage.mat,
+              second.stage.test=second.stage.test,global.test=global.test,
+              first.stage.mat=first.stage.mat,first.stage.test=first.stage.test,loglikelihood = loglikelihood,
               AIC = AIC,beta=beta,covariance.beta=covariance.beta,
               z.standard=z.standard))
 }else{
@@ -306,12 +304,12 @@ if(is.null(x.self.design)){
                                          first.stage.mat,
                                          covar.names)
 
-  return(list(delta=delta,covariance.delta=covariance.delta,second.stage.mat = second.stage.mat,second.stage.test,global.test,first.stage.mat,first.stage.test,loglikelihood = loglikelihood,
+  return(list(delta=delta,covariance.delta=covariance.delta,second.stage.mat = second.stage.mat,
+              second.stage.test=second.stage.test,global.test=global.test,
+              first.stage.mat=first.stage.mat,first.stage.test=first.stage.test,loglikelihood = loglikelihood,
               AIC = AIC,beta=beta,covariance.beta=covariance.beta,
               z.standard=z.standard))
 }
 
 }
-
-
 

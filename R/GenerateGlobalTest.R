@@ -1,14 +1,13 @@
 #' Title
 #'
-#' @param delta
-#' @param sigma
-#' @param M
-#' @param second.stage.mat
+#' @param delta Input for `delta`.
+#' @param sigma Input for `sigma`.
+#' @param M Input for `M`.
+#' @param second.stage.mat Input for `second.stage.mat`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateGlobalTest <- function(delta,sigma,M,second.stage.mat){
   ind.start=1
   ind.end = 0
@@ -19,7 +18,7 @@ GenerateGlobalTest <- function(delta,sigma,M,second.stage.mat){
   global.test.for.heter <- rep(0,p)
   for(i in 1:p){
     for(j in 1:nrow(second.stage.mat)){
-      if(is.na(second.stage.mat[j,i])==F){
+      if(is.na(second.stage.mat[j,i])==FALSE){
         ind.end <- ind.end+1
       }
     }
