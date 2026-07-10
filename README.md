@@ -110,11 +110,15 @@ top_meta(studies)
 
 ## Documentation
 
-- [Getting started](https://andrewhaoyu.github.io/TOP/articles/getting-started.html)
-- [Score scans and follow-up](https://andrewhaoyu.github.io/TOP/articles/score-scan-and-followup.html)
-- [Score-statistic meta-analysis](https://andrewhaoyu.github.io/TOP/articles/meta-analysis.html)
-- [Custom subtype designs](https://andrewhaoyu.github.io/TOP/articles/custom-subtype-designs.html)
-- [Function reference](https://andrewhaoyu.github.io/TOP/reference/)
+- [Getting started](vignettes/getting-started.Rmd)
+- [Score scans and follow-up](vignettes/score-scan-and-followup.Rmd)
+- [Score-statistic meta-analysis](vignettes/meta-analysis.Rmd)
+- [Custom subtype designs](vignettes/custom-subtype-designs.Rmd)
+- [Function reference](man/)
+
+These branch-relative links work directly on GitHub. After the changes are
+merged into `master`, the pkgdown workflow will publish the rendered
+[documentation website](https://andrewhaoyu.github.io/TOP/).
 
 `TwoStageModel()` and the original score-test functions remain available for
 existing scripts. New analyses should use the validated `top_*()` interfaces.
