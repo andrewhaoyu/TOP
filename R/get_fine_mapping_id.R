@@ -1,12 +1,11 @@
 #' Title
 #'
-#' @param all
-#' @param fine_mapping
+#' @param all Input for `all`.
+#' @param fine_mapping Input for `fine_mapping`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 get_fine_mapping_id<- function(all,fine_mapping){
 CHR.all <- all$CHR
 position.all <- all$position

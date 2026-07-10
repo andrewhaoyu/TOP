@@ -15,9 +15,7 @@
 
 
 /* Function to allocate memory for a double vector */
-  static double * dVec_alloc(n, initFlag, initVal)
-int n, initFlag;
-double initVal;
+  static double * dVec_alloc(int n, int initFlag, double initVal)
 {
   int i;
   double *ret, *p;
@@ -33,9 +31,7 @@ double initVal;
 } /* END: dVec_alloc */
 
   /* Function to allocate a double matrix */
-  static double ** dMat_alloc(nrow, ncol, initFlag, initVal)
-int nrow, ncol, initFlag;
-double initVal;
+  static double ** dMat_alloc(int nrow, int ncol, int initFlag, double initVal)
 {
   double **mat, **ptr;
   int i;
@@ -49,9 +45,7 @@ double initVal;
 } /* END: dMat_alloc */
 
   /* Function to free a matrix */
-  static void matrix_free(x, n)
-void **x;
-int n;
+  static void matrix_free(void **x, int n)
 {
   int i;
   for (i=0; i<n; i++) {
@@ -62,9 +56,7 @@ int n;
 } /* END: matrix_free */
 
   /* Function to check for non-finite values */
-  static int all_finite(vec, n)
-double *vec;
-int n;
+  static int all_finite(double *vec, int n)
 {
   int i;
 
@@ -77,9 +69,7 @@ int n;
 } /* END: all_finite */
 
   /* Multiply to matrices (matrix mult)  */
-  static void matrixMult(m1, m1_nr, m1_nc, m2, m2_nc, ret)
-double **m1, **m2, **ret;
-int m1_nr, m1_nc, m2_nc;
+  static void matrixMult(double **m1, int m1_nr, int m1_nc, double **m2, int m2_nc, double **ret)
 {
   int i, j, k;
   double sum;
@@ -107,9 +97,7 @@ int m1_nr, m1_nc, m2_nc;
 
 
 /* Function to compute Xy for matrix X and vector */
-  static void X_y(X, nr, nc, y, ret)
-double **X, *y, *ret;
-int nr, nc;
+  static void X_y(double **X, int nr, int nc, double *y, double *ret)
 {
   int i, j;
   double sum, *p, *pret, *px;
@@ -125,9 +113,7 @@ int nr, nc;
 } /* END: X_y */
 
   /* Function for dot product of two vectors */
-  static double dotProd(v1, v2, n)
-double *v1, *v2;
-int n;
+  static double dotProd(double *v1, double *v2, int n)
 {
   int i;
   double sum=0.0;
@@ -184,9 +170,7 @@ int M, Ncatp1, Ncov;
 }  END: get_Z */
 
   /* Function to get a column of XXZ matrix */
-  static void get_XXZ_col(col, X, Xnr, Xnc, M, Z, dtempvec, out)
-double **X, **Z, *out, *dtempvec; /* dtempvec length M*Xnc */
-  int col, Xnr, Xnc, M;
+  static void get_XXZ_col(int col, double **X, int Xnr, int Xnc, int M, double **Z, double *dtempvec, double *out)
 {
   int  i, j, k, zstart;
   double sum, *pt, *prow, *pout;
@@ -209,9 +193,7 @@ double **X, **Z, *out, *dtempvec; /* dtempvec length M*Xnc */
 } /* END: get_XXZ_col */
 
   /* Function to compute t(XXZ) */
-  static void get_tXXZ(X, Xnr, Xnc, M, Znc, Z, out)
-double **X, **Z, **out;  /* out must have dim Zallnc x Xnr*M */
-  int Xnr, Xnc, M,Znc;
+  static void get_tXXZ(double **X, int Xnr, int Xnc, int M, int Znc, double **Z, double **out)
 {
   int i;
   double *temp;
@@ -227,9 +209,7 @@ double **X, **Z, **out;  /* out must have dim Zallnc x Xnr*M */
 } /* END: get_tXXZ */
 
   /* Function to compute lxx = xx * beta = xx * z * delta */
-  static void get_lxx(Z, Znr, Znc, delta, X, Xnr, Xnc, M,out)
-double **Z, *delta, **X, *out;
-int Xnr, Xnc, Znr, Znc, M;
+  static void get_lxx(double **Z, int Znr, int Znc, double *delta, double **X, int Xnr, int Xnc, int M, double *out)
 {
   double  sum,*beta;
   int i, j, k, row, brow, bstart;
@@ -261,9 +241,7 @@ int Xnr, Xnc, Znr, Znc, M;
 } /* END: get_lxx */
 
   /* Function to compute pxx */
-  static void get_pxx(lxx, N, M, out)
-double *lxx, *out;
-int N, M;
+  static void get_pxx(double *lxx, int N, int M, double *out)
 {
   int i, j, col, NM;
   double sum;
@@ -292,10 +270,7 @@ int N, M;
 
 
   /* Function to compute W_y = yy-pxx+W%*%lxx */
-  static void get_Wy(Y, lxx, Pxx, N, M,W, out)
-double *Y;  /* Nsub*M vector of outcomes */
-  int N, M;
-double *lxx, *out, *Pxx, *W;
+  static void get_Wy(double *Y, double *lxx, double *Pxx, int N, int M, double *W, double *out)
 {
   int  NM, k,i;
   double sum;
@@ -338,9 +313,7 @@ double *lxx, *out, *Pxx, *W;
 
   /* fill the info matrix to the result*/
   /* the Info matrix is sysmetric */
-  static void fill_SysMat(Mat,Vec,Nr)
-double **Mat,*Vec;
-int Nr;
+  static void fill_SysMat(double **Mat, double *Vec, int Nr)
 {
   int i,j;
   for(j=0;j<Nr;j++){
@@ -356,9 +329,7 @@ int Nr;
 /*end fill_SysMat*/
 
   /* Function to compute delta */
-  static void get_delta(INV, nc, tXXZ, N, M, W_y, out)
-double **INV, **tXXZ, *W_y, *out;
-int nc, N, M;
+  static void get_delta(double **INV, int nc, double **tXXZ, int N, int M, double *W_y, double *out)
 {
   /* delta <- solve(Infor_M,t(xxz)%*%W_y) */
     int i, NM;
@@ -381,9 +352,7 @@ int nc, N, M;
 
 
   /* Function to check the stopping criteria */
-  static double checkStop(delta, delta0, n)
-double *delta, *delta0;
-int n;
+  static double checkStop(double *delta, double *delta0, int n)
 {
   int i;
   double maxv=-9999.9, temp, rerror;
@@ -407,9 +376,7 @@ int n;
 } /* END: checkStop */
 
   /* Function to fill in a matrix from a vector (by column) */
-  static void fillMat(vec, nr, nc, addInt, out)
-double *vec, **out;
-int nr, nc, addInt;
+  static void fillMat(double *vec, int nr, int nc, int addInt, double **out)
 {
   int i, j, col=0, ii;
 
@@ -435,9 +402,7 @@ int nr, nc, addInt;
   /***********************************************************************************/
 
   /* Factor a symmetric positive definite matrix */
-  static int symPosFactor(mat, n, ret, retdiag)
-double **mat, **ret, *retdiag;
-int n;
+  static int symPosFactor(double **mat, int n, double **ret, double *retdiag)
 {
   int i, j, k;
   double sum, save, *ptr;
@@ -471,10 +436,7 @@ int n;
 } /* END: symPosFactor */
 
   /* Invert a factor */
-  static void symPosFacInv(L, diag, n, ret)
-double **L, *diag;
-int n;
-double **ret;
+  static void symPosFacInv(double **L, double *diag, int n, double **ret)
 {
   int i, j, k;
   double sum;
@@ -497,10 +459,7 @@ double **ret;
 } /* END: symPosFacInv */
 
   /* Transpose of a square matrix */
-  static void matTranspose(mat, n, ret)
-double **mat;
-int n;
-double **ret;
+  static void matTranspose(double **mat, int n, double **ret)
 {
   int i, j;
 
@@ -511,10 +470,7 @@ double **ret;
 } /* END: rmatTranspose */
 
   /* Inverse of symmetric positive definite matrix */
-  static int symPosMatInv(mat, n, ret)
-double **mat;
-int n;
-double **ret;
+  static int symPosMatInv(double **mat, int n, double **ret)
 {
   double **L, **Linv, *diag;
   int i;
@@ -743,18 +699,14 @@ double **ret;
   }
 
 /* Function to compute the inverse of a covariance matrix */
-static int cov_inv(cov, n, inv)
-  double **cov;
-int n;
-double **inv; /* Returned inverse */
+static int cov_inv(double **cov, int n, double **inv)
 {
   double cc, a, b, d;
   int ret;
   
   switch (n) {
   case 0:
-    Rprintf("\nERROR: dimension of covariance matrix is 0\n");
-    exit(1);
+    error("cannot invert a covariance matrix with dimension 0");
   case 1:
     a = cov[0][0];
     if (fabs(a) < ALMOST_ZERO) return(ERROR_SINGULAR_MATRIX);
@@ -797,9 +749,8 @@ return(0);
                      int DEBUG,int* ret_rc,double* ret_delta,double**Info,
                      double *ret_p,double *lxx,double *W,double *beta,
                      double* w_y,double **XmWXm,double **Inv,double **tXXZ,double *XX){
-    int i, iter, NM, rc, conv=0;
+    int i, iter, rc, conv=0;
     double  rerror,*delta0;
-    NM      = N*M;
     /*printf("Ncat\tNcatp1\tNcov0\tNcov\tZnr\Znc\n");
     printf("%i\t%i\t%i\t%i\t%i\t%i\n",Ncat,Ncatp1,Ncov0,Ncov,Znr,Znc);*/
 
@@ -908,12 +859,7 @@ static void Free_Mem(double * XX,double **tXXZ,int Nparm,double**X,int N,
 
 }
 
-void CompleteCasesScoreTestSupport(deltai, pNparm, Y, Xvec, ZallVec,Zallnr,Zallnc, pN, pM, pNcov, pNiter, ptol,
-                        pDEBUG, ret_rc, ret_delta,ret_info,ret_p,ret_Inv_info_vec,YminusP,W, WXZ_vec,WX_vec)
-double *deltai, *Y, *Xvec, *ptol, *ret_delta,*ret_info,*ret_p,*ZallVec,
- *ret_Inv_info_vec, *YminusP, *W,*WXZ_vec,*WX_vec;
-int *pNparm, *pN, *pM, *pNcov, *pNiter, *ret_rc, *pDEBUG,*Zallnr,*Zallnc;
-
+void CompleteCasesScoreTestSupport(double *deltai, int *pNparm, double *Y, double *Xvec, double *ZallVec, int *Zallnr, int *Zallnc, int *pN, int *pM, int *pNcov, int *pNiter, double *ptol, int *pDEBUG, int *ret_rc, double *ret_delta, double *ret_info, double *ret_p, double *ret_Inv_info_vec, double *YminusP, double *W, double *WXZ_vec, double *WX_vec)
 {
   int i, Niter, M, N, Ncov0, Ncov, Znr, Znc, NM, conv=0;
   int Nparm, DEBUG;
@@ -1027,4 +973,3 @@ int *pNparm, *pN, *pM, *pNcov, *pNiter, *ret_rc, *pDEBUG,*Zallnr,*Zallnc;
     return;
 
 } /* END: Mvpoly */
-

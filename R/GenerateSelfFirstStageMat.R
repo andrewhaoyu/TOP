@@ -1,16 +1,15 @@
 
 #' Title
 #'
-#' @param beta
-#' @param x.self.design
-#' @param z.design
-#' @param covar.names
-#' @param subtypes.names
+#' @param beta Input for `beta`.
+#' @param x.self.design Input for `x.self.design`.
+#' @param z.design Input for `z.design`.
+#' @param covar.names Input for `covar.names`.
+#' @param subtypes.names Input for `subtypes.names`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateSelfFirstStageMat <- function(beta,
                                   x.self.design,
                                   z.design,

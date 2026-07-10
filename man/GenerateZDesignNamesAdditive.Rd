@@ -7,7 +7,10 @@
 GenerateZDesignNamesAdditive(tumor.names)
 }
 \arguments{
-\item{tumor.names}{}
+\item{tumor.names}{Input for `tumor.names`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

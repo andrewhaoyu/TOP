@@ -1,0 +1,76 @@
+---
+title: "Custom subtype designs"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Custom subtype designs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+`top_fit_custom()` supports scientifically defined subtype groupings that are
+not represented by TOP's predefined hierarchical structures.
+
+```{r data}
+library(TOP)
+data("data", package = "TOP")
+
+y <- data[, 1:5]
+snp <- data[, 6, drop = FALSE]
+pc1 <- data[, 7, drop = FALSE]
+z_standard <- GenerateZstandard(y, missingTumorIndicator = 888)
+```
+
+Rows of the custom design correspond to the retained first-stage subtypes.
+Columns define custom second-stage effects. This example maps the cross-classified
+subtypes into five groups based on hormone-receptor status, HER2, and grade.
+
+```{r design}
+design <- matrix(0, nrow(z_standard), 5)
+colnames(design) <- c(
+  "HR+_HER2-_lowgrade",
+  "HR+_HER2+",
+  "HR+_HER2-_highgrade",
+  "HR-_HER2+",
+  "HR-_HER2-"
+)
+
+hr_positive <- z_standard[, 1] == 1 | z_standard[, 2] == 1
+her2_positive <- z_standard[, 3] == 1
+high_grade <- z_standard[, 4] == 2
+
+design[hr_positive & !her2_positive & !high_grade, 1] <- 1
+design[hr_positive & her2_positive, 2] <- 1
+design[hr_positive & !her2_positive & high_grade, 3] <- 1
+design[!hr_positive & her2_positive, 4] <- 1
+design[!hr_positive & !her2_positive, 5] <- 1
+
+table(rowSums(design))
+```
+
+Every retained subtype must map to at least one custom effect. Overlapping
+columns are allowed when scientifically intended, provided the resulting model
+is identifiable.
+
+```{r fit}
+custom_fit <- top_fit_custom(
+  y = y,
+  covariate = snp,
+  design = design,
+  adjustment = pc1,
+  missing_value = 888
+)
+
+custom_fit$second.stage.test
+custom_fit$global.test
+```
+
+The fitted object uses the same `top_model` methods as `top_fit()`.
+
+```{r methods}
+custom_fit
+head(coef(custom_fit))
+```

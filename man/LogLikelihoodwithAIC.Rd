@@ -7,7 +7,14 @@
 LogLikelihoodwithAIC(y_em, p, nparm)
 }
 \arguments{
-\item{nparm}{}
+\item{y_em}{Input for `y_em`.}
+
+\item{p}{Input for `p`.}
+
+\item{nparm}{Input for `nparm`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

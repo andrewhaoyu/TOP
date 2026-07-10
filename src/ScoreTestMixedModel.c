@@ -14,9 +14,7 @@
 #define CHECK_MEM(obj) if (obj == NULL) {Rprintf("ERROR: allocating memory \n"); error("1");}
 
 /* Function to allocate memory for a double vector */
-  static double * dVec_alloc(n, initFlag, initVal)
-int n, initFlag;
-double initVal;
+  static double * dVec_alloc(int n, int initFlag, double initVal)
 {
   int i;
   double *ret, *p;
@@ -32,9 +30,7 @@ double initVal;
 } /* END: dVec_alloc */
 
   /* Function to allocate a double matrix */
-  static double ** dMat_alloc(nrow, ncol, initFlag, initVal)
-int nrow, ncol, initFlag;
-double initVal;
+  static double ** dMat_alloc(int nrow, int ncol, int initFlag, double initVal)
 {
   double **mat, **ptr;
   int i;
@@ -48,9 +44,7 @@ double initVal;
 } /* END: dMat_alloc */
 
   /* Function to free a matrix */
-  static void matrix_free(x, n)
-void **x;
-int n;
+  static void matrix_free(void **x, int n)
 {
   int i;
   for (i=0; i<n; i++) {
@@ -73,9 +67,7 @@ int n;
   }
 
   /* Multiply to matrices (matrix mult)  */
-  static void matrixMult(m1, m1_nr, m1_nc, m2, m2_nc, ret)
-double **m1, **m2, **ret;
-int m1_nr, m1_nc, m2_nc;
+  static void matrixMult(double **m1, int m1_nr, int m1_nc, double **m2, int m2_nc, double **ret)
 {
   int i, j, k;
   double sum;
@@ -156,9 +148,7 @@ int M, Ncatp1, Ncov;
 
   /* fill the info matrix to the result*/
   /* the Info matrix is sysmetric */
-  static void fill_SysMat_to_vec(Mat,Vec,Nr)
-double **Mat,*Vec;
-int Nr;
+  static void fill_SysMat_to_vec(double **Mat, double *Vec, int Nr)
 {
   int i,j;
   for(j=0;j<Nr;j++){
@@ -178,9 +168,7 @@ int Nr;
  
 
   /* Function to fill in a matrix from a vector (by column) */
-  static void fillMat(vec, nr, nc, addInt, out)
-double *vec, **out;
-int nr, nc, addInt;
+  static void fillMat(double *vec, int nr, int nc, int addInt, double **out)
 {
   int i, j, col=0, ii;
 

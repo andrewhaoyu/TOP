@@ -7,7 +7,12 @@
 GenerateCompleteYPheno(y.pheno, missingTumorIndicator)
 }
 \arguments{
-\item{missingTumorIndicator}{}
+\item{y.pheno}{Input for `y.pheno`.}
+
+\item{missingTumorIndicator}{Input for `missingTumorIndicator`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

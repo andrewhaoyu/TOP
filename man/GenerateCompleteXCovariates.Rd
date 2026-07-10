@@ -7,7 +7,14 @@
 GenerateCompleteXCovariates(y.pheno, x.all, missingTumorIndicator)
 }
 \arguments{
-\item{missingTumorIndicator}{}
+\item{y.pheno}{Input for `y.pheno`.}
+
+\item{x.all}{Input for `x.all`.}
+
+\item{missingTumorIndicator}{Input for `missingTumorIndicator`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

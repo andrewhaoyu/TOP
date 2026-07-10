@@ -13,7 +13,18 @@ GenerateSelfSecondStageMat(
 )
 }
 \arguments{
-\item{delta}{}
+\item{x.self.design}{Input for `x.self.design`.}
+
+\item{z.design}{Input for `z.design`.}
+
+\item{M}{Input for `M`.}
+
+\item{full.second.stage.names}{Input for `full.second.stage.names`.}
+
+\item{delta}{Input for `delta`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

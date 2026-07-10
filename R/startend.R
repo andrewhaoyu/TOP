@@ -1,13 +1,12 @@
 #' Title
 #'
-#' @param num
-#' @param size
-#' @param ind
+#' @param num Input for `num`.
+#' @param size Input for `size`.
+#' @param ind Input for `ind`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 startend <- function(num,size,ind){
   split.all <- split(1:num,cut(1:num,size))
   temp <- split.all[[ind]]

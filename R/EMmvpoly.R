@@ -2,6 +2,7 @@
 #'
 #' @param y the phenotype file. The first column is the case control disease status. The other columns are the tumor characteristics status
 #' @param missingTumorIndicator The indicators to show the tumor characteristics are missing. In the example, we put missing tumor characteristics as 888. Note, for all the controls subjects, they don't have tumor characteristics. So their tumor characteristics are put as NA instead of 888 to differentiate with cases missing tumor characteristics.
+#' @param cutoff subtypes with counts at or below this value are removed
 #'
 #' @return a matrix with all the combinations of tumor characteristics. All the subtypes with less than 10 are removed by default.
 #' @export
@@ -20,7 +21,8 @@
 #'z.standard <- GenerateZstandard(y)
 
 GenerateZstandard <- function(y,
-                              missingTumorIndicator = 888){
+                              missingTumorIndicator = 888,
+                              cutoff = 10){
   if(is.null(missingTumorIndicator)){
   y.pheno.complete <- y
   tumor.number <- ncol(y)-1
@@ -28,7 +30,7 @@ GenerateZstandard <- function(y,
   y.tumor <- y[,2:(tumor.number+1),drop=F]
   freq.subtypes <- GenerateFreqTable(y.pheno.complete)
   if(CheckControlTumor(y.case.control,y.tumor)==1){
-    return(print("ERROR:The tumor characteristics for control subtypes should put as NA"))
+    stop("tumor characteristics for controls must be NA", call. = FALSE)
   }
   tumor.names <- colnames(y.tumor)
   if(is.null(tumor.names)){
@@ -57,7 +59,7 @@ GenerateZstandard <- function(y,
     y.tumor <- y[,2:(tumor.number+1),drop=F]
     freq.subtypes <- GenerateFreqTable(y.pheno.complete)
     if(CheckControlTumor(y.case.control,y.tumor)==1){
-      return(print("ERROR:The tumor characteristics for control subtypes should put as NA"))
+      stop("tumor characteristics for controls must be NA", call. = FALSE)
     }
     tumor.names <- colnames(y.tumor)
     if(is.null(tumor.names)){
@@ -67,11 +69,13 @@ GenerateZstandard <- function(y,
     z.design.baselineonly <- GenerateZDesignBaselineonly(tumor.character.cat,
                                                          tumor.number,
                                                          tumor.names,
-                                                         freq.subtypes)
+                                                         freq.subtypes,
+                                                         cutoff)
     z.design.additive <- GenerateZDesignAdditive(tumor.character.cat,
                                                  tumor.number,
                                                  tumor.names,
-                                                 freq.subtypes)
+                                                 freq.subtypes,
+                                                 cutoff)
     z.standard <- z.design.additive[,-1,drop=F]
     return(as.matrix(z.standard))
 
@@ -137,7 +141,7 @@ EMmvpoly <- function(y,
                                     saturated,
                                     z.standard,
                                     covar.names,
-                                    delta,
+                                    model.result$delta,
                                     z.design.additive,
                                     z.design.pairwise.interaction,
                                     z.design.saturated,

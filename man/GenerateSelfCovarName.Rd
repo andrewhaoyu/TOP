@@ -13,7 +13,18 @@ GenerateSelfCovarName(
 )
 }
 \arguments{
-\item{saturated}{}
+\item{x.self.design}{Input for `x.self.design`.}
+
+\item{baselineonly}{Input for `baselineonly`.}
+
+\item{additive}{Input for `additive`.}
+
+\item{pairwise.interaction}{Input for `pairwise.interaction`.}
+
+\item{saturated}{Input for `saturated`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

@@ -7,7 +7,12 @@
 error_f(delta_old, delta_new)
 }
 \arguments{
-\item{delta_new}{}
+\item{delta_old}{Input for `delta_old`.}
+
+\item{delta_new}{Input for `delta_new`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

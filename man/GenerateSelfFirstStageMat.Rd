@@ -13,7 +13,18 @@ GenerateSelfFirstStageMat(
 )
 }
 \arguments{
-\item{subtypes.names}{}
+\item{beta}{Input for `beta`.}
+
+\item{x.self.design}{Input for `x.self.design`.}
+
+\item{z.design}{Input for `z.design`.}
+
+\item{covar.names}{Input for `covar.names`.}
+
+\item{subtypes.names}{Input for `subtypes.names`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

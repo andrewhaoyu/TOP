@@ -12,7 +12,16 @@ MetaMixedPfunction(
 )
 }
 \arguments{
-\item{random.second.num}{}
+\item{icog_onco_score_infor_one}{Input for `icog_onco_score_infor_one`.}
+
+\item{icog_onco_score_infor_casecase_one}{Input for `icog_onco_score_infor_casecase_one`.}
+
+\item{fixed.second.num}{Input for `fixed.second.num`.}
+
+\item{random.second.num}{Input for `random.second.num`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

@@ -19,6 +19,7 @@
 #' @export
 #'
 #' @examples 
+#' \donttest{
 #'#load in the breast cancer example
 #' data(data, package="TOP") #load in the breast cancer example
 #'#this is a simulated breast cancer example
@@ -77,6 +78,7 @@
 #'                              z.design = z.design,
 #'                              additive=PC1,
 #'                              missingTumorIndicator = 888)
+#' }
 EMmvpolySelfDesign <- function(y,
                                x.self.design,
                                z.design,
@@ -133,7 +135,7 @@ EMmvpolySelfDesign <- function(y,
                                     saturated,
                                     z.standard,
                                     covar.names,
-                                    delta,
+                                    model.result$delta,
                                     z.design.additive,
                                     z.design.pairwise.interaction,
                                     z.design.saturated,

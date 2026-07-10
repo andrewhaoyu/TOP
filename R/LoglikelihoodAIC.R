@@ -1,14 +1,13 @@
 
 #' Title
 #'
-#' @param y_em
-#' @param p
-#' @param nparm
+#' @param y_em Input for `y_em`.
+#' @param p Input for `p`.
+#' @param nparm Input for `nparm`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 LogLikelihoodwithAIC <- function(y_em,p,nparm){
   n <- nrow(y_em)
   M <- ncol(y_em)
@@ -26,13 +25,12 @@ LogLikelihoodwithAIC <- function(y_em,p,nparm){
 
 #' Title
 #'
-#' @param y_em
-#' @param p
+#' @param y_em Input for `y_em`.
+#' @param p Input for `p`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 ComputeLogLikelihood <- function(y_em,p){
 
   n <- nrow(y_em)

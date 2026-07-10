@@ -1,13 +1,12 @@
 
 #' Title
 #'
-#' @param logodds
-#' @param sigma
+#' @param logodds Input for `logodds`.
+#' @param sigma Input for `sigma`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GlobalTestForAssoc <- function(logodds,sigma){
   sigma <- as.matrix(sigma)
   df <- length(logodds)
@@ -28,14 +27,13 @@ GlobalTestForAssoc <- function(logodds,sigma){
 
 #' Title
 #'
-#' @param logodds
-#' @param sigma
-#' @param self.design
+#' @param logodds Input for `logodds`.
+#' @param sigma Input for `sigma`.
+#' @param self.design Input for `self.design`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GlobalTestForHeter <- function(logodds,sigma,self.design=F){
 
   if(self.design==F){
@@ -85,13 +83,12 @@ GlobalTestForHeter <- function(logodds,sigma,self.design=F){
 
 #' Title
 #'
-#' @param logodds
-#' @param sigma
+#' @param logodds Input for `logodds`.
+#' @param sigma Input for `sigma`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 IndividualHeterTest <- function(logodds,sigma){
 
   sigma <- as.matrix(sigma)
@@ -107,13 +104,12 @@ IndividualHeterTest <- function(logodds,sigma){
 
 #' Title
 #'
-#' @param score
-#' @param infor
+#' @param score Input for `score`.
+#' @param infor Input for `infor`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 ScoreGlobalTestForAssoc <- function(score,infor){
   infor <- as.matrix(infor)
   df <- length(score)
@@ -131,13 +127,12 @@ ScoreGlobalTestForAssoc <- function(score,infor){
 
 #' Title
 #'
-#' @param score
-#' @param infor
+#' @param score Input for `score`.
+#' @param infor Input for `infor`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 ScoreGlobalMixedTestForAssoc <- function(score,infor){
   infor <- as.matrix(infor)
   df <- length(score)
@@ -172,13 +167,12 @@ ScoreGlobalMixedTestForAssoc <- function(score,infor){
 
 #' Title
 #'
-#' @param score.casecase
-#' @param infor.casecase
+#' @param score.casecase Input for `score.casecase`.
+#' @param infor.casecase Input for `infor.casecase`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 ScoreMixedGlobalTestForHeter <- function(score.casecase,infor.casecase){
 
 
@@ -208,15 +202,14 @@ ScoreMixedGlobalTestForHeter <- function(score.casecase,infor.casecase){
 
 #' Title
 #'
-#' @param p.value.score.heter
-#' @param score.baseline
-#' @param infor.baseline
+#' @param p.value.score.heter Input for `p.value.score.heter`.
+#' @param score.baseline Input for `score.baseline`.
+#' @param infor.baseline Input for `infor.baseline`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @import CompQuadForm
 #' @export
 #'
-#' @examples
 ScoreMixedGlobalTestForAssoc <- function(p.value.score.heter,
                                          score.baseline,
                                          infor.baseline){

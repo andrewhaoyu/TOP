@@ -7,7 +7,18 @@
 SelfFirstStageTest(beta, sigma, M, first.stage.mat, covar.names)
 }
 \arguments{
-\item{first.stage.mat}{}
+\item{beta}{Input for `beta`.}
+
+\item{sigma}{Input for `sigma`.}
+
+\item{M}{Input for `M`.}
+
+\item{first.stage.mat}{Input for `first.stage.mat`.}
+
+\item{covar.names}{Input for `covar.names`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

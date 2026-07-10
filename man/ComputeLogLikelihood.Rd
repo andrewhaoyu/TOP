@@ -7,7 +7,12 @@
 ComputeLogLikelihood(y_em, p)
 }
 \arguments{
-\item{p}{}
+\item{y_em}{Input for `y_em`.}
+
+\item{p}{Input for `p`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

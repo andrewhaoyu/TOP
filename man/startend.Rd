@@ -7,7 +7,14 @@
 startend(num, size, ind)
 }
 \arguments{
-\item{ind}{}
+\item{num}{Input for `num`.}
+
+\item{size}{Input for `size`.}
+
+\item{ind}{Input for `ind`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

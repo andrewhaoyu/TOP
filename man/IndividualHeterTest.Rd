@@ -7,7 +7,12 @@
 IndividualHeterTest(logodds, sigma)
 }
 \arguments{
-\item{sigma}{}
+\item{logodds}{Input for `logodds`.}
+
+\item{sigma}{Input for `sigma`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

@@ -1,14 +1,13 @@
 #' Title
 #'
-#' @param beta
-#' @param sigma
-#' @param M
-#' @param first.stage.mat
+#' @param beta Input for `beta`.
+#' @param sigma Input for `sigma`.
+#' @param M Input for `M`.
+#' @param first.stage.mat Input for `first.stage.mat`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 FirstStageTest <- function(beta,sigma,M,first.stage.mat){
   logodds <- beta
   ###take out intercept

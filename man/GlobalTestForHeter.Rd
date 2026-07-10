@@ -7,7 +7,14 @@
 GlobalTestForHeter(logodds, sigma, self.design = F)
 }
 \arguments{
-\item{self.design}{}
+\item{logodds}{Input for `logodds`.}
+
+\item{sigma}{Input for `sigma`.}
+
+\item{self.design}{Input for `self.design`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

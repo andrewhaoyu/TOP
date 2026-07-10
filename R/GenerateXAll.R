@@ -1,15 +1,14 @@
 #' Title
 #'
-#' @param y
-#' @param baselineonly
-#' @param additive
-#' @param pairwise.interaction
-#' @param saturated
+#' @param y Input for `y`.
+#' @param baselineonly Input for `baselineonly`.
+#' @param additive Input for `additive`.
+#' @param pairwise.interaction Input for `pairwise.interaction`.
+#' @param saturated Input for `saturated`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateXAll <- function(y,baselineonly,additive,pairwise.interaction,saturated){
   n = nrow(y)
   ###initial x.all to use cbind

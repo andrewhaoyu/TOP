@@ -2,18 +2,17 @@
 
 #' Title
 #'
-#' @param y
-#' @param baselineonly
-#' @param additive
-#' @param pairwise.interaction
-#' @param saturated
-#' @param missingTumorIndicator
-#' @param cutoff 
+#' @param y Input for `y`.
+#' @param baselineonly Input for `baselineonly`.
+#' @param additive Input for `additive`.
+#' @param pairwise.interaction Input for `pairwise.interaction`.
+#' @param saturated Input for `saturated`.
+#' @param missingTumorIndicator Input for `missingTumorIndicator`.
+#' @param cutoff Input for `cutoff`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 EMScoreTestSupport <- function(y,
                              baselineonly,
                              additive,
@@ -28,7 +27,7 @@ EMScoreTestSupport <- function(y,
   y.pheno.complete <- GenerateCompleteYPheno(y,missingTumorIndicator)
   freq.subtypes <- GenerateFreqTable(y.pheno.complete)
   if(CheckControlTumor(y.case.control,y.tumor)==1){
-    return(print("ERROR:The tumor characteristics for control subtypes should put as NA"))
+    stop("tumor characteristics for controls must be NA", call. = FALSE)
   }
   tumor.names <- colnames(y.tumor)
   if(is.null(tumor.names)){
@@ -79,11 +78,12 @@ EMScoreTestSupport <- function(y,
   #score_test_mis <- score_test_mis(y_em,baselineonly,score_support_result)
   #return(list(score_c=score_test_mis$score_c,infor_c = score_test_mis$infor_c))
   result <- Score.Support
-  result[[7]] <- z.design.baselineonly
-  result[[8]] <- z.design.additive
-  result[[9]] <- z.design.pairwise.interaction
-  result[[10]] <- z.design.saturated
-  result[[11]] <- z.standard
-  return(result)
+  c(result, list(
+    z.design.baselineonly = z.design.baselineonly,
+    z.design.additive = z.design.additive,
+    z.design.pairwise.interaction = z.design.pairwise.interaction,
+    z.design.saturated = z.design.saturated,
+    z.standard = z.standard
+  ))
 
 }

@@ -1,22 +1,21 @@
 
 #' Title
 #'
-#' @param baselineonly
-#' @param additive
-#' @param pairwise.interaction
-#' @param saturated
-#' @param M
-#' @param full.second.stage.names
-#' @param covar.names
-#' @param delta
-#' @param z.design.additive
-#' @param z.design.pairwise.interaction
-#' @param z.design.saturated
+#' @param baselineonly Input for `baselineonly`.
+#' @param additive Input for `additive`.
+#' @param pairwise.interaction Input for `pairwise.interaction`.
+#' @param saturated Input for `saturated`.
+#' @param M Input for `M`.
+#' @param full.second.stage.names Input for `full.second.stage.names`.
+#' @param covar.names Input for `covar.names`.
+#' @param delta Input for `delta`.
+#' @param z.design.additive Input for `z.design.additive`.
+#' @param z.design.pairwise.interaction Input for `z.design.pairwise.interaction`.
+#' @param z.design.saturated Input for `z.design.saturated`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateSecondStageMat <- function(baselineonly,
                                    additive,
                                    pairwise.interaction,

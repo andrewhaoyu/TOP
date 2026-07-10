@@ -16,7 +16,24 @@ ZDesigntoZall(
 )
 }
 \arguments{
-\item{z.design.saturated}{}
+\item{baselineonly}{Input for `baselineonly`.}
+
+\item{additive}{Input for `additive`.}
+
+\item{pairwise.interaction}{Input for `pairwise.interaction`.}
+
+\item{saturated}{Input for `saturated`.}
+
+\item{z.design.baselineonly}{Input for `z.design.baselineonly`.}
+
+\item{z.design.additive}{Input for `z.design.additive`.}
+
+\item{z.design.pairwise.interaction}{Input for `z.design.pairwise.interaction`.}
+
+\item{z.design.saturated}{Input for `z.design.saturated`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

@@ -7,7 +7,12 @@
 ScoreGlobalMixedTestForAssoc(score, infor)
 }
 \arguments{
-\item{infor}{}
+\item{score}{Input for `score`.}
+
+\item{infor}{Input for `infor`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

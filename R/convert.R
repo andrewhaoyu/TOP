@@ -8,7 +8,7 @@
 #'
 convert <- function(snppro,n){
   snpvalue <- rep(0,n)
-  temp <- .C("convert",as.integer(n),as.numeric(snppro),as.numeric(snpvalue))
+  temp <- .C("convert",as.integer(n),as.numeric(snppro),as.numeric(snpvalue), PACKAGE = "TOP")
 
   return(temp[[3]])
 }

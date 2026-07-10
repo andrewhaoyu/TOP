@@ -19,6 +19,9 @@ EMStep(delta0, y, x.all, z.standard, z.all, missingTumorIndicator)
 
 \item{missingTumorIndicator}{missingtumorIndicator}
 }
+\value{
+A result from this computation.
+}
 \description{
 Title
 }

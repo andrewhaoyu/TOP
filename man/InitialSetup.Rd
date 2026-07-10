@@ -16,7 +16,24 @@ InitialSetup(
 )
 }
 \arguments{
-\item{cutoff}{}
+\item{y.pheno.complete}{Input for `y.pheno.complete`.}
+
+\item{baselineonly}{Input for `baselineonly`.}
+
+\item{additive}{Input for `additive`.}
+
+\item{pairwise.interaction}{Input for `pairwise.interaction`.}
+
+\item{saturated}{Input for `saturated`.}
+
+\item{x.self.design}{Input for `x.self.design`.}
+
+\item{z.design}{Input for `z.design`.}
+
+\item{cutoff}{Input for `cutoff`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

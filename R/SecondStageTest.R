@@ -2,15 +2,14 @@
 
 #' Title
 #'
-#' @param delta
-#' @param sigma
-#' @param M
-#' @param second.stage.mat
+#' @param logodds Input for `logodds`.
+#' @param sigma Input for `sigma`.
+#' @param M Input for `M`.
+#' @param second.stage.mat Input for `second.stage.mat`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 
 SecondStageTest <- function(logodds,sigma,M,second.stage.mat){
   ind.delta <- 0

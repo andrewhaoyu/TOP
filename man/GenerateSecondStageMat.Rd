@@ -19,7 +19,30 @@ GenerateSecondStageMat(
 )
 }
 \arguments{
-\item{z.design.saturated}{}
+\item{baselineonly}{Input for `baselineonly`.}
+
+\item{additive}{Input for `additive`.}
+
+\item{pairwise.interaction}{Input for `pairwise.interaction`.}
+
+\item{saturated}{Input for `saturated`.}
+
+\item{M}{Input for `M`.}
+
+\item{full.second.stage.names}{Input for `full.second.stage.names`.}
+
+\item{covar.names}{Input for `covar.names`.}
+
+\item{delta}{Input for `delta`.}
+
+\item{z.design.additive}{Input for `z.design.additive`.}
+
+\item{z.design.pairwise.interaction}{Input for `z.design.pairwise.interaction`.}
+
+\item{z.design.saturated}{Input for `z.design.saturated`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

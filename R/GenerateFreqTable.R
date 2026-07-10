@@ -1,12 +1,11 @@
 ### Generate the frequency of subtypes in the complete data file
 #' Title
 #'
-#' @param y.pheno.complete
+#' @param y.pheno.complete Input for `y.pheno.complete`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateFreqTable <- function(y.pheno.complete){
   eval_text = NULL
   tumor.number = ncol(y.pheno.complete)-1

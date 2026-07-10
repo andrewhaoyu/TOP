@@ -13,7 +13,18 @@ ScoreTest(
 )
 }
 \arguments{
-\item{missingTumorIndicator}{}
+\item{y}{Input for `y`.}
+
+\item{x}{Input for `x`.}
+
+\item{second.stage.structure}{Input for `second.stage.structure`.}
+
+\item{score.test.support}{Input for `score.test.support`.}
+
+\item{missingTumorIndicator}{Input for `missingTumorIndicator`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 ScoreTest

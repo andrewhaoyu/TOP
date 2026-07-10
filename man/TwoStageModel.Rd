@@ -39,7 +39,7 @@ the result is a list containing 9 elements. 1. the second stage parameters 2. th
 Two-stage polytomous logistic regression
 }
 \examples{
-
+\donttest{
 data(data, package="TOP") #load in the breast cancer example
 #this is a simulated breast cancer example
 #there are around 5000 breast cancer cases and 5000 controls, i.e. people without disease
@@ -47,7 +47,7 @@ data[1:5,]
 
 #four different tumor characteristics were included, ER (positive vs negative), PR (positive vs negative), HER2 (positive vs negative), grade (ordinal 1, 2, 3)
 #the phenotype file
-y <- data[,1:4]
+y <- data[,1:5]
 
 #one SNP and one Principal components (PC1) are the covariates
 SNP <- data[,6,drop=F]
@@ -73,4 +73,5 @@ model.1[[7]] #the case-control odds ratios for all of the subtypes.
 model.2 <- TwoStageModel(y=y,baselineonly = SNP,
                       additive=PC1,
                       missingTumorIndicator = 888)
+}
 }

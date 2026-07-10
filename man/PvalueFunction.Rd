@@ -7,7 +7,10 @@
 PvalueFunction(z)
 }
 \arguments{
-\item{z}{}
+\item{z}{Input for `z`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

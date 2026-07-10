@@ -10,11 +10,27 @@ OneStepMLE(
   additive,
   pairwise.interaction,
   saturated,
-  missingTumorIndicator
+  missingTumorIndicator,
+  cutoff = 10
 )
 }
 \arguments{
-\item{missingTumorIndicator}{}
+\item{y}{Input for `y`.}
+
+\item{baselineonly}{Input for `baselineonly`.}
+
+\item{additive}{Input for `additive`.}
+
+\item{pairwise.interaction}{Input for `pairwise.interaction`.}
+
+\item{saturated}{Input for `saturated`.}
+
+\item{missingTumorIndicator}{Input for `missingTumorIndicator`.}
+
+\item{cutoff}{subtypes with counts at or below this value are removed}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

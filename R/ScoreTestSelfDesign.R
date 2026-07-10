@@ -1,16 +1,15 @@
 
 #' Title
 #'
-#' @param y
-#' @param x
-#' @param z.design
-#' @param score.test.support
-#' @param missingTumorIndicator
+#' @param y Input for `y`.
+#' @param x Input for `x`.
+#' @param z.design Input for `z.design`.
+#' @param score.test.support Input for `score.test.support`.
+#' @param missingTumorIndicator Input for `missingTumorIndicator`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 ScoreTestSelfDesign <- function(y,x,z.design = z.design,score.test.support=NULL,missingTumorIndicator=NULL){
   if(is.vector(x)==1){
     x = matrix(x,ncol=1)
@@ -28,7 +27,7 @@ ScoreTestSelfDesign <- function(y,x,z.design = z.design,score.test.support=NULL,
   y.pheno.complete <- GenerateCompleteYPheno(y,missingTumorIndicator)
   freq.subtypes <- GenerateFreqTable(y.pheno.complete)
   if(CheckControlTumor(y.case.control,y.tumor)==1){
-    return(print("ERROR:The tumor characteristics for control subtypes should put as NA"))
+    stop("tumor characteristics for controls must be NA", call. = FALSE)
   }
   tumor.names <- colnames(y.tumor)
   if(is.null(tumor.names)){
@@ -57,7 +56,7 @@ z.intere <- z.design
 
 
   z.standard <- z.design.additive[,-1]
-  debug     <- as.integer(1)
+  debug     <- as.integer(0)
   inv_info_vec=as.numeric(score.test.support$inv_info_vec)
   YminusP=as.numeric(score.test.support$YminusP)
   W_obs=as.numeric(score.test.support$W_obs)
@@ -104,7 +103,8 @@ z.intere <- z.design
                info.complete.vec = info.complete.vec,
                info.lost.vec=info.lost.vec,
                tx_intereWXZ_vec= tx_intereWXZ_vec,
-               Quad_tx_intere_WXZ_invinfo_vec= Quad_tx_intere_WXZ_invinfo_vec
+               Quad_tx_intere_WXZ_invinfo_vec= Quad_tx_intere_WXZ_invinfo_vec,
+               PACKAGE = "TOP"
     )
     score.result[i,] <- temp$score
     efficient.info <- matrix(temp$efficient.info.vec,nparm.intere,nparm.intere)
@@ -128,7 +128,6 @@ z.intere <- z.design
   #return(list(score_c=score_test_mis$score_c,infor_c = score_test_mis$infor_c))
   return(list(score.result=score.result,efficient.info.result=efficient.info.result, info.complete=info.complete,info.lost = info.lost,tx_intereWXZ=tx_intereWXZ,Quad_tx_intere_WXZ_invinfo_vec=Quad_tx_intere_WXZ_invinfo_vec))
 }
-
 
 
 

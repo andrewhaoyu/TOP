@@ -1,0 +1,58 @@
+url: https://andrewhaoyu.github.io/TOP/
+
+template:
+  bootstrap: 5
+  bootswatch: flatly
+  bslib:
+    primary: "#176B87"
+
+home:
+  title: "TOP: Two-Stage Polytomous Logistic Regression"
+  description: >
+    User-friendly two-stage polytomous models, score scans, follow-up models,
+    and score-statistic meta-analysis for diseases with multiple characteristics.
+
+navbar:
+  structure:
+    left: [intro, reference, articles, news]
+    right: [search, github]
+  components:
+    intro:
+      text: Get started
+      href: articles/getting-started.html
+    articles:
+      text: Guides
+      menu:
+        - text: Score scans and follow-up
+          href: articles/score-scan-and-followup.html
+        - text: Meta-analysis
+          href: articles/meta-analysis.html
+        - text: Custom subtype designs
+          href: articles/custom-subtype-designs.html
+    github:
+      icon: fab fa-github
+      href: https://github.com/andrewhaoyu/TOP
+      aria-label: GitHub
+
+articles:
+  - title: Workflows
+    contents:
+      - getting-started
+      - score-scan-and-followup
+      - meta-analysis
+      - custom-subtype-designs
+
+reference:
+  - title: Recommended user API
+    desc: Stable entry points for new analyses.
+    contents:
+      - top_fit
+      - top_fit_custom
+      - top_score_support
+      - top_score_scan
+      - top_followup
+      - top_meta
+  - title: Backward-compatible and low-level API
+    desc: Legacy functions retained for existing analyses and advanced workflows.
+    contents:
+      - '-starts_with("top_")'

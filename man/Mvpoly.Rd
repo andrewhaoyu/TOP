@@ -15,9 +15,22 @@ Mvpoly(
 )
 }
 \arguments{
-\item{delta0}{}
+\item{y}{Input for `y`.}
 
-\item{cutoff}{}
+\item{baselineonly}{Input for `baselineonly`.}
+
+\item{additive}{Input for `additive`.}
+
+\item{pairwise.interaction}{Input for `pairwise.interaction`.}
+
+\item{saturated}{Input for `saturated`.}
+
+\item{delta0}{Input for `delta0`.}
+
+\item{cutoff}{Input for `cutoff`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

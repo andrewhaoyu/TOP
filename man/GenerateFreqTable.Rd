@@ -7,7 +7,10 @@
 GenerateFreqTable(y.pheno.complete)
 }
 \arguments{
-\item{y.pheno.complete}{}
+\item{y.pheno.complete}{Input for `y.pheno.complete`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

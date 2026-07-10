@@ -1,14 +1,13 @@
 #' Title
 #'
-#' @param delta
-#' @param sigma
-#' @param M
-#' @param second.stage.mat
+#' @param delta Input for `delta`.
+#' @param sigma Input for `sigma`.
+#' @param M Input for `M`.
+#' @param second.stage.mat Input for `second.stage.mat`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateGlobalTest <- function(delta,sigma,M,second.stage.mat){
   ind.start=1
   ind.end = 0

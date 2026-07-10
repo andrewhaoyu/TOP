@@ -1,0 +1,36 @@
+name: Bug report
+description: Report an installation, fitting, or result problem
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for helping improve TOP. Please remove sensitive study data from all examples.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: reproducible
+    attributes:
+      label: Minimal reproducible example
+      description: Use simulated or package data whenever possible.
+      render: r
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Error or output
+      render: shell
+  - type: textarea
+    id: session
+    attributes:
+      label: Session information
+      description: Paste the output of sessionInfo().
+      render: text
+    validations:
+      required: true

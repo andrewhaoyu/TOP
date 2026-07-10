@@ -7,7 +7,20 @@
 TakeoutIntercept(delta, covariance.delta, M, tumor.names, z.all, covar.names)
 }
 \arguments{
-\item{covar.names}{}
+\item{delta}{Input for `delta`.}
+
+\item{covariance.delta}{Input for `covariance.delta`.}
+
+\item{M}{Input for `M`.}
+
+\item{tumor.names}{Input for `tumor.names`.}
+
+\item{z.all}{Input for `z.all`.}
+
+\item{covar.names}{Input for `covar.names`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

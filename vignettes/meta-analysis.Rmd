@@ -1,0 +1,68 @@
+---
+title: "Score-statistic meta-analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Score-statistic meta-analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+`top_meta()` combines score vectors and information matrices from any number
+of independent studies. This supports distributed analyses in which individual
+participant data cannot be pooled.
+
+## Required study-level objects
+
+Each study supplies a list with:
+
+- `score`: a numeric score vector;
+- `information`: the corresponding square symmetric information matrix.
+
+All studies must use the same parameter order and second-stage design.
+
+```{r example}
+library(TOP)
+
+studies <- list(
+  array_a = list(
+    score = c(1.0, 2.0),
+    information = diag(c(2, 3))
+  ),
+  array_b = list(
+    score = c(0.5, -0.5),
+    information = diag(c(1, 2))
+  ),
+  array_c = list(
+    score = c(-0.25, 1.0),
+    information = diag(c(4, 1))
+  )
+)
+
+meta <- top_meta(studies)
+meta
+```
+
+```{r components}
+meta$score
+meta$information
+meta$statistic
+meta$p.value
+```
+
+The combined score and information are sums across studies. TOP then evaluates
+the quadratic score statistic using the combined information matrix.
+
+## Defensive checks
+
+`top_meta()` rejects non-finite scores, non-square or asymmetric information
+matrices, inconsistent parameter dimensions, and a singular combined
+information matrix. Align parameter names and allele coding before constructing
+the list; study-specific column mapping belongs in the analysis project rather
+than in the package.
+
+`ScoreMetaAnalysis()` remains available for older two-study scripts, but new
+code should use `top_meta()`.

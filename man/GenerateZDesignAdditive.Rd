@@ -13,7 +13,18 @@ GenerateZDesignAdditive(
 )
 }
 \arguments{
-\item{cutoff}{}
+\item{tumor.character.cat}{Input for `tumor.character.cat`.}
+
+\item{tumor.number}{Input for `tumor.number`.}
+
+\item{tumor.names}{Input for `tumor.names`.}
+
+\item{freq.subtypes}{Input for `freq.subtypes`.}
+
+\item{cutoff}{Input for `cutoff`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

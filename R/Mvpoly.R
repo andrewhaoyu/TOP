@@ -1,18 +1,17 @@
 
 #' Title
 #'
-#' @param y
-#' @param baselineonly
-#' @param additive
-#' @param pairwise.interaction
-#' @param saturated
-#' @param delta0 
-#' @param cutoff 
+#' @param y Input for `y`.
+#' @param baselineonly Input for `baselineonly`.
+#' @param additive Input for `additive`.
+#' @param pairwise.interaction Input for `pairwise.interaction`.
+#' @param saturated Input for `saturated`.
+#' @param delta0 Input for `delta0`.
+#' @param cutoff Input for `cutoff`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 
 Mvpoly <- function(y,
                           baselineonly,
@@ -28,7 +27,7 @@ Mvpoly <- function(y,
   y.case.control <- y[,1,drop=F]
   y.tumor <- y[,2:ncol(y),drop=F]
   if(CheckControlTumor(y.case.control,y.tumor)==1){
-    return(print("ERROR:The tumor characteristics for control subtypes should put as NA"))
+    stop("tumor characteristics for controls must be NA", call. = FALSE)
   }
   tumor.names <- colnames(y.tumor)
   tumor.number <- ncol(y)-1
@@ -123,7 +122,7 @@ X <- as.numeric(as.vector(x.all))
 ZallVec = as.numeric(as.vector(z.all))
 Znr = as.integer(nrow(z.all))
 Znc = as.integer(ncol(z.all))
-debug     <- as.integer(1)
+debug     <- as.integer(0)
 ret_rc    <- as.integer(1)
 ret_delta <- as.numeric(rep(-9999, nparm))
 ret_info <- as.numeric(rep(-9999,nparm^2))
@@ -134,7 +133,8 @@ loglikelihood <- as.numeric(-1);
 
 
 temp <- .C("Mvpoly_complete",deltai, nparm, Y=Y, X, ZallVec,Znr,Znc, N, M, NCOV, NITER, tol,
-           debug, ret_rc=ret_rc, ret_delta=ret_delta,ret_info=ret_info,ret_p=ret_p,loglikelihood = loglikelihood)
+           debug, ret_rc=ret_rc, ret_delta=ret_delta,ret_info=ret_info,ret_p=ret_p,loglikelihood = loglikelihood,
+           PACKAGE = "TOP")
 
 info <- matrix(unlist(temp$ret_info),nparm,nparm)
 result <- list(temp$ret_delta,info,
@@ -211,7 +211,9 @@ first.stage.test <- FirstStageTest(beta.no.inter,
 
 
 
-return(list(delta=delta,covariance.delta=covariance.delta,second.stage.mat = second.stage.mat,second.stage.test,global.test,first.stage.mat,first.stage.test,loglikelihood = loglikelihood,
+return(list(delta=delta,covariance.delta=covariance.delta,second.stage.mat = second.stage.mat,
+            second.stage.test=second.stage.test,global.test=global.test,
+            first.stage.mat=first.stage.mat,first.stage.test=first.stage.test,loglikelihood = loglikelihood,
             AIC = AIC,beta=beta,covariance.beta=covariance.beta,
             z.standard=z.standard))
 }

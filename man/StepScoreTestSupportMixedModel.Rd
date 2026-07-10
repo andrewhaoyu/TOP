@@ -7,15 +7,18 @@
 StepScoreTestSupportMixedModel(delta0, y, x.all, z.standard, z.all)
 }
 \arguments{
-\item{delta0}{}
+\item{delta0}{Input for `delta0`.}
 
-\item{y}{}
+\item{y}{Input for `y`.}
 
-\item{x.all}{}
+\item{x.all}{Input for `x.all`.}
 
-\item{z.standard}{}
+\item{z.standard}{Input for `z.standard`.}
 
-\item{z.all}{}
+\item{z.all}{Input for `z.all`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

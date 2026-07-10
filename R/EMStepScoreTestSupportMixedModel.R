@@ -1,16 +1,15 @@
 #' Title
 #'
-#' @param delta0
-#' @param y
-#' @param x.all
-#' @param z.standard
-#' @param z.all
-#' @param missingTumorIndicator
+#' @param delta0 Input for `delta0`.
+#' @param y Input for `y`.
+#' @param x.all Input for `x.all`.
+#' @param z.standard Input for `z.standard`.
+#' @param z.all Input for `z.all`.
+#' @param missingTumorIndicator Input for `missingTumorIndicator`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 EMStepScoreTestSupportMixedModel <- function(delta0,y,x.all,z.standard,z.all,missingTumorIndicator){
 
   tol <- as.numeric(1e-04)
@@ -57,7 +56,7 @@ EMStepScoreTestSupportMixedModel <- function(delta0,y,x.all,z.standard,z.all,mis
   ZallVec = as.numeric(as.vector(z.all))
   Znr = as.integer(nrow(z.all))
   Znc = as.integer(ncol(z.all))
-  debug     <- as.integer(1)
+  debug     <- as.integer(0)
   ret_rc    <- as.integer(1)
   ret_delta <- as.numeric(rep(-9999, nparm))
   ret_info <- as.numeric(rep(-9999,nparm^2))
@@ -85,8 +84,9 @@ EMStepScoreTestSupportMixedModel <- function(delta0,y,x.all,z.standard,z.all,mis
              missing.mat.vec,missing.number,
              ret_Inv_info_vec=ret_Inv_info_vec,
              YminusP=YminusP,
-             W_obs = W_obs)
-  print(paste0("EM Algorithm Converged"))
+             W_obs = W_obs,
+             PACKAGE = "TOP")
+  .top_message("EM algorithm converged")
   inv_info_vec <- temp$ret_Inv_info_vec
   YminusP <- temp$YminusP
   W_obs <- temp$W_obs
@@ -96,4 +96,3 @@ EMStepScoreTestSupportMixedModel <- function(delta0,y,x.all,z.standard,z.all,mis
   return(list(inv_info_vec=inv_info_vec,YminusP=YminusP,W_obs=W_obs,zc=z.all,x.all=x.all,idx.drop=idx.drop))
   #  return(temp)
 }
-

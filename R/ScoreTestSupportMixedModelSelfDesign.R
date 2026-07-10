@@ -1,19 +1,18 @@
 #' Title
 #'
-#' @param y
-#' @param x.self.design
-#' @param z.design
-#' @param baselineonly
-#' @param additive
-#' @param pairwise.interaction
-#' @param saturated
-#' @param missingTumorIndicator
-#' @param delta0
+#' @param y Input for `y`.
+#' @param x.self.design Input for `x.self.design`.
+#' @param z.design Input for `z.design`.
+#' @param baselineonly Input for `baselineonly`.
+#' @param additive Input for `additive`.
+#' @param pairwise.interaction Input for `pairwise.interaction`.
+#' @param saturated Input for `saturated`.
+#' @param missingTumorIndicator Input for `missingTumorIndicator`.
+#' @param delta0 Input for `delta0`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 ScoreTestSupportMixedModelSelfDesign <- function(y,
                                                  x.self.design,
                                                  z.design,
@@ -36,7 +35,7 @@ ScoreTestSupportMixedModelSelfDesign <- function(y,
   
   freq.subtypes <- GenerateFreqTable(y.pheno.complete)
   if(CheckControlTumor(y.case.control,y.tumor)==1){
-    return(print("ERROR:The tumor characteristics for control subtypes should put as NA"))
+    stop("tumor characteristics for controls must be NA", call. = FALSE)
   }
   tumor.names <- colnames(y.tumor)
   if(is.null(tumor.names)){

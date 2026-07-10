@@ -1,0 +1,107 @@
+---
+title: "Getting started with TOP"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with TOP}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+TOP fits two-stage polytomous logistic regression models for case-control
+studies in which cases are characterized by multiple disease or tumor markers.
+The recommended interface for new analyses is `top_fit()`.
+
+## Data layout
+
+The outcome matrix has case-control status in its first column (`0` for
+controls and `1` for cases) and tumor characteristics in the remaining
+columns. Tumor characteristics must be `NA` for controls. If case tumor
+characteristics can be missing, use a distinct numeric code and pass it as
+`missing_value`.
+
+```{r data}
+library(TOP)
+data("data", package = "TOP")
+
+y <- data[, 1:5]
+snp <- data[, 6, drop = FALSE]
+pc1 <- data[, 7, drop = FALSE]
+
+head(y)
+table(y[, 1])
+```
+
+The simulated package data use `888` for missing case tumor characteristics.
+
+## Fit an additive model
+
+Here the SNP and principal component both use an additive second-stage
+structure. `top_fit()` validates dimensions, coding, missingness, and finite
+covariate values before calling the numerical model.
+
+```{r fit}
+fit <- top_fit(
+  y = y,
+  additive = cbind(snp, pc1),
+  missing_value = 888
+)
+
+fit
+```
+
+Results have stable names. The second-stage table contains baseline
+case-control effects and marker-specific case-case effects.
+
+```{r named-results}
+fit$second.stage.test
+fit$global.test
+head(fit$first.stage.test)
+```
+
+Standard R methods are also available.
+
+```{r methods}
+head(coef(fit, stage = "second"))
+dim(vcov(fit, stage = "second"))
+summary(fit)
+```
+
+## Choose a second-stage structure
+
+Covariates can be assigned to different structures:
+
+- `baseline`: a common association across subtypes;
+- `additive`: baseline plus tumor-marker main effects;
+- `pairwise`: additive effects plus pairwise marker interactions;
+- `saturated`: a separate effect for every retained subtype.
+
+For example, a common SNP effect can be adjusted for an additive PC effect.
+
+```{r mixed-structures, eval=FALSE}
+fit_mixed <- top_fit(
+  y = y,
+  baseline = snp,
+  additive = pc1,
+  missing_value = 888
+)
+```
+
+## Subtype counts and convergence
+
+TOP historically omits subtypes with counts at or below the cutoff. The
+default `subtype_cutoff = 10` preserves that behavior. Lower cutoffs can make
+information matrices unstable, particularly in small datasets. Numerical
+failures raise R errors instead of terminating the R session.
+
+Set `options(TOP.verbose = TRUE)` temporarily when EM progress messages are
+useful.
+
+## Existing scripts
+
+`TwoStageModel()` remains available for backward compatibility. New code
+should prefer `top_fit()` and named components such as
+`fit$second.stage.test` rather than positional indexing.

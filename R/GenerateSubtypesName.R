@@ -1,14 +1,13 @@
 
 #' Title
 #'
-#' @param z.design.additive
-#' @param M
-#' @param tumor.names
+#' @param z.design.additive Input for `z.design.additive`.
+#' @param M Input for `M`.
+#' @param tumor.names Input for `tumor.names`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 GenerateSubtypesName <- function(z.design.additive,
                                  M,
                                  tumor.names) {

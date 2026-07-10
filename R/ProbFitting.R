@@ -4,17 +4,16 @@
 ####output: y_em the initial results for E step matrix
 #' Title
 #'
-#' @param delta0
-#' @param y
-#' @param x.all
-#' @param z.standard
-#' @param z.all
-#' @param missingTumorIndicator
+#' @param delta0 Input for `delta0`.
+#' @param y Input for `y`.
+#' @param x.all Input for `x.all`.
+#' @param z.standard Input for `z.standard`.
+#' @param z.all Input for `z.all`.
+#' @param missingTumorIndicator Input for `missingTumorIndicator`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 ProbFitting <- function(delta0,y,x.all,z.standard,z.all,missingTumorIndicator=NULL){
   idx.drop = NULL
   if(is.null(missingTumorIndicator)==1){

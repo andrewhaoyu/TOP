@@ -48,6 +48,7 @@ the result is a list containing 9 elements. 1. the second stage parameters 2. th
 Two stage model with self design second stage matrix
 }
 \examples{
+\donttest{
 #load in the breast cancer example
 data(data, package="TOP") #load in the breast cancer example
 #this is a simulated breast cancer example
@@ -104,4 +105,5 @@ model.3 <- EMmvpolySelfDesign(y,
                              z.design = z.design,
                              additive=PC1,
                              missingTumorIndicator = 888)
+}
 }

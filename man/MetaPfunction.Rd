@@ -7,7 +7,12 @@
 MetaPfunction(icog_onco_score_infor_one, second.num)
 }
 \arguments{
-\item{second.num}{}
+\item{icog_onco_score_infor_one}{Input for `icog_onco_score_infor_one`.}
+
+\item{second.num}{Input for `second.num`.}
+}
+\value{
+A result from this computation.
 }
 \description{
 Title

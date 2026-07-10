@@ -1,26 +1,148 @@
-TOP
-=======
-Two-stage polytomous logistic regression (TOP): in this package, we developed a two-stage polytomous regression framework to handle cancer data with multivariate tumor characteristics. In the first stage, a standard polytomous model is used to specify for all subtypes defined by the cross-classification of different markers. In the second stage, the subtype-specific case-control odds ratios are specified using a more parsimonious model based on the case-control odds ratio for a baseline subtype, and the case-case parameters associated with tumor markers. Further, to reduce the degrees-of-freedom, we allow to specify case-case parameters for additional markers using a random-effect model.
+# TOP
 
-Usage
-=======
-[The 'TOP' vignette](https://github.com/andrewhaoyu/TOP/blob/master/inst/TOP.pdf) will provide a good start point for using TOP package.
+[![R-CMD-check](https://github.com/andrewhaoyu/TOP/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/andrewhaoyu/TOP/actions/workflows/R-CMD-check.yaml)
+[![pkgdown](https://github.com/andrewhaoyu/TOP/actions/workflows/pkgdown.yaml/badge.svg)](https://andrewhaoyu.github.io/TOP/)
+[![License: GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
+TOP fits two-stage polytomous logistic regression models for case-control
+studies with multiple disease or tumor characteristics. It supports missing
+tumor-marker data, reusable fixed-effect score scans, detailed variant
+follow-up, custom subtype designs, and score-statistic meta-analysis.
 
-Development 
-=======
-This R package is developed by Haoyu Zhang and William Wheeler, and maintained by Haoyu Zhang <andrew.haoyu@gmail.com>.
+## Installation
 
-Installation
-=======
-To install the development version of TOP, it's easiest to use the 'devtools' package.
+Install the development release from GitHub:
 
-install.packages("devtools")  
-library(devtools)  
-install_github("andrewhaoyu/TOP")
+```r
+install.packages("remotes")
+remotes::install_github("andrewhaoyu/TOP")
+```
 
-References
-=======
-Zhang, Haoyu, et al. "A mixed-model approach for powerful testing of genetic associations with cancer risk incorporating tumor characteristics." Biostatistics 22.4 (2021): 772-788.
+Then load TOP:
 
+```r
+library(TOP)
+```
 
+## Quick start
+
+The outcome matrix contains case-control status in column 1 and tumor
+characteristics in the remaining columns. Controls must have `NA` tumor
+characteristics. In the package example, `888` marks missing tumor data among
+cases.
+
+```r
+data("data", package = "TOP")
+
+y <- data[, 1:5]
+snp <- data[, 6, drop = FALSE]
+pc1 <- data[, 7, drop = FALSE]
+
+fit <- top_fit(
+  y = y,
+  additive = cbind(snp, pc1),
+  missing_value = 888
+)
+
+fit
+fit$second.stage.test
+fit$global.test
+summary(fit)
+```
+
+TOP model results have stable names and standard methods:
+
+```r
+coef(fit, stage = "second")
+vcov(fit, stage = "second")
+```
+
+## Genome-wide score scans
+
+Fit the nuisance model once and reuse it across variant batches:
+
+```r
+support <- top_score_support(
+  y = y,
+  additive = pc1,
+  missing_value = 888
+)
+
+scan <- top_score_scan(
+  y = y,
+  variants = snp,
+  support = support,
+  missing_value = 888
+)
+
+as.data.frame(scan)
+```
+
+Fit detailed Wald models only for selected variants:
+
+```r
+followup <- top_followup(
+  y = y,
+  variants = snp,
+  adjustment = pc1,
+  missing_value = 888,
+  keep_models = FALSE
+)
+
+followup$results
+followup$effects
+```
+
+## Meta-analysis
+
+Combine aligned score vectors and information matrices from any number of
+independent studies:
+
+```r
+studies <- list(
+  list(score = c(1, 2), information = diag(c(2, 3))),
+  list(score = c(0.5, -0.5), information = diag(c(1, 2))),
+  list(score = c(-0.25, 1), information = diag(c(4, 1)))
+)
+
+top_meta(studies)
+```
+
+## Documentation
+
+- [Getting started](https://andrewhaoyu.github.io/TOP/articles/getting-started.html)
+- [Score scans and follow-up](https://andrewhaoyu.github.io/TOP/articles/score-scan-and-followup.html)
+- [Score-statistic meta-analysis](https://andrewhaoyu.github.io/TOP/articles/meta-analysis.html)
+- [Custom subtype designs](https://andrewhaoyu.github.io/TOP/articles/custom-subtype-designs.html)
+- [Function reference](https://andrewhaoyu.github.io/TOP/reference/)
+
+`TwoStageModel()` and the original score-test functions remain available for
+existing scripts. New analyses should use the validated `top_*()` interfaces.
+The original long methodological tutorial is archived under
+[`legacy/tutorial`](legacy/tutorial).
+
+## Subtype filtering and convergence
+
+TOP preserves its historical rule that a cutoff of 10 omits subtypes with 10
+or fewer cases. Sparse subtypes can produce unstable or singular information
+matrices. Numerical failures now raise informative R errors instead of
+terminating the R session. Set `options(TOP.verbose = TRUE)` to show EM progress.
+
+## Citation
+
+If TOP contributes to an analysis, cite:
+
+> Zhang H, Zhao N, Ahearn TU, Wheeler W, García-Closas M, Chatterjee N.
+> A mixed-model approach for powerful testing of genetic associations with
+> cancer risk incorporating tumor characteristics. *Biostatistics*.
+> 2021;22(4):772–788. [doi:10.1093/biostatistics/kxz065](https://doi.org/10.1093/biostatistics/kxz065)
+
+From R, run `citation("TOP")` for a formatted entry.
+
+## Contributing
+
+Bug reports and feature requests are welcome through
+[GitHub Issues](https://github.com/andrewhaoyu/TOP/issues). See
+[`CONTRIBUTING.md`](CONTRIBUTING.md) before proposing statistical or API
+changes. Never attach participant-level or sensitive study data to a public
+issue.

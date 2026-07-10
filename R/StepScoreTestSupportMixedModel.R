@@ -1,16 +1,15 @@
 
 #' Title
 #'
-#' @param delta0 
-#' @param y 
-#' @param x.all 
-#' @param z.standard 
-#' @param z.all 
+#' @param delta0 Input for `delta0`.
+#' @param y Input for `y`.
+#' @param x.all Input for `x.all`.
+#' @param z.standard Input for `z.standard`.
+#' @param z.all Input for `z.all`.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 StepScoreTestSupportMixedModel <- function(delta0,y,x.all,z.standard,z.all){
   tol <- as.numeric(1e-04)
   delta_old <- delta0
@@ -40,7 +39,7 @@ StepScoreTestSupportMixedModel <- function(delta0,y,x.all,z.standard,z.all){
     ZallVec = as.numeric(as.vector(z.all))
     Znr = as.integer(nrow(z.all))
     Znc = as.integer(ncol(z.all))
-    debug     <- as.integer(1)
+    debug     <- as.integer(0)
     ret_rc    <- as.integer(1)
     ret_delta <- as.numeric(rep(-9999, nparm))
     ret_info <- as.numeric(rep(-9999,nparm^2))
@@ -76,8 +75,9 @@ StepScoreTestSupportMixedModel <- function(delta0,y,x.all,z.standard,z.all){
                YminusP=YminusP,
                W= W_obs,
                WXZ_vec = WXZ_vec,
-               WX_vec = WX_vec)
-    print(paste0("Algorithm Converged"))
+               WX_vec = WX_vec,
+               PACKAGE = "TOP")
+    .top_message("Algorithm converged")
     inv_info_vec <- temp$ret_Inv_info_vec
     YminusP <- temp$YminusP
     W_obs <- temp$W

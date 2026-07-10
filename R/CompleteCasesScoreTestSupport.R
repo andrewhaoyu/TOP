@@ -2,22 +2,22 @@
 
 #' Title
 #'
-#' @param y
-#' @param baselineonly
-#' @param additive
-#' @param pairwise.interaction
-#' @param saturated
-#' @param missingTumorIndicator
+#' @param y Input for `y`.
+#' @param baselineonly Input for `baselineonly`.
+#' @param additive Input for `additive`.
+#' @param pairwise.interaction Input for `pairwise.interaction`.
+#' @param saturated Input for `saturated`.
+#' @param cutoff Subtypes with counts at or below this value are removed.
 #'
-#' @return
+#' @return A result from this computation.
 #' @export
 #'
-#' @examples
 CompleteCasesScoreTestSupport <- function(y,
                                baselineonly,
                                additive,
                                pairwise.interaction,
-                               saturated){
+                               saturated,
+                               cutoff = 10){
   y <- as.matrix(y)
   tumor.number <- ncol(y)-1
   y.case.control <- y[,1,drop=F]
@@ -25,7 +25,7 @@ CompleteCasesScoreTestSupport <- function(y,
   y.pheno.complete <- y
   freq.subtypes <- GenerateFreqTable(y.pheno.complete)
   if(CheckControlTumor(y.case.control,y.tumor)==1){
-    return(print("ERROR:The tumor characteristics for control subtypes should put as NA"))
+    stop("tumor characteristics for controls must be NA", call. = FALSE)
   }
   tumor.names <- colnames(y.tumor)
   if(is.null(tumor.names)){
@@ -35,20 +35,24 @@ CompleteCasesScoreTestSupport <- function(y,
   z.design.baselineonly <- GenerateZDesignBaselineonly(tumor.character.cat,
                                                        tumor.number,
                                                        tumor.names,
-                                                       freq.subtypes)
+                                                       freq.subtypes,
+                                                       cutoff)
   z.design.additive <- GenerateZDesignAdditive(tumor.character.cat,
                                                tumor.number,
                                                tumor.names,
-                                               freq.subtypes)
+                                               freq.subtypes,
+                                               cutoff)
   if(tumor.number>=2){
     z.design.pairwise.interaction <- GenerateZDesignPairwiseInteraction(tumor.character.cat,
                                                                         tumor.number,
                                                                         tumor.names,
-                                                                        freq.subtypes)
+                                                                        freq.subtypes,
+                                                                        cutoff)
     z.design.saturated <- GenerateZDesignSaturated(tumor.character.cat,
                                                    tumor.number,
                                                    tumor.names,
-                                                   freq.subtypes)
+                                                   freq.subtypes,
+                                                   cutoff)
     
   }else{
     z.design.pairwise.interaction <- z.design.additive
@@ -101,7 +105,7 @@ CompleteCasesScoreTestSupport <- function(y,
   ZallVec = as.numeric(as.vector(z.all))
   Znr = as.integer(nrow(z.all))
   Znc = as.integer(ncol(z.all))
-  debug     <- as.integer(1)
+  debug     <- as.integer(0)
   ret_rc    <- as.integer(1)
   ret_delta <- as.numeric(rep(-9999, nparm))
   ret_info <- as.numeric(rep(-9999,nparm^2))
@@ -137,8 +141,9 @@ CompleteCasesScoreTestSupport <- function(y,
              YminusP=YminusP,
              W= W_obs,
              WXZ_vec = WXZ_vec,
-             WX_vec = WX_vec)
-  print(paste0("Algorithm Converged"))
+             WX_vec = WX_vec,
+             PACKAGE = "TOP")
+  .top_message("Algorithm converged")
   inv_info_vec <- temp$ret_Inv_info_vec
   YminusP <- temp$YminusP
   W_obs <- temp$W
@@ -146,18 +151,21 @@ CompleteCasesScoreTestSupport <- function(y,
   WX_vec <- temp$WX_vec
 
 
-  result <- list(inv_info_vec=inv_info_vec,YminusP=YminusP,W_obs=W_obs,WXZ_vec = WXZ_vec,zc=z.all)
+  result <- list(inv_info_vec=inv_info_vec,YminusP=YminusP,W_obs=W_obs,
+                 WXZ_vec = WXZ_vec,zc=z.all)
 
 
   # score_support_result <- score_support(pxx,x.all,baselineonly,z.all,z.standard,y_em)
   #score_test_mis <- score_test_mis(y_em,baselineonly,score_support_result)
   #return(list(score_c=score_test_mis$score_c,infor_c = score_test_mis$infor_c))
 
-  result[[6]] <- z.design.baselineonly
-  result[[7]] <- z.design.additive
-  result[[8]] <- z.design.pairwise.interaction
-  result[[9]] <- z.design.saturated
-  result[[10]] <- z.standard
-  return(result)
+  c(result, list(
+    idx.drop = NULL,
+    z.design.baselineonly = z.design.baselineonly,
+    z.design.additive = z.design.additive,
+    z.design.pairwise.interaction = z.design.pairwise.interaction,
+    z.design.saturated = z.design.saturated,
+    z.standard = z.standard
+  ))
 
 }
