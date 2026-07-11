@@ -60,7 +60,7 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="top">TOP<a class="anchor" aria-label="anchor" href="#top"></a>
 </h1></div>
-<p><a href="https://github.com/andrewhaoyu/TOP/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/andrewhaoyu/TOP/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <a href="https://andrewhaoyu.github.io/TOP/"><img src="https://github.com/andrewhaoyu/TOP/actions/workflows/pkgdown.yaml/badge.svg" alt="pkgdown"></a> <a href="https://www.gnu.org/licenses/gpl-3.0" class="external-link"><img src="https://img.shields.io/badge/license-GPL--3-blue.svg" alt="License: GPL-3"></a></p>
+<p><a href="https://github.com/andrewhaoyu/TOP/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/andrewhaoyu/TOP/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <a href="https://github.com/andrewhaoyu/TOP/actions/workflows/pkgdown.yaml" class="external-link"><img src="https://github.com/andrewhaoyu/TOP/actions/workflows/pkgdown.yaml/badge.svg" alt="pkgdown"></a> <a href="https://www.gnu.org/licenses/gpl-3.0" class="external-link"><img src="https://img.shields.io/badge/license-GPL--3-blue.svg" alt="License: GPL-3"></a></p>
 <p>TOP fits two-stage polytomous logistic regression models for case-control studies with multiple disease or tumor characteristics. It supports missing tumor-marker data, reusable fixed-effect score scans, detailed variant follow-up, custom subtype designs, and score-statistic meta-analysis.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -148,13 +148,17 @@
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h2>
 <ul>
-<li><a href="vignettes/getting-started.Rmd">Getting started</a></li>
-<li><a href="vignettes/score-scan-and-followup.Rmd">Score scans and follow-up</a></li>
-<li><a href="vignettes/meta-analysis.Rmd">Score-statistic meta-analysis</a></li>
-<li><a href="vignettes/custom-subtype-designs.Rmd">Custom subtype designs</a></li>
-<li><a href="man/">Function reference</a></li>
+<li>
+<a href="vignettes/getting-started.html">Getting started</a> (<a href="vignettes/getting-started.Rmd">source</a>)</li>
+<li>
+<a href="vignettes/score-scan-and-followup.html">Score scans and follow-up</a> (<a href="vignettes/score-scan-and-followup.Rmd">source</a>)</li>
+<li>
+<a href="vignettes/meta-analysis.html">Score-statistic meta-analysis</a> (<a href="vignettes/meta-analysis.Rmd">source</a>)</li>
+<li>
+<a href="vignettes/custom-subtype-designs.html">Custom subtype designs</a> (<a href="vignettes/custom-subtype-designs.Rmd">source</a>)</li>
+<li><a href="vignettes/function-reference.html">Function reference</a></li>
 </ul>
-<p>These branch-relative links work directly on GitHub. After the changes are merged into <code>master</code>, the pkgdown workflow will publish the rendered <a href="https://andrewhaoyu.github.io/TOP/">documentation website</a>.</p>
+<p>The guides are rendered Markdown files that open readably on GitHub. The linked <code>.Rmd</code> files are their reproducible source. A richer package website is also ready to publish from the <code>gh-pages</code> branch once GitHub Pages is enabled for this repository.</p>
 <p><code><a href="reference/TwoStageModel.html">TwoStageModel()</a></code> and the original score-test functions remain available for existing scripts. New analyses should use the validated <code>top_*()</code> interfaces. The original long methodological tutorial is archived under <a href="legacy/tutorial"><code>legacy/tutorial</code></a>.</p>
 </div>
 <div class="section level2">
