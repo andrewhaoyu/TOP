@@ -1,7 +1,7 @@
 # TOP
 
 [![R-CMD-check](https://github.com/andrewhaoyu/TOP/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/andrewhaoyu/TOP/actions/workflows/R-CMD-check.yaml)
-[![pkgdown](https://github.com/andrewhaoyu/TOP/actions/workflows/pkgdown.yaml/badge.svg)](https://andrewhaoyu.github.io/TOP/)
+[![pkgdown](https://github.com/andrewhaoyu/TOP/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/andrewhaoyu/TOP/actions/workflows/pkgdown.yaml)
 [![License: GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 TOP fits two-stage polytomous logistic regression models for case-control
@@ -110,15 +110,16 @@ top_meta(studies)
 
 ## Documentation
 
-- [Getting started](vignettes/getting-started.Rmd)
-- [Score scans and follow-up](vignettes/score-scan-and-followup.Rmd)
-- [Score-statistic meta-analysis](vignettes/meta-analysis.Rmd)
-- [Custom subtype designs](vignettes/custom-subtype-designs.Rmd)
-- [Function reference](man/)
+- [Getting started](vignettes/getting-started.md) ([source](vignettes/getting-started.Rmd))
+- [Score scans and follow-up](vignettes/score-scan-and-followup.md) ([source](vignettes/score-scan-and-followup.Rmd))
+- [Score-statistic meta-analysis](vignettes/meta-analysis.md) ([source](vignettes/meta-analysis.Rmd))
+- [Custom subtype designs](vignettes/custom-subtype-designs.md) ([source](vignettes/custom-subtype-designs.Rmd))
+- [Function reference](vignettes/function-reference.md)
 
-These branch-relative links work directly on GitHub. After the changes are
-merged into `master`, the pkgdown workflow will publish the rendered
-[documentation website](https://andrewhaoyu.github.io/TOP/).
+The guides are rendered Markdown files that open readably on GitHub. The
+linked `.Rmd` files are their reproducible source. A richer package website is
+also ready to publish from the `gh-pages` branch once GitHub Pages is enabled
+for this repository.
 
 `TwoStageModel()` and the original score-test functions remain available for
 existing scripts. New analyses should use the validated `top_*()` interfaces.
