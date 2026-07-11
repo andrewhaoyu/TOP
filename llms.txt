@@ -1,0 +1,364 @@
+# TOP
+
+[![R-CMD-check](https://github.com/andrewhaoyu/TOP/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/andrewhaoyu/TOP/actions/workflows/R-CMD-check.yaml)
+[![pkgdown](https://github.com/andrewhaoyu/TOP/actions/workflows/pkgdown.yaml/badge.svg)](https://andrewhaoyu.github.io/TOP/)
+[![License:
+GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+TOP fits two-stage polytomous logistic regression models for
+case-control studies with multiple disease or tumor characteristics. It
+supports missing tumor-marker data, reusable fixed-effect score scans,
+detailed variant follow-up, custom subtype designs, and score-statistic
+meta-analysis.
+
+## Installation
+
+Install the development release from GitHub:
+
+``` r
+
+install.packages("remotes")
+remotes::install_github("andrewhaoyu/TOP")
+```
+
+Then load TOP:
+
+``` r
+
+library(TOP)
+```
+
+## Quick start
+
+The outcome matrix contains case-control status in column 1 and tumor
+characteristics in the remaining columns. Controls must have `NA` tumor
+characteristics. In the package example, `888` marks missing tumor data
+among cases.
+
+``` r
+
+data("data", package = "TOP")
+
+y <- data[, 1:5]
+snp <- data[, 6, drop = FALSE]
+pc1 <- data[, 7, drop = FALSE]
+
+fit <- top_fit(
+  y = y,
+  additive = cbind(snp, pc1),
+  missing_value = 888
+)
+
+fit
+fit$second.stage.test
+fit$global.test
+summary(fit)
+```
+
+TOP model results have stable names and standard methods:
+
+``` r
+
+coef(fit, stage = "second")
+vcov(fit, stage = "second")
+```
+
+## Genome-wide score scans
+
+Fit the nuisance model once and reuse it across variant batches:
+
+``` r
+
+support <- top_score_support(
+  y = y,
+  additive = pc1,
+  missing_value = 888
+)
+
+scan <- top_score_scan(
+  y = y,
+  variants = snp,
+  support = support,
+  missing_value = 888
+)
+
+as.data.frame(scan)
+```
+
+Fit detailed Wald models only for selected variants:
+
+``` r
+
+followup <- top_followup(
+  y = y,
+  variants = snp,
+  adjustment = pc1,
+  missing_value = 888,
+  keep_models = FALSE
+)
+
+followup$results
+followup$effects
+```
+
+## Meta-analysis
+
+Combine aligned score vectors and information matrices from any number
+of independent studies:
+
+``` r
+
+studies <- list(
+  list(score = c(1, 2), information = diag(c(2, 3))),
+  list(score = c(0.5, -0.5), information = diag(c(1, 2))),
+  list(score = c(-0.25, 1), information = diag(c(4, 1)))
+)
+
+top_meta(studies)
+```
+
+## Documentation
+
+- [Getting
+  started](https://andrewhaoyu.github.io/TOP/vignettes/getting-started.Rmd)
+- [Score scans and
+  follow-up](https://andrewhaoyu.github.io/TOP/vignettes/score-scan-and-followup.Rmd)
+- [Score-statistic
+  meta-analysis](https://andrewhaoyu.github.io/TOP/vignettes/meta-analysis.Rmd)
+- [Custom subtype
+  designs](https://andrewhaoyu.github.io/TOP/vignettes/custom-subtype-designs.Rmd)
+- [Function reference](https://andrewhaoyu.github.io/TOP/man/)
+
+These branch-relative links work directly on GitHub. After the changes
+are merged into `master`, the pkgdown workflow will publish the rendered
+[documentation website](https://andrewhaoyu.github.io/TOP/).
+
+[`TwoStageModel()`](https://andrewhaoyu.github.io/TOP/reference/TwoStageModel.md)
+and the original score-test functions remain available for existing
+scripts. New analyses should use the validated `top_*()` interfaces. The
+original long methodological tutorial is archived under
+[`legacy/tutorial`](https://andrewhaoyu.github.io/TOP/legacy/tutorial).
+
+## Subtype filtering and convergence
+
+TOP preserves its historical rule that a cutoff of 10 omits subtypes
+with 10 or fewer cases. Sparse subtypes can produce unstable or singular
+information matrices. Numerical failures now raise informative R errors
+instead of terminating the R session. Set `options(TOP.verbose = TRUE)`
+to show EM progress.
+
+## Citation
+
+If TOP contributes to an analysis, cite:
+
+> Zhang H, Zhao N, Ahearn TU, Wheeler W, García-Closas M, Chatterjee N.
+> A mixed-model approach for powerful testing of genetic associations
+> with cancer risk incorporating tumor characteristics. *Biostatistics*.
+> 2021;22(4):772–788.
+> [doi:10.1093/biostatistics/kxz065](https://doi.org/10.1093/biostatistics/kxz065)
+
+From R, run `citation("TOP")` for a formatted entry.
+
+## Contributing
+
+Bug reports and feature requests are welcome through [GitHub
+Issues](https://github.com/andrewhaoyu/TOP/issues). See
+[`CONTRIBUTING.md`](https://andrewhaoyu.github.io/TOP/CONTRIBUTING.md)
+before proposing statistical or API changes. Never attach
+participant-level or sensitive study data to a public issue.
+
+# Package index
+
+## Recommended user API
+
+Stable entry points for new analyses.
+
+- [`top_fit()`](https://andrewhaoyu.github.io/TOP/reference/top_fit.md)
+  : Fit a TOP model with validated inputs and named results
+- [`top_fit_custom()`](https://andrewhaoyu.github.io/TOP/reference/top_fit_custom.md)
+  : Fit a TOP model with a custom second-stage design
+- [`top_score_support()`](https://andrewhaoyu.github.io/TOP/reference/top_score_support.md)
+  : Prepare reusable null-model support for TOP score scans
+- [`top_score_scan()`](https://andrewhaoyu.github.io/TOP/reference/top_score_scan.md)
+  : Scan variants with a TOP fixed-effect score test
+- [`top_followup()`](https://andrewhaoyu.github.io/TOP/reference/top_followup.md)
+  : Fit detailed TOP models for selected follow-up variants
+- [`top_meta()`](https://andrewhaoyu.github.io/TOP/reference/top_meta.md)
+  : Combine TOP score statistics across studies
+
+## Backward-compatible and low-level API
+
+Legacy functions retained for existing analyses and advanced workflows.
+
+- [`CompleteCasesScoreTestSupport()`](https://andrewhaoyu.github.io/TOP/reference/CompleteCasesScoreTestSupport.md)
+  : Title
+- [`ComputeLogLikelihood()`](https://andrewhaoyu.github.io/TOP/reference/ComputeLogLikelihood.md)
+  : Title
+- [`DisplayFirstStageTestResult()`](https://andrewhaoyu.github.io/TOP/reference/DisplayFirstStageTestResult.md)
+  : Display the first stage parameters
+- [`DisplayFixedScoreTestResult()`](https://andrewhaoyu.github.io/TOP/reference/DisplayFixedScoreTestResult.md)
+  : Calcualte the fixed effect score test p value based on score and
+  information matrix
+- [`DisplayIndTestResult()`](https://andrewhaoyu.github.io/TOP/reference/DisplayIndTestResult.md)
+  : Calculate the individual test p value
+- [`DisplayMixedScoreTestResult()`](https://andrewhaoyu.github.io/TOP/reference/DisplayMixedScoreTestResult.md)
+  : Calculate the mixed effect model p value based on score and
+  information matrix
+- [`DisplaySecondStageTestResult()`](https://andrewhaoyu.github.io/TOP/reference/DisplaySecondStageTestResult.md)
+  : DisplaySecondStageTestResult
+- [`EMScoreTestSupport()`](https://andrewhaoyu.github.io/TOP/reference/EMScoreTestSupport.md)
+  : Title
+- [`EMStep()`](https://andrewhaoyu.github.io/TOP/reference/EMStep.md) :
+  Title
+- [`EMStepScoreTestSupport()`](https://andrewhaoyu.github.io/TOP/reference/EMStepScoreTestSupport.md)
+  : Title
+- [`EMStepScoreTestSupportMixedModel()`](https://andrewhaoyu.github.io/TOP/reference/EMStepScoreTestSupportMixedModel.md)
+  : Title
+- [`EMmvpolySelfDesign()`](https://andrewhaoyu.github.io/TOP/reference/EMmvpolySelfDesign.md)
+  : Two stage model with self design second stage matrix
+- [`FillandMatch()`](https://andrewhaoyu.github.io/TOP/reference/FillandMatch.md)
+  : Title
+- [`FirstStageTest()`](https://andrewhaoyu.github.io/TOP/reference/FirstStageTest.md)
+  : Title
+- [`GenerateCompleteXCovariates()`](https://andrewhaoyu.github.io/TOP/reference/GenerateCompleteXCovariates.md)
+  : Title
+- [`GenerateCompleteYPheno()`](https://andrewhaoyu.github.io/TOP/reference/GenerateCompleteYPheno.md)
+  : Title
+- [`GenerateCovarName()`](https://andrewhaoyu.github.io/TOP/reference/GenerateCovarName.md)
+  : Title
+- [`GenerateFirstStageMat()`](https://andrewhaoyu.github.io/TOP/reference/GenerateFirstStageMat.md)
+  : Title
+- [`GenerateFreqTable()`](https://andrewhaoyu.github.io/TOP/reference/GenerateFreqTable.md)
+  : Title
+- [`GenerateGlobalTest()`](https://andrewhaoyu.github.io/TOP/reference/GenerateGlobalTest.md)
+  : Title
+- [`GenerateMissingPosition()`](https://andrewhaoyu.github.io/TOP/reference/GenerateMissingPosition.md)
+  : Title
+- [`GenerateSecondStageMat()`](https://andrewhaoyu.github.io/TOP/reference/GenerateSecondStageMat.md)
+  : Title
+- [`GenerateSelfCovarName()`](https://andrewhaoyu.github.io/TOP/reference/GenerateSelfCovarName.md)
+  : Title
+- [`GenerateSelfFirstStageMat()`](https://andrewhaoyu.github.io/TOP/reference/GenerateSelfFirstStageMat.md)
+  : Title
+- [`GenerateSelfSecondStageMat()`](https://andrewhaoyu.github.io/TOP/reference/GenerateSelfSecondStageMat.md)
+  : Title
+- [`GenerateSelfXAll()`](https://andrewhaoyu.github.io/TOP/reference/GenerateSelfXAll.md)
+  : Title
+- [`GenerateSubtypesName()`](https://andrewhaoyu.github.io/TOP/reference/GenerateSubtypesName.md)
+  : Title
+- [`GenerateTumorCharacterCat()`](https://andrewhaoyu.github.io/TOP/reference/GenerateTumorCharacterCat.md)
+  : Title
+- [`GenerateXAll()`](https://andrewhaoyu.github.io/TOP/reference/GenerateXAll.md)
+  : Title
+- [`GenerateZDesignAdditive()`](https://andrewhaoyu.github.io/TOP/reference/GenerateZDesignAdditive.md)
+  : Title
+- [`GenerateZDesignBaselineonly()`](https://andrewhaoyu.github.io/TOP/reference/GenerateZDesignBaselineonly.md)
+  : Title
+- [`GenerateZDesignCombination()`](https://andrewhaoyu.github.io/TOP/reference/GenerateZDesignCombination.md)
+  : Generate the three Z design matrix given the tumor characteristics
+- [`GenerateZDesignNamesAdditive()`](https://andrewhaoyu.github.io/TOP/reference/GenerateZDesignNamesAdditive.md)
+  : Title
+- [`GenerateZDesignPairwiseInteraction()`](https://andrewhaoyu.github.io/TOP/reference/GenerateZDesignPairwiseInteraction.md)
+  : Title
+- [`GenerateZDesignSaturated()`](https://andrewhaoyu.github.io/TOP/reference/GenerateZDesignSaturated.md)
+  : Title
+- [`GenerateZstandard()`](https://andrewhaoyu.github.io/TOP/reference/GenerateZstandard.md)
+  : Generate the combinations of all the tumor characteristics.
+- [`GlobalTestForAssoc()`](https://andrewhaoyu.github.io/TOP/reference/GlobalTestForAssoc.md)
+  : Title
+- [`GlobalTestForHeter()`](https://andrewhaoyu.github.io/TOP/reference/GlobalTestForHeter.md)
+  : Title
+- [`IndividualHeterTest()`](https://andrewhaoyu.github.io/TOP/reference/IndividualHeterTest.md)
+  : Title
+- [`InitialSetup()`](https://andrewhaoyu.github.io/TOP/reference/InitialSetup.md)
+  : Title
+- [`LogLikelihoodwithAIC()`](https://andrewhaoyu.github.io/TOP/reference/LogLikelihoodwithAIC.md)
+  : Title
+- [`LogoddsMetaAnalysis()`](https://andrewhaoyu.github.io/TOP/reference/LogoddsMetaAnalysis.md)
+  : Title
+- [`MetaFixedPfunction_temp()`](https://andrewhaoyu.github.io/TOP/reference/MetaFixedPfunction_temp.md)
+  : Title
+- [`MetaMixedPfunction()`](https://andrewhaoyu.github.io/TOP/reference/MetaMixedPfunction.md)
+  : Title
+- [`MetaMixedPfunction_temp()`](https://andrewhaoyu.github.io/TOP/reference/MetaMixedPfunction_temp.md)
+  : Title
+- [`MetaPfunction()`](https://andrewhaoyu.github.io/TOP/reference/MetaPfunction.md)
+  : Title
+- [`Mvpoly()`](https://andrewhaoyu.github.io/TOP/reference/Mvpoly.md) :
+  Title
+- [`MvpolySelfDesign()`](https://andrewhaoyu.github.io/TOP/reference/MvpolySelfDesign.md)
+  : Title
+- [`OneStepMLE()`](https://andrewhaoyu.github.io/TOP/reference/OneStepMLE.md)
+  : Title
+- [`OneStepMleScoreTestSupport()`](https://andrewhaoyu.github.io/TOP/reference/OneStepMleScoreTestSupport.md)
+  : Title
+- [`ProbFitting()`](https://andrewhaoyu.github.io/TOP/reference/ProbFitting.md)
+  : Title
+- [`PvalueFunction()`](https://andrewhaoyu.github.io/TOP/reference/PvalueFunction.md)
+  : Title
+- [`ScoreGlobalMixedTestForAssoc()`](https://andrewhaoyu.github.io/TOP/reference/ScoreGlobalMixedTestForAssoc.md)
+  : Title
+- [`ScoreGlobalTestForAssoc()`](https://andrewhaoyu.github.io/TOP/reference/ScoreGlobalTestForAssoc.md)
+  : Title
+- [`ScoreMetaAnalysis()`](https://andrewhaoyu.github.io/TOP/reference/ScoreMetaAnalysis.md)
+  : Title
+- [`ScoreMixedGlobalTestForAssoc()`](https://andrewhaoyu.github.io/TOP/reference/ScoreMixedGlobalTestForAssoc.md)
+  : Title
+- [`ScoreMixedGlobalTestForHeter()`](https://andrewhaoyu.github.io/TOP/reference/ScoreMixedGlobalTestForHeter.md)
+  : Title
+- [`ScoreTest()`](https://andrewhaoyu.github.io/TOP/reference/ScoreTest.md)
+  : ScoreTest
+- [`ScoreTestMixedModel()`](https://andrewhaoyu.github.io/TOP/reference/ScoreTestMixedModel.md)
+  : Title
+- [`ScoreTestSelfDesign()`](https://andrewhaoyu.github.io/TOP/reference/ScoreTestSelfDesign.md)
+  : Title
+- [`ScoreTestSupport()`](https://andrewhaoyu.github.io/TOP/reference/ScoreTestSupport.md)
+  : Title
+- [`ScoreTestSupportMixedModel()`](https://andrewhaoyu.github.io/TOP/reference/ScoreTestSupportMixedModel.md)
+  : Generate the support list for score test To construct a score test,
+  we need to first fit the model under the null hypothesis. This
+  function fitts the model under the null hypothesis, then saved all the
+  necessary results into a list to pass to the score test function.
+- [`ScoreTestSupportMixedModelSelfDesign()`](https://andrewhaoyu.github.io/TOP/reference/ScoreTestSupportMixedModelSelfDesign.md)
+  : Title
+- [`ScoreTestSupportSelfDesign()`](https://andrewhaoyu.github.io/TOP/reference/ScoreTestSupportSelfDesign.md)
+  : Title
+- [`SecondStageTest()`](https://andrewhaoyu.github.io/TOP/reference/SecondStageTest.md)
+  : Title
+- [`SelfFirstStageTest()`](https://andrewhaoyu.github.io/TOP/reference/SelfFirstStageTest.md)
+  : Title
+- [`StartValueFunction()`](https://andrewhaoyu.github.io/TOP/reference/StartValueFunction.md)
+  : Title
+- [`StepScoreTestSupportMixedModel()`](https://andrewhaoyu.github.io/TOP/reference/StepScoreTestSupportMixedModel.md)
+  : Title
+- [`SummaryResult()`](https://andrewhaoyu.github.io/TOP/reference/SummaryResult.md)
+  : Title
+- [`TakeoutIntercept()`](https://andrewhaoyu.github.io/TOP/reference/TakeoutIntercept.md)
+  : Title
+- [`TwoStageModel()`](https://andrewhaoyu.github.io/TOP/reference/TwoStageModel.md)
+  : Two-stage polytomous logistic regression
+- [`ZDesigntoZall()`](https://andrewhaoyu.github.io/TOP/reference/ZDesigntoZall.md)
+  : Title
+- [`ZSelfDesigntoZall()`](https://andrewhaoyu.github.io/TOP/reference/ZSelfDesigntoZall.md)
+  : Title
+- [`data`](https://andrewhaoyu.github.io/TOP/reference/data.md) :
+  Simulated breast cancer data
+- [`error_f()`](https://andrewhaoyu.github.io/TOP/reference/error_f.md)
+  : Title
+- [`get_fine_mapping_id()`](https://andrewhaoyu.github.io/TOP/reference/get_fine_mapping_id.md)
+  : Title
+- [`startend()`](https://andrewhaoyu.github.io/TOP/reference/startend.md)
+  : Title
+
+# Articles
+
+### Workflows
+
+- [Getting started with
+  TOP](https://andrewhaoyu.github.io/TOP/articles/getting-started.md):
+- [Score scans and detailed
+  follow-up](https://andrewhaoyu.github.io/TOP/articles/score-scan-and-followup.md):
+- [Score-statistic
+  meta-analysis](https://andrewhaoyu.github.io/TOP/articles/meta-analysis.md):
+- [Custom subtype
+  designs](https://andrewhaoyu.github.io/TOP/articles/custom-subtype-designs.md):
